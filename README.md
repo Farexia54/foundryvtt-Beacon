@@ -24,6 +24,6 @@ Search "Beacon" in the Foundry system browser and click Install.
 https://github.com/Eranziel/foundryvtt-lancer/wiki/Development-Setup
 
 ## Legal
-"Beacon for FoundryVTT" is not an official Beacon product; it is a third party work, and is not affiliated with Pirate Gonzalez Games. "Lancer for FoundryVTT" is published via the Beacon Third Party License.
+"Beacon for FoundryVTT" is not an official Beacon product; it is a third party work, and is not affiliated with Pirate Gonzalez Games. "Beacon for FoundryVTT" is published via the Beacon Third Party License.
 
 Beacon is copyrighted by Pirate Gonzalez Games.
