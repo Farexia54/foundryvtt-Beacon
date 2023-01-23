@@ -1,5 +1,5 @@
 # Beacon System for FoundryVTT
-A Foundry VTT system for the Beacon RPG by Pirate Gonzalez Games (https://pirategonzalezgames.itch.io). 
+A Foundry VTT system for the Beacon RPG by Pirate Gonzalez Games (https://www.pirategonzalezgames.com/). 
 
 ## Attribution and Acknowledgements
 The Beacon system and all related setting materials are copyrighted by Pirate Gonzalez Games, used with permission.
