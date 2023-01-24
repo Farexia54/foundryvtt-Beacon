@@ -1,4 +1,4 @@
-import { LANCER } from "./config";
+import { Beacon } from "./config";
 
 export function measureDistances(
   this: SquareGrid,
@@ -6,7 +6,7 @@ export function measureDistances(
 ): ReturnType<SquareGrid["measureDistances"]> {
   if (!options?.gridSpaces) return BaseGrid.prototype.measureDistances.call(this, segments, options);
 
-  const mode = game.settings.get(game.system.id, LANCER.setting_square_grid_diagonals);
+  const mode = game.settings.get(game.system.id, Beacon.setting_square_grid_diagonals);
   // @ts-expect-error Should be fixed with v10 types
   const grid_distance = canvas.scene?.grid.distance ?? 0;
   let diag_parity = 0; // Track the parity of the diagonals so that 121 can't be cheesed

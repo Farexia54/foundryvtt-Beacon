@@ -1,13 +1,13 @@
 // Import TypeScript modules
-import { LANCER } from "../config";
+import { Beacon } from "../config";
 import { getAutomationOptions } from "../settings";
-import type { LancerActor } from "../actor/lancer-actor";
-import type { LancerOverchargeMacroData } from "../interfaces";
+import type { BeaconActor } from "../actor/Beacon-actor";
+import type { BeaconOverchargeMacroData } from "../interfaces";
 import { encodeMacroData } from "./_encode";
 import { getMacroSpeaker } from "./_util";
 import { renderMacroTemplate } from "./_render";
 
-const lp = LANCER.log_prefix;
+const lp = Beacon.log_prefix;
 
 export function encodeOverchargeMacroData(actor_id: string): string {
   return encodeMacroData({
@@ -42,7 +42,7 @@ export async function prepareOverchargeMacro(a: string) {
   // @ts-expect-error Should be fixed with v10 types
   let mech = actor.system.derived.mm!;
 
-  let mData: LancerOverchargeMacroData = {
+  let mData: BeaconOverchargeMacroData = {
     level: mech.OverchargeCount,
     roll: roll,
   };
@@ -60,7 +60,7 @@ export async function prepareOverchargeMacro(a: string) {
   return rollOverchargeMacro(actor, mData);
 }
 
-async function rollOverchargeMacro(actor: LancerActor, data: LancerOverchargeMacroData) {
+async function rollOverchargeMacro(actor: BeaconActor, data: BeaconOverchargeMacroData) {
   if (!actor) return Promise.resolve();
 
   const roll_tt = await data.roll.getTooltip();

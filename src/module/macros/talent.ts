@@ -1,11 +1,11 @@
 // Import TypeScript modules
-import { LANCER } from "../config";
-import type { LancerActor } from "../actor/lancer-actor";
-import type { LancerTalentMacroData } from "../interfaces";
+import { Beacon } from "../config";
+import type { BeaconActor } from "../actor/Beacon-actor";
+import type { BeaconTalentMacroData } from "../interfaces";
 import { renderMacroTemplate } from "./_render";
 import { getMacroSpeaker, ownedItemFromString } from "./_util";
 
-const lp = LANCER.log_prefix;
+const lp = Beacon.log_prefix;
 
 /**
  * Generic macro preparer for a talent
@@ -22,7 +22,7 @@ export async function prepareTalentMacro(a: string, i: string, rank: number) {
   const item = ownedItemFromString(i, actor);
   if (!item || !item.is_talent()) return;
 
-  let talData: LancerTalentMacroData = {
+  let talData: BeaconTalentMacroData = {
     // @ts-expect-error Should be fixed with v10 types
     talent: item.system,
     rank: rank,
@@ -31,7 +31,7 @@ export async function prepareTalentMacro(a: string, i: string, rank: number) {
   await rollTalentMacro(actor, talData);
 }
 
-export async function rollTalentMacro(actor: LancerActor, data: LancerTalentMacroData) {
+export async function rollTalentMacro(actor: BeaconActor, data: BeaconTalentMacroData) {
   if (!actor) return Promise.resolve();
 
   // Construct the template

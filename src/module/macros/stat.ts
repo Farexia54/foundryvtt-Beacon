@@ -1,13 +1,13 @@
 // Import TypeScript modules
-import { LANCER } from "../config";
-import type { LancerActor } from "../actor/lancer-actor";
-import type { LancerStatMacroData } from "../interfaces";
+import { Beacon } from "../config";
+import type { BeaconActor } from "../actor/Beacon-actor";
+import type { BeaconStatMacroData } from "../interfaces";
 import { resolve_dotpath } from "../helpers/commons";
 import type { AccDiffDataSerialized } from "../helpers/acc_diff";
 import { getMacroSpeaker } from "./_util";
 import { renderMacroTemplate } from "./_render";
 
-const lp = LANCER.log_prefix;
+const lp = Beacon.log_prefix;
 
 export async function prepareStatMacro(a: string, statKey: string, rerollData?: AccDiffDataSerialized) {
   // Determine which Actor to speak as
@@ -21,7 +21,7 @@ export async function prepareStatMacro(a: string, statKey: string, rerollData?: 
 
   let bonus: number = resolve_dotpath(mm_ent, statKey.substr(3));
 
-  let mData: LancerStatMacroData = {
+  let mData: BeaconStatMacroData = {
     title: statPath[statPath.length - 1].toUpperCase(),
     bonus: bonus,
   };
@@ -31,7 +31,7 @@ export async function prepareStatMacro(a: string, statKey: string, rerollData?: 
 
 // Rollers
 
-export async function rollStatMacro(actor: LancerActor, data: LancerStatMacroData) {
+export async function rollStatMacro(actor: BeaconActor, data: BeaconStatMacroData) {
   if (!actor) return Promise.resolve();
 
   // Get accuracy/difficulty with a prompt

@@ -1,5 +1,5 @@
 import type * as t from "io-ts";
-import { LancerItem } from "../../item/lancer-item";
+import { BeaconItem } from "../../item/Beacon-item";
 
 import type { AccDiffData } from "./index";
 
@@ -55,7 +55,7 @@ declare interface AccDiffPlugin<Data extends AccDiffPluginData> {
   // a "perTarget" plugin applies individually to every single target
   // a "perUnknownTarget" applies whenever the user opens the roll dialog without a target
   // so every roll has perRoll + exactly one of perTarget and perUnknownTarget
-  perRoll?(item?: LancerItem | LancerActor): Data;
+  perRoll?(item?: BeaconItem | BeaconActor): Data;
   perUnknownTarget?(): Data;
   perTarget?(item: Token): Data;
   // usually you want to implement either perRoll OR both of the other two

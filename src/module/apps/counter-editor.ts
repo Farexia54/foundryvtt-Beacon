@@ -39,7 +39,7 @@ export class CounterEditForm<O> extends FormApplication {
       width: 400,
       title: "Counter Editing",
       height: "auto",
-      classes: ["lancer"],
+      classes: ["Beacon"],
     };
   }
 

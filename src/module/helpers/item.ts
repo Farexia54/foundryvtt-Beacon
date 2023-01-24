@@ -63,7 +63,7 @@ import {
 } from "./commons";
 import { limited_uses_indicator, ref_commons, ref_params, resolve_ref_element } from "./refs";
 import { ActivationOptions, ChipIcons } from "../enums";
-import type { LancerActorSheetData, LancerItemSheetData, LancerMacroData } from "../interfaces";
+import type { BeaconActorSheetData, BeaconItemSheetData, BeaconMacroData } from "../interfaces";
 import { encodeMacroData } from "../macros";
 import { is_limited, is_loading } from "machine-mind/dist/classes/mech/EquipUtil";
 import type { CollapseRegistry } from "./loadout";
@@ -71,7 +71,7 @@ import { uuid4 } from "./collapse";
 import { promptText } from "../apps/simple-prompt";
 import { CounterEditForm } from "../apps/counter-editor";
 import { FoundryFlagData } from "../mm-util/foundry-reg";
-import { is_reg_pilot } from "../actor/lancer-actor";
+import { is_reg_pilot } from "../actor/Beacon-actor";
 import { frameToPath } from "../actor/retrograde-map";
 import { InventoryDialogData } from "../apps/inventory";
 
@@ -239,7 +239,7 @@ export function uses_control(uses_path: string, max_uses: number, helper: Helper
   const curr_uses = resolve_helper_dotpath(helper, uses_path, 0);
   return `
     <div class="card clipped">
-      <span class="lancer-header"> USES </span>
+      <span class="Beacon-header"> USES </span>
       ${std_x_of_y(uses_path, curr_uses, max_uses)}
     </div>
     `;
@@ -309,26 +309,26 @@ export function single_bonus_editor(bonus_path: string, bonus: Bonus, options: H
   // Consolidate them into rows
   return `
     <div class="flexcol">
-      <span class="lancer-header">INFO</span>
+      <span class="Beacon-header">INFO</span>
       ${id_input}
       ${val_input}
 
       <div class="wraprow double">
         <div class="flexcol">
-          <span class="lancer-header">DAMAGE TYPES</span>
+          <span class="Beacon-header">DAMAGE TYPES</span>
           ${damage_checkboxes.join(" ")}
         </div>
         <div class="flexcol">
-          <span class="lancer-header">RANGES TYPES</span>
+          <span class="Beacon-header">RANGES TYPES</span>
           ${range_checkboxes.join(" ")}
         </div>
 
         <div class="flexcol">
-          <span class="lancer-header">WEAPON TYPES</span>
+          <span class="Beacon-header">WEAPON TYPES</span>
           ${type_checkboxes.join(" ")}
         </div>
         <div class="flexcol">
-          <span class="lancer-header">WEAPON SIZES</span>
+          <span class="Beacon-header">WEAPON SIZES</span>
           ${size_checkboxes.join(" ")}
         </div>
       </div>
@@ -359,7 +359,7 @@ export function bonuses_display(bonuses_path: string, bonuses_array: Bonus[], ed
 
   return `
     <div class="card bonus-list">
-      <div class="lancer-header">
+      <div class="Beacon-header">
         <span class="left">// Bonuses</span>
         ${inc_if(
           `<a class="gen-control fas fa-plus" data-action="append" data-path="${bonuses_path}" data-action-value="(struct)bonus"></a>`,
@@ -451,10 +451,10 @@ export function pilot_armor_slot(armor_path: string, helper: HelperOptions): str
 
   return `<div class="valid ${cd.ref.type} ref drop-settable card clipped pilot-armor-compact item" 
                 ${ref_params(cd.ref, armor_path)} >
-            <div class="lancer-header">
+            <div class="Beacon-header">
               <i class="mdi mdi-shield-outline i--m i--light"> </i>
               <span class="minor">${armor!.Name}</span>
-              <a class="lancer-context-menu" data-context-menu="${armor.Type}" data-path="${armor_path}"">
+              <a class="Beacon-context-menu" data-context-menu="${armor.Type}" data-path="${armor_path}"">
                 <i class="fas fa-ellipsis-v"></i>
               </a>
             </div>
@@ -517,10 +517,10 @@ export function pilot_weapon_refview(weapon_path: string, helper: HelperOptions)
     EntryType.PILOT_WEAPON
   } ref drop-settable card clipped pilot-weapon-compact item macroable"
                 ${ref_params(cd.ref, weapon_path)} >
-    <div class="lancer-header">
+    <div class="Beacon-header">
       <i class="cci cci-weapon i--m i--light"> </i>
       <span class="minor">${weapon.Name}</span>
-              <a class="lancer-context-menu" data-context-menu="${weapon.Type}" data-path="${weapon_path}"">
+              <a class="Beacon-context-menu" data-context-menu="${weapon.Type}" data-path="${weapon_path}"">
                 <i class="fas fa-ellipsis-v"></i>
               </a>
     </div>
@@ -576,11 +576,11 @@ export function pilot_gear_refview(gear_path: string, helper: HelperOptions): st
 
   return `<div class="valid ${EntryType.PILOT_GEAR} ref drop-settable card clipped macroable item"
                 ${ref_params(cd.ref, gear_path)} >
-    <div class="lancer-header">
+    <div class="Beacon-header">
       <i class="cci cci-generic-item i--m"> </i>
       <a class="gear-macro macroable"><i class="mdi mdi-message"></i></a>
       <span class="minor">${gear.Name}</span>
-      <a class="lancer-context-menu" data-context-menu="${gear.Type}" data-path="${gear_path}"">
+      <a class="Beacon-context-menu" data-context-menu="${gear.Type}" data-path="${gear_path}"">
         <i class="fas fa-ellipsis-v"></i>
       </a>
     </div>
@@ -702,20 +702,20 @@ data-action="set" data-action-value="(int)${i}" data-path="${weapon_path}.Select
   return `
   <div class="mech-weapon-wrapper${mod_text ? "-modded" : ""}">
     <div class="valid ${EntryType.MECH_WEAPON} 
-    ref drop-settable flexcol lancer-weapon-container macroable item"
+    ref drop-settable flexcol Beacon-weapon-container macroable item"
                   ${ref_params(cd.ref, weapon_path)}
                   style="max-height: fit-content;">
-      <div class="lancer-header ${weapon.Destroyed ? "destroyed" : ""}">
+      <div class="Beacon-header ${weapon.Destroyed ? "destroyed" : ""}">
         <i class="${weapon.Destroyed ? "mdi mdi-cog" : "cci cci-weapon i--m i--light"}"> </i>
         <span class="minor" ${mech_ ? `data-collapse-store="${mech_.RegistryID}"` : ""}" >
           ${weapon.Name} // ${weapon.Size.toUpperCase()} ${weapon.SelectedProfile.WepType.toUpperCase()}
         </span>
         <i class="mdi mdi-unfold-less-horizontal collapse-trigger collapse-icon" data-collapse-id="${collapseID}"> </i>
-        <a class="lancer-context-menu" data-context-menu="${EntryType.MECH_WEAPON}" data-path="${weapon_path}">
+        <a class="Beacon-context-menu" data-context-menu="${EntryType.MECH_WEAPON}" data-path="${weapon_path}">
           <i class="fas fa-ellipsis-v"></i>
         </a>
       </div> 
-      <div class="lancer-body collapse" data-collapse-id="${collapseID}">
+      <div class="Beacon-body collapse" data-collapse-id="${collapseID}">
         ${weapon.SP ? sp : ""}
         ${profiles}
         <div class="flexrow" style="text-align: left; white-space: nowrap;">
@@ -797,14 +797,14 @@ export function weapon_mod_ref(mod_path: string, weapon_path: string | null, opt
   return `
   <div class="valid item flexcol clipped-top ref ${EntryType.WEAPON_MOD}"
       ${weapon_path ? ref_params(cd.ref, weapon_path) : ref_params(cd.ref, cd.uuid)}>
-    <div class="lancer-header">
+    <div class="Beacon-header">
       <i class="cci cci-weaponmod i--m i--light"> </i>
       <span class="minor">${mod.Name}</span>
-      <a class="lancer-context-menu" data-context-menu="${EntryType.WEAPON_MOD}" data-path="${mod_path}">
+      <a class="Beacon-context-menu" data-context-menu="${EntryType.WEAPON_MOD}" data-path="${mod_path}">
         <i class="fas fa-ellipsis-v"></i>
       </a>
     </div>
-    <div class="lancer-body">
+    <div class="Beacon-body">
       <div class="flexrow">${sp} ${limited}</div>
       <div class="flexrow">
         ${added_range}
@@ -854,11 +854,11 @@ export function license_ref(license: License | null, level: number, item_path?: 
   } else {
     return `
     <li class="card clipped item macroable ref valid" ${ref_params(cd.ref, cd.uuid)}>
-      <div class="lancer-header lancer-license-header medium clipped-top" style="grid-area: 1/1/2/3">
+      <div class="Beacon-header Beacon-license-header medium clipped-top" style="grid-area: 1/1/2/3">
         <i class="cci cci-license i--m i--dark"> </i>
         <div class="major modifier-name">${license!.Name} ${license!.CurrentRank}</div>
         <div class="ref-list-controls">
-          <a class="lancer-context-menu" data-context-menu="${license!.Type}" data-path="${item_path}"">
+          <a class="Beacon-context-menu" data-context-menu="${license!.Type}" data-path="${item_path}"">
             <i class="fas fa-ellipsis-v"></i>
           </a>
         </div>
@@ -879,7 +879,7 @@ export function frame_ref(frame: Frame | null, item_path?: string): string {
         <span class="img-bar" style="background-image: url(${frame_img})"></span>
         <div class="major modifier-name i--light">${frame.Source?.LID} ${frame.Name}</div>
         <div class="ref-list-controls">
-          <a class="lancer-context-menu" data-context-menu="${frame.Type}" data-path="${item_path}"">
+          <a class="Beacon-context-menu" data-context-menu="${frame.Type}" data-path="${item_path}"">
             <i class="fas fa-ellipsis-v i--light"></i>
           </a>
         </div>
@@ -900,7 +900,7 @@ export function npc_class_ref(npc_class: NpcClass | null, item_path?: string): s
         <span class="img-bar" style="background-image: url(${frame_img})"></span>
         <div class="major modifier-name i--light">${npc_class.Name} // ${npc_class.Role.toUpperCase()}</div>
         <div class="ref-list-controls">
-          <a class="lancer-context-menu" data-context-menu="${npc_class.Type}" data-path="${item_path}"">
+          <a class="Beacon-context-menu" data-context-menu="${npc_class.Type}" data-path="${item_path}"">
             <i class="fas fa-ellipsis-v i--light"></i>
           </a>
         </div>
@@ -920,7 +920,7 @@ export function npc_template_ref(npc_tmpl: NpcTemplate | null, item_path?: strin
         <span class="img-bar" style="background-image: url(${npc_tmpl.Flags.top_level_data.img})"></span>
         <div class="major modifier-name i--light">${npc_tmpl.Name}</div>
         <div class="ref-list-controls">
-          <a class="lancer-context-menu" data-context-menu="${npc_tmpl.Type}" data-path="${item_path}"">
+          <a class="Beacon-context-menu" data-context-menu="${npc_tmpl.Type}" data-path="${item_path}"">
             <i class="fas fa-ellipsis-v i--light"></i>
           </a>
         </div>
@@ -998,9 +998,9 @@ export function buildActionHTML(
       detailText = `
         <div class="action-detail collapse ${options.full ? "" : "collapsed"}" data-collapse-id="${collID}">
           <hr class="hsep">
-          <div class="overline">${game.i18n.localize("lancer.chat-card.label.trigger")}</div> 
+          <div class="overline">${game.i18n.localize("Beacon.chat-card.label.trigger")}</div> 
           <div>${action.Trigger}</div>
-          <div class="overline">${game.i18n.localize("lancer.chat-card.label.effect")}</div> 
+          <div class="overline">${game.i18n.localize("Beacon.chat-card.label.effect")}</div> 
           <div>${action.Detail}</div> 
         </div>`;
     }
@@ -1142,14 +1142,14 @@ export function buildDeployableHTML(dep: Deployable, full?: boolean, num?: numbe
 
 export function buildChipHTML(
   activation: ActivationType,
-  macroData?: { icon?: ChipIcons; num?: number; isDep?: boolean; fullData?: LancerMacroData }
+  macroData?: { icon?: ChipIcons; num?: number; isDep?: boolean; fullData?: BeaconMacroData }
 ): string {
   if (macroData && (macroData?.fullData || macroData?.num !== undefined)) {
     if (!macroData.icon) macroData.icon = ChipIcons.Chat;
     let data: string | undefined;
     if (macroData?.fullData) data = `data-macro=${encodeMacroData(macroData.fullData)}`;
     else data = `data-${macroData.isDep ? "deployable" : "activation"}=${macroData.num}`;
-    return `<a class="${macroData?.fullData ? "lancer-macro" : `macroable`} activation-chip activation-${activation
+    return `<a class="${macroData?.fullData ? "Beacon-macro" : `macroable`} activation-chip activation-${activation
       .toLowerCase()
       .replace(/\s+/g, "")}" ${data}>
             ${macroData.icon ? macroData.icon : ""}
@@ -1188,7 +1188,7 @@ export function buildSystemHTML(data: MechSystem): string {
     data.as_ref(),
     data.Flags.orig_doc.uuid
   )} style="margin: 0px;">
-  <div class="lancer-header mech-system">// SYSTEM :: ${data.Name} //</div>
+  <div class="Beacon-header mech-system">// SYSTEM :: ${data.Name} //</div>
   ${eff ? eff : ""}
   ${actions ? actions : ""}
   ${deployables ? deployables : ""}
@@ -1222,9 +1222,9 @@ export function buildCounterHeader(data: Counter, path: string, writeback_path: 
   //
   return `
   <div class="card clipped-bot counter-wrapper" data-path="${path}" data-writeback_path="${writeback_path}">
-    <div class="lancer-header">
+    <div class="Beacon-header">
       <span>// ${data.Name} //</span>
-      <a class="lancer-context-menu" data-context-menu="counter" data-path="${path}" data-can-delete="${
+      <a class="Beacon-context-menu" data-context-menu="counter" data-path="${path}" data-can-delete="${
     can_delete ? can_delete : false
   }">
         <i class="fas fa-ellipsis-v"></i>
@@ -1265,7 +1265,7 @@ export function buildCounterArrayHTML(
 
   return `
   <div class="card clipped double">
-    <span class="lancer-header submajor ">
+    <span class="Beacon-header submajor ">
       COUNTERS
       <a class="gen-control fas fa-plus" data-action="append" data-path="${
         custom_path ? custom_path : path
@@ -1299,7 +1299,7 @@ function _updateButtonSiblingData(button: JQuery<HTMLElement>, delta: number) {
   }
 }
 
-async function _updateCounterData<T extends LancerActorSheetData<any> | LancerItemSheetData<any>>(
+async function _updateCounterData<T extends BeaconActorSheetData<any> | BeaconItemSheetData<any>>(
   data: T,
   path: string | undefined,
   writeback_path: string | undefined,
@@ -1324,7 +1324,7 @@ async function _updateCounterData<T extends LancerActorSheetData<any> | LancerIt
   }
 }
 
-export function HANDLER_activate_plus_minus_buttons<T extends LancerActorSheetData<any> | LancerItemSheetData<any>>(
+export function HANDLER_activate_plus_minus_buttons<T extends BeaconActorSheetData<any> | BeaconItemSheetData<any>>(
   html: JQuery,
   // Retrieves the data that we will operate on
   data_getter: () => Promise<T> | T,
@@ -1351,7 +1351,7 @@ export function HANDLER_activate_plus_minus_buttons<T extends LancerActorSheetDa
   incr.on("click", mod_handler(+1));
 }
 
-export function HANDLER_activate_counter_listeners<T extends LancerActorSheetData<any> | LancerItemSheetData<any>>(
+export function HANDLER_activate_counter_listeners<T extends BeaconActorSheetData<any> | BeaconItemSheetData<any>>(
   html: JQuery,
   // Retrieves the data that we will operate on
   data_getter: () => Promise<T> | T
@@ -1368,7 +1368,7 @@ export function HANDLER_activate_counter_listeners<T extends LancerActorSheetDat
 }
 
 export function HANDLER_activate_item_context_menus<
-  T extends LancerActorSheetData<any> | LancerItemSheetData<any> | InventoryDialogData
+  T extends BeaconActorSheetData<any> | BeaconItemSheetData<any> | InventoryDialogData
 >(
   html: JQuery,
   // Retrieves the data that we will operate on
@@ -1491,40 +1491,40 @@ export function HANDLER_activate_item_context_menus<
   let e_r = view_only ? [edit] : [edit, remove];
 
   // Finally, setup the context menu
-  tippy_context_menu(html.find(`.lancer-context-menu[data-context-menu=\"mech_weapon\"]`), "click", e_d_r);
-  tippy_context_menu(html.find(`.lancer-context-menu[data-context-menu=\"mech_system\"]`), "click", e_d_r);
+  tippy_context_menu(html.find(`.Beacon-context-menu[data-context-menu=\"mech_weapon\"]`), "click", e_d_r);
+  tippy_context_menu(html.find(`.Beacon-context-menu[data-context-menu=\"mech_system\"]`), "click", e_d_r);
   if (html.offsetParent().hasClass("item")) {
-    tippy_context_menu(html.find(`.lancer-context-menu[data-context-menu=\"npc_feature\"]`), "click", e_d_rr);
+    tippy_context_menu(html.find(`.Beacon-context-menu[data-context-menu=\"npc_feature\"]`), "click", e_d_rr);
   } else {
-    tippy_context_menu(html.find(`.lancer-context-menu[data-context-menu=\"npc_feature\"]`), "click", e_d_r);
+    tippy_context_menu(html.find(`.Beacon-context-menu[data-context-menu=\"npc_feature\"]`), "click", e_d_r);
   }
-  tippy_context_menu(html.find(`.lancer-context-menu[data-context-menu=\"weapon_mod\"]`), "click", e_r);
-  tippy_context_menu(html.find(`.lancer-context-menu[data-context-menu=\"pilot_weapon\"]`), "click", e_r);
-  tippy_context_menu(html.find(`.lancer-context-menu[data-context-menu=\"pilot_armor\"]`), "click", e_r);
-  tippy_context_menu(html.find(`.lancer-context-menu[data-context-menu=\"pilot_gear\"]`), "click", e_r);
-  tippy_context_menu(html.find(`.lancer-context-menu[data-context-menu=\"talent\"]`), "click", e_r);
-  tippy_context_menu(html.find(`.lancer-context-menu[data-context-menu=\"skill\"]`), "click", e_r);
-  tippy_context_menu(html.find(`.lancer-context-menu[data-context-menu=\"core_bonus\"]`), "click", e_r);
-  tippy_context_menu(html.find(`.lancer-context-menu[data-context-menu=\"license\"]`), "click", e_r);
-  tippy_context_menu(html.find(`.lancer-context-menu[data-context-menu=\"frame\"]`), "click", e_r);
-  tippy_context_menu(html.find(`.lancer-context-menu[data-context-menu=\"npc_class\"]`), "click", e_r);
-  tippy_context_menu(html.find(`.lancer-context-menu[data-context-menu=\"npc_template\"]`), "click", e_r);
+  tippy_context_menu(html.find(`.Beacon-context-menu[data-context-menu=\"weapon_mod\"]`), "click", e_r);
+  tippy_context_menu(html.find(`.Beacon-context-menu[data-context-menu=\"pilot_weapon\"]`), "click", e_r);
+  tippy_context_menu(html.find(`.Beacon-context-menu[data-context-menu=\"pilot_armor\"]`), "click", e_r);
+  tippy_context_menu(html.find(`.Beacon-context-menu[data-context-menu=\"pilot_gear\"]`), "click", e_r);
+  tippy_context_menu(html.find(`.Beacon-context-menu[data-context-menu=\"talent\"]`), "click", e_r);
+  tippy_context_menu(html.find(`.Beacon-context-menu[data-context-menu=\"skill\"]`), "click", e_r);
+  tippy_context_menu(html.find(`.Beacon-context-menu[data-context-menu=\"core_bonus\"]`), "click", e_r);
+  tippy_context_menu(html.find(`.Beacon-context-menu[data-context-menu=\"license\"]`), "click", e_r);
+  tippy_context_menu(html.find(`.Beacon-context-menu[data-context-menu=\"frame\"]`), "click", e_r);
+  tippy_context_menu(html.find(`.Beacon-context-menu[data-context-menu=\"npc_class\"]`), "click", e_r);
+  tippy_context_menu(html.find(`.Beacon-context-menu[data-context-menu=\"npc_template\"]`), "click", e_r);
 
   // Only some counters can be deleted
   tippy_context_menu(
-    html.find(`.lancer-context-menu[data-context-menu=\"counter\"][data-can-delete=\"false\"]`),
+    html.find(`.Beacon-context-menu[data-context-menu=\"counter\"][data-can-delete=\"false\"]`),
     "click",
     [counter_edit]
   );
   tippy_context_menu(
-    html.find(`.lancer-context-menu[data-context-menu=\"counter\"][data-can-delete=\"true\"]`),
+    html.find(`.Beacon-context-menu[data-context-menu=\"counter\"][data-can-delete=\"true\"]`),
     "click",
     [counter_edit, counter_remove]
   );
 }
 
 // Allows user to remove or rename profiles value via right click
-export function HANDLER_activate_profile_context_menus<T extends LancerItemSheetData<any>>(
+export function HANDLER_activate_profile_context_menus<T extends BeaconItemSheetData<any>>(
   html: JQuery,
   // Retrieves the data that we will operate on
   data_getter: () => Promise<T> | T,

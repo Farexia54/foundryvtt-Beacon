@@ -7,10 +7,10 @@ import type {
   PackedPilotLoadoutData,
 } from "machine-mind";
 import { nanoid } from "nanoid";
-import type { LancerActor } from "../actor/lancer-actor";
+import type { BeaconActor } from "../actor/Beacon-actor";
 
 // GOODBYE LEGACY TYPES
-type LegacyLancerActor = {
+type LegacyBeaconActor = {
   name: string;
   data: {
     type: EntryType;
@@ -26,7 +26,7 @@ type LegacyLancerActor = {
  * @param download whether to trigger an automatic download of the json file.
  * @returns the export in object form, or null if error occurred.
  */
-export function handleActorExport(actor: LegacyLancerActor | LancerActor, download = true) {
+export function handleActorExport(actor: LegacyBeaconActor | BeaconActor, download = true) {
   // TODO: replace check with version check and appropriate export handler.
   if (!validForExport(actor)) {
     // ui.notifications!.warn("Exporting for this version of actor is currently unsupported.");
@@ -67,7 +67,7 @@ export function handleActorExport(actor: LegacyLancerActor | LancerActor, downlo
   return dump;
 }
 
-export function addExportButton(actor: LegacyLancerActor | LancerActor, html: JQuery) {
+export function addExportButton(actor: LegacyBeaconActor | BeaconActor, html: JQuery) {
   // @ts-ignore I'm just going to assume all of this works but it probably doesn't
   const id = actor._id;
   if (!document.getElementById(id) && validForExport(actor)) {
@@ -137,7 +137,7 @@ type FakePackedNPC = {
 
 //
 // HANDLERS
-function handleNPCExport(actor: LegacyLancerActor) {
+function handleNPCExport(actor: LegacyBeaconActor) {
   const data = actor as any;
   console.log(`Exporting NPC: ${data.name}`);
 
@@ -200,7 +200,7 @@ function handleNPCExport(actor: LegacyLancerActor) {
   return exportNPC;
 }
 
-function handlePilotExport(actor: LegacyLancerActor) {
+function handlePilotExport(actor: LegacyBeaconActor) {
   const data = actor as any;
   console.log(`Exporting Pilot: ${data.name}`);
   // const loadout = actor.system.loadout;
@@ -407,7 +407,7 @@ function mapWeapon(weapon: any): FakePackedWeapon {
   };
 }
 
-export function validForExport(actor: LegacyLancerActor | LancerActor) {
+export function validForExport(actor: LegacyBeaconActor | BeaconActor) {
   // @ts-ignore I'm just going to assume all of this works but it probably doesn't
   return !actor.system?.cc_ver?.startsWith("MchMnd2");
 }

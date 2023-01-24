@@ -1,7 +1,7 @@
-import type { LancerInitiativeConfig } from "lancer-initiative";
+import type { BeaconInitiativeConfig } from "Beacon-initiative";
 import type { IContentPackManifest } from "machine-mind";
 import type { AutomationOptions } from "./module/settings";
-import type { LancerActionManager } from "./module/action/actionManager";
+import type { BeaconActionManager } from "./module/action/actionManager";
 
 declare global {
   // Since we never use these before `init` tell league types that they are
@@ -13,43 +13,43 @@ declare global {
 
   namespace Game {
     interface SystemData<T> {
-      id: "lancer";
+      id: "Beacon";
     }
   }
   interface Game {
-    lancer: {
+    Beacon: {
       [x: string]: unknown;
     };
-    action_manager?: LancerActionManager;
+    action_manager?: BeaconActionManager;
   }
 
   interface CONFIG {
-    LancerInitiative: LancerInitiativeConfig<Game["system"]["id"]>;
+    BeaconInitiative: BeaconInitiativeConfig<Game["system"]["id"]>;
   }
 
   namespace ClientSettings {
     interface Values {
-      "lancer.systemMigrationVersion": string;
-      "lancer.coreDataVersion": string;
-      "lancer.installedLCPs": {
+      "Beacon.systemMigrationVersion": string;
+      "Beacon.coreDataVersion": string;
+      "Beacon.installedLCPs": {
         index: IContentPackManifest[];
       };
-      "lancer.keepStockIcons": boolean;
-      "lancer.hideWelcome": boolean;
-      "lancer.automationOptions": Partial<AutomationOptions>;
-      "lancer.automationSwitch": boolean;
-      "lancer.attackSwitch": boolean;
-      "lancer.actionManager": boolean;
-      "lancer.actionManagerPlayersUse": boolean;
-      "lancer.autoOCHeat": boolean;
-      "lancer.autoOKillHeat": boolean;
-      "lancer.autoCalcStructure": boolean;
-      "lancer.squareGridDiagonals": "111" | "121" | "222" | "euc";
-      // "lancer.warningFor120": boolean; // Old setting, currently unused.
-      // "lancer.warningForBeta": boolean; // Old setting, currently unused.
-      "lancer.combatTrackerConfig": { sortTracker: boolean } | ClientSettings.Values["lancer.combatTrackerConfig"];
-      "lancer.dsnSetup": boolean;
-      "lancer.combat-tracker-appearance": Partial<LancerInitiativeConfig["def_appearance"]>;
+      "Beacon.keepStockIcons": boolean;
+      "Beacon.hideWelcome": boolean;
+      "Beacon.automationOptions": Partial<AutomationOptions>;
+      "Beacon.automationSwitch": boolean;
+      "Beacon.attackSwitch": boolean;
+      "Beacon.actionManager": boolean;
+      "Beacon.actionManagerPlayersUse": boolean;
+      "Beacon.autoOCHeat": boolean;
+      "Beacon.autoOKillHeat": boolean;
+      "Beacon.autoCalcStructure": boolean;
+      "Beacon.squareGridDiagonals": "111" | "121" | "222" | "euc";
+      // "Beacon.warningFor120": boolean; // Old setting, currently unused.
+      // "Beacon.warningForBeta": boolean; // Old setting, currently unused.
+      "Beacon.combatTrackerConfig": { sortTracker: boolean } | ClientSettings.Values["Beacon.combatTrackerConfig"];
+      "Beacon.dsnSetup": boolean;
+      "Beacon.combat-tracker-appearance": Partial<BeaconInitiativeConfig["def_appearance"]>;
     }
   }
 }

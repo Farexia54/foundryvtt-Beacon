@@ -27,7 +27,7 @@ export class BonusEditDialog<O> extends Dialog {
       template: `systems/${game.system.id}/templates/window/bonus.hbs`,
       width: 400,
       height: "auto",
-      classes: ["lancer"],
+      classes: ["Beacon"],
     };
   }
 

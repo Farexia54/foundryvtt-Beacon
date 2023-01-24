@@ -20,10 +20,10 @@ import {
   WeaponMod,
 } from "machine-mind";
 import { is_limited } from "machine-mind/dist/classes/mech/EquipUtil";
-import { AnyMMActor, is_actor_type } from "../actor/lancer-actor";
+import { AnyMMActor, is_actor_type } from "../actor/Beacon-actor";
 import { TypeIcon } from "../config";
-import type { LancerMacroData } from "../interfaces";
-import { AnyMMItem, is_item_type, LancerItemType } from "../item/lancer-item";
+import type { BeaconMacroData } from "../interfaces";
+import { AnyMMItem, is_item_type, BeaconItemType } from "../item/Beacon-item";
 import { encodeMacroData } from "../macros";
 import { FoundryFlagData, FoundryReg } from "../mm-util/foundry-reg";
 import { effect_box, gentle_merge, read_form, resolve_dotpath, resolve_helper_dotpath, sp_display } from "./commons";
@@ -250,7 +250,7 @@ export function mm_ref_portrait<T extends EntryType>(
 
 // A helper suitable for showing lists of refs that can be deleted/spliced out, or slots that can be nulled
 // trash_actions controls what happens when the trashcan is clicked. Delete destroys an item, splice removes it from the array it is found in, and null replaces with null
-export function editable_mm_ref_list_item<T extends LancerItemType>(
+export function editable_mm_ref_list_item<T extends BeaconItemType>(
   item_path: string,
   trash_action: "delete" | "splice" | "null" | null,
   helper: HelperOptions,
@@ -328,7 +328,7 @@ export function editable_mm_ref_list_item<T extends LancerItemType>(
         }).join("");
       }
 
-      let macroData: LancerMacroData = {
+      let macroData: BeaconMacroData = {
         iconPath: `systems/${game.system.id}/assets/icons/macro-icons/mech_system.svg`,
         title: sys.Name,
         fn: "prepareItemMacro",
@@ -342,13 +342,13 @@ export function editable_mm_ref_list_item<T extends LancerItemType>(
       return `<li class="valid ref card clipped mech-system item ${
         sys.SysType === SystemType.Tech ? "tech-item" : ""
       }" ${ref_params(cd.ref, cd.uuid)} style="margin: 0;">
-        <div class="lancer-header ${sys.Destroyed ? "destroyed" : ""}" style="grid-area: 1/1/2/3; display: flex">
+        <div class="Beacon-header ${sys.Destroyed ? "destroyed" : ""}" style="grid-area: 1/1/2/3; display: flex">
           <i class="${sys.Destroyed ? "mdi mdi-cog" : icon}"> </i>
-          <a class="lancer-macro" data-macro="${encodeMacroData(macroData)}"><i class="mdi mdi-message"></i></a>
+          <a class="Beacon-macro" data-macro="${encodeMacroData(macroData)}"><i class="mdi mdi-message"></i></a>
           <span class="minor grow">${sys.Name}</span>
           ${collapse_trigger}
           <div class="ref-list-controls">
-            <a class="lancer-context-menu" data-context-menu="${item.Type}" data-path="${item_path}"">
+            <a class="Beacon-context-menu" data-context-menu="${item.Type}" data-path="${item_path}"">
               <i class="fas fa-ellipsis-v"></i>
             </a>
           </div>
@@ -371,12 +371,12 @@ export function editable_mm_ref_list_item<T extends LancerItemType>(
     case EntryType.TALENT:
       let talent: Talent = <Talent>(<any>item);
       let retStr = `<li class="card clipped talent-compact item ref valid" ${ref_params(cd.ref, cd.uuid)}>
-        <div class="lancer-talent-header medium clipped-top" style="grid-area: 1/1/2/4">
+        <div class="Beacon-talent-header medium clipped-top" style="grid-area: 1/1/2/4">
           <i class="cci cci-talent i--m"></i>
           <span class="major">${talent.Name}</span>
           ${collapse_trigger}
           <div class="ref-list-controls">
-            <a class="lancer-context-menu" data-context-menu="${item.Type}" data-path="${item_path}"">
+            <a class="Beacon-context-menu" data-context-menu="${item.Type}" data-path="${item_path}"">
               <i class="fas fa-ellipsis-v"></i>
             </a>
           </div>
@@ -392,7 +392,7 @@ export function editable_mm_ref_list_item<T extends LancerItemType>(
           }).join("");
         }
 
-        let macroData: LancerMacroData = {
+        let macroData: BeaconMacroData = {
           iconPath: `systems/${game.system.id}/assets/icons/macro-icons/talent.svg`,
           title: talent.Ranks[i]?.Name,
           fn: "prepareTalentMacro",
@@ -400,7 +400,7 @@ export function editable_mm_ref_list_item<T extends LancerItemType>(
         };
 
         retStr += `<li class="talent-rank-compact card clipped" style="padding: 5px">
-        <a class="cci cci-rank-${i + 1} i--l i--dark talent-macro lancer-macro" data-macro="${encodeMacroData(
+        <a class="cci cci-rank-${i + 1} i--l i--dark talent-macro Beacon-macro" data-macro="${encodeMacroData(
           macroData
         )}" style="grid-area: 1/1/2/2"></a>
         <span class="major" style="grid-area: 1/2/2/3">${talent.Ranks[i]?.Name}</span>
@@ -420,11 +420,11 @@ export function editable_mm_ref_list_item<T extends LancerItemType>(
       let skill: Skill = <Skill>(<any>item);
       return `
       <li class="card clipped skill-compact item macroable ref valid" ${ref_params(cd.ref, cd.uuid)}>
-        <div class="lancer-trigger-header medium clipped-top" style="grid-area: 1/1/2/3">
+        <div class="Beacon-trigger-header medium clipped-top" style="grid-area: 1/1/2/3">
           <i class="cci cci-skill i--m i--dark"> </i>
           <span class="major modifier-name">${skill.Name}</span>
           <div class="ref-list-controls">
-            <a class="lancer-context-menu" data-context-menu="${item.Type}" data-path="${item_path}"">
+            <a class="Beacon-context-menu" data-context-menu="${item.Type}" data-path="${item_path}"">
               <i class="fas fa-ellipsis-v"></i>
             </a>
           </div>
@@ -440,12 +440,12 @@ export function editable_mm_ref_list_item<T extends LancerItemType>(
       let cb: CoreBonus = <CoreBonus>(<any>item);
       return `
       <li class="card clipped item ref valid" ${ref_params(cd.ref, cd.uuid)}>
-        <div class="lancer-corebonus-header medium clipped-top" style="grid-area: 1/1/2/3">
+        <div class="Beacon-corebonus-header medium clipped-top" style="grid-area: 1/1/2/3">
           <i class="cci cci-corebonus i--m i--dark"> </i>
           <span class="major modifier-name">${cb.Name}</span>
           ${collapse_trigger}
           <div class="ref-list-controls">
-            <a class="lancer-context-menu" data-context-menu="${item.Type}" data-path="${item_path}"">
+            <a class="Beacon-context-menu" data-context-menu="${item.Type}" data-path="${item_path}"">
               <i class="fas fa-ellipsis-v"></i>
             </a>
           </div>
@@ -503,9 +503,9 @@ function limited_HTML(
 
   return `Uses: 
   <div class="flexrow flex-center no-wrap">
-  <input class="lancer-stat" type="number" name="${val_path}" value="${data_val}" data-dtype="Number" data-commit-item="${path}" style="justify-content: left"/>
+  <input class="Beacon-stat" type="number" name="${val_path}" value="${data_val}" data-dtype="Number" data-commit-item="${path}" style="justify-content: left"/>
   <span>/</span>
-  <span class="lancer-stat" style="justify-content: left"> ${item.OrigData.derived.max_uses}</span>
+  <span class="Beacon-stat" style="justify-content: left"> ${item.OrigData.derived.max_uses}</span>
 </div>`;
 }
 

@@ -30,7 +30,7 @@ export function item_edit_arrayed_actions(path: string, title: string, helper: H
 
   return `
     <div class="card clipped double edi">
-      <span class="lancer-header submajor ">
+      <span class="Beacon-header submajor ">
         ${title}
         <a class="gen-control fas fa-plus" data-action="append" data-path="${path}" data-action-value="(struct)action"></a>
       </span>
@@ -60,7 +60,7 @@ export function item_edit_arrayed_damage(path: string, title: string, helper: He
 
   return `
     <div class="card clipped double edi">
-      <span class="lancer-header submajor ">
+      <span class="Beacon-header submajor ">
         ${title}
         <a class="gen-control fas fa-plus" data-action="append" data-path="${path}" data-action-value="(struct)damage"></a>
       </span>
@@ -88,7 +88,7 @@ export function item_edit_arrayed_range(path: string, title: string, helper: Hel
 
   return `
     <div class="card clipped double">
-      <span class="lancer-header submajor ">
+      <span class="Beacon-header submajor ">
         ${title}
         <a class="gen-control fas fa-plus" data-action="append" data-path="${path}" data-action-value="(struct)range"></a>
       </span>
@@ -131,7 +131,7 @@ export function item_edit_arrayed_deployables(path: string, title: string, helpe
 
   return `
     <div class="card clipped">
-      <span class="lancer-header submajor clipped-top">
+      <span class="Beacon-header submajor clipped-top">
         ${title}
       </span>
       ${depHTML}
@@ -156,7 +156,7 @@ export function item_edit_arrayed_synergies(path: string, title: string, helper:
 
   return `
     <div class="card clipped">
-      <span class="lancer-header submajor clipped-top">
+      <span class="Beacon-header submajor clipped-top">
         ${title}
       </span>
       ${synHTML}
@@ -194,7 +194,7 @@ export function item_edit_arrayed_enum(title: string, path: string, enum_name: s
 
   return `
     <div class="card clipped item-edit-arrayed">
-      <span class="lancer-header submajor ">
+      <span class="Beacon-header submajor ">
         ${title}
         <a class="gen-control fas fa-plus" data-action="append" data-path="${path}" data-action-value="(struct)${enum_name}"></a>
       </span>
@@ -255,7 +255,7 @@ export function item_edit_arrayed_integrated(path: string, title: string, helper
 
   return `
     <div class="card clipped item-edit-arrayed">
-      <span class="lancer-header submajor ">
+      <span class="Beacon-header submajor ">
         INTEGRATED ITEMS
         <a class="gen-control fas fa-plus" data-action="append" data-path="${path}" data-action-value="(struct)string"></a>
       </span>
@@ -277,7 +277,7 @@ export function item_edit_license(helper: HelperOptions): string {
 
   if (!cd || !license) licenseInfo = "No license";
   else
-    licenseInfo = `<div class="valid ${EntryType.LICENSE} ref lancer-license-header medium clipped-top" ${ref_params(
+    licenseInfo = `<div class="valid ${EntryType.LICENSE} ref Beacon-license-header medium clipped-top" ${ref_params(
       cd.ref,
       cd.uuid
     )}>
@@ -325,9 +325,9 @@ export function item_edit_uses(cur_uses_path: string, max_uses_path: string, hel
     <div class="flexcol uses-editor clipped-top">
         <span class="major">Uses</span>
         <div class="flexrow flex-center no-wrap">
-            <input class="lancer-stat lancer-stat" type="number" name="${cur_uses_path}" value="${cur_uses}" data-dtype="Number" style="justify-content: left"/>
+            <input class="Beacon-stat Beacon-stat" type="number" name="${cur_uses_path}" value="${cur_uses}" data-dtype="Number" style="justify-content: left"/>
             <span>/</span>
-            <span class="lancer-stat" style="justify-content: left">${max_uses}</span>
+            <span class="Beacon-stat" style="justify-content: left">${max_uses}</span>
         </div>
     </div>`;
 }

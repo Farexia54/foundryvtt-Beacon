@@ -1,10 +1,10 @@
-<form class="{{cssClass}} lancer-sheet" autocomplete="off">
+<form class="{{cssClass}} Beacon-sheet" autocomplete="off">
   {{! Sheet Header }}
   <header class="sheet-header card clipped-bot">
     <div class="flexcol grow">
       <h1 class="charname">
         <input class="header-field" name="name" type="text" value="{{item.name}}"
-               placeholder="{{localize "lancer.placeholder.name"}}" />
+               placeholder="{{localize "Beacon.placeholder.name"}}" />
       </h1>
       {{#if item.actor}}
         <div class="flexrow">
@@ -26,9 +26,9 @@
     {{#if mm.Ranks}}
       {{#each mm.Ranks as |rank index|}}
         <div class="talent-level card clipped-bot flexcol">
-          <div class="lancer-header" style="flex-basis: auto;">
+          <div class="Beacon-header" style="flex-basis: auto;">
             <i class="cci cci-rank-{{inc index}} i--xl i--dark"></i>
-            <input class="lancer-invisible-input" name="mm.Ranks.{{index}}.Name" value="{{rank.Name}}"
+            <input class="Beacon-invisible-input" name="mm.Ranks.{{index}}.Name" value="{{rank.Name}}"
                    data-dtype="String" style="color: white" />
             <span class="minor">
               // RANK
@@ -52,7 +52,7 @@
             true
           }}}
           <div class="integrated-wrapper card clipped flexcol">
-            <div class="lancer-header" style="font-weight: bold">INTEGRATED GEAR</div>
+            <div class="Beacon-header" style="font-weight: bold">INTEGRATED GEAR</div>
             {{#each rank.Integrated as |integrated integ_index|}}
               {{#if (eq integrated.Type "mech_system")}}
                 {{{ref-mm-controllable-item-native (concat "mm.Ranks." index ".Integrated." integ_index) null }}}

@@ -1,6 +1,6 @@
-import type { LancerItemSheetData } from "../interfaces";
-import { LANCER } from "../config";
-import type { LancerItem, LancerItemType } from "./lancer-item";
+import type { BeaconItemSheetData } from "../interfaces";
+import { Beacon } from "../config";
+import type { BeaconItem, BeaconItemType } from "./Beacon-item";
 import {
   HANDLER_activate_general_controls,
   gentle_merge,
@@ -30,14 +30,14 @@ import type { FoundryFlagData } from "../mm-util/foundry-reg";
 import { find_license_for } from "../mm-util/helpers";
 import { MMDragResolveCache } from "../helpers/dragdrop";
 
-const lp = LANCER.log_prefix;
+const lp = Beacon.log_prefix;
 
 /**
  * Extend the basic ItemSheet with some very simple modifications
  * @extends {ItemSheet}
  */
-export class LancerItemSheet<T extends LancerItemType> extends ItemSheet<ItemSheet.Options, LancerItemSheetData<T>> {
-  constructor(document: LancerItem, options: ItemSheet.Options) {
+export class BeaconItemSheet<T extends BeaconItemType> extends ItemSheet<ItemSheet.Options, BeaconItemSheetData<T>> {
+  constructor(document: BeaconItem, options: ItemSheet.Options) {
     super(document, options);
     if (this.item.is_mech_weapon()) {
       // @ts-ignore IDK if this even does anything
@@ -55,12 +55,12 @@ export class LancerItemSheet<T extends LancerItemType> extends ItemSheet<ItemShe
    */
   static get defaultOptions(): ItemSheet.Options {
     return mergeObject(super.defaultOptions, {
-      classes: ["lancer", "sheet", "item"],
+      classes: ["Beacon", "sheet", "item"],
       width: 700,
       height: 700,
       tabs: [
         {
-          navSelector: ".lancer-tabs",
+          navSelector: ".Beacon-tabs",
           contentSelector: ".sheet-body",
           initial: "description",
         },
@@ -85,8 +85,8 @@ export class LancerItemSheet<T extends LancerItemType> extends ItemSheet<ItemShe
   _activate_context_listeners(
     html: JQuery,
     // Retrieves the data that we will operate on
-    data_getter: () => Promise<LancerItemSheetData<T>> | LancerItemSheetData<T>,
-    commit_func: (data: LancerItemSheetData<T>) => void | Promise<void>
+    data_getter: () => Promise<BeaconItemSheetData<T>> | BeaconItemSheetData<T>,
+    commit_func: (data: BeaconItemSheetData<T>) => void | Promise<void>
   ) {
     // Enable custom context menu triggers. If the sheet is not editable, show only the "view" option.
     HANDLER_activate_item_context_menus(html, data_getter, commit_func, !this.options.editable);
@@ -194,8 +194,8 @@ export class LancerItemSheet<T extends LancerItemType> extends ItemSheet<ItemShe
    * Prepare data for rendering the frame sheet
    * The prepared data object contains both the actor data as well as additional sheet options
    */
-  async getData(): Promise<LancerItemSheetData<T>> {
-    const data = super.getData() as LancerItemSheetData<T>; // Not fully populated yet!
+  async getData(): Promise<BeaconItemSheetData<T>> {
+    const data = super.getData() as BeaconItemSheetData<T>; // Not fully populated yet!
 
     // Wait for preparations to complete
     // @ts-ignore T doesn't narrow this.item.data
@@ -215,8 +215,8 @@ export class LancerItemSheet<T extends LancerItemType> extends ItemSheet<ItemShe
   }
 
   // Cached getdata
-  private _currData: LancerItemSheetData<T> | null = null;
-  async getDataLazy(): Promise<LancerItemSheetData<T>> {
+  private _currData: BeaconItemSheetData<T> | null = null;
+  async getDataLazy(): Promise<BeaconItemSheetData<T>> {
     return this._currData ?? (await this.getData());
   }
 

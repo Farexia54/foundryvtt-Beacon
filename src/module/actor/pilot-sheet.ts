@@ -1,14 +1,14 @@
-import { LANCER } from "../config";
-const lp = LANCER.log_prefix;
-import { LancerActorSheet } from "./lancer-actor-sheet";
+import { Beacon } from "../config";
+const lp = Beacon.log_prefix;
+import { BeaconActorSheet } from "./Beacon-actor-sheet";
 import { EntryType, Mech, PackedPilotData, Pilot } from "machine-mind";
 import type { HelperOptions } from "handlebars";
 import { buildCounterHeader, buildCounterHTML } from "../helpers/item";
 import { ref_commons, ref_params, resolve_ref_element, simple_mm_ref } from "../helpers/refs";
 import { resolve_dotpath } from "../helpers/commons";
-import { AnyMMActor, is_reg_mech, LancerActor } from "./lancer-actor";
+import { AnyMMActor, is_reg_mech, BeaconActor } from "./Beacon-actor";
 import { fetchPilotViaCache, fetchPilotViaShareCode, pilotCache } from "../compcon";
-import type { AnyMMItem, LancerItemType } from "../item/lancer-item";
+import type { AnyMMItem, BeaconItemType } from "../item/Beacon-item";
 import { clicker_num_input } from "../helpers/actor";
 
 const shareCodeMatcher = /^[A-Z0-9\d]{6}$/g;
@@ -17,20 +17,20 @@ const COUNTER_MAX = 8;
 /**
  * Extend the basic ActorSheet
  */
-export class LancerPilotSheet extends LancerActorSheet<EntryType.PILOT> {
+export class BeaconPilotSheet extends BeaconActorSheet<EntryType.PILOT> {
   /**
    * Extend and override the default options used by the Pilot Sheet
    * @returns {Object}
    */
   static get defaultOptions(): ActorSheet.Options {
     return mergeObject(super.defaultOptions, {
-      classes: ["lancer", "sheet", "actor", "pilot"],
+      classes: ["Beacon", "sheet", "actor", "pilot"],
       template: `systems/${game.system.id}/templates/actor/pilot.hbs`,
       width: 800,
       height: 800,
       tabs: [
         {
-          navSelector: ".lancer-tabs",
+          navSelector: ".Beacon-tabs",
           contentSelector: ".sheet-body",
           initial: "tactical",
         },
@@ -148,7 +148,7 @@ export class LancerPilotSheet extends LancerActorSheet<EntryType.PILOT> {
     }
   }
 
-  _onPilotJsonUpload(ev: JQuery.ChangeEvent<HTMLElement, undefined, HTMLElement, HTMLElement>, actor: LancerActor) {
+  _onPilotJsonUpload(ev: JQuery.ChangeEvent<HTMLElement, undefined, HTMLElement, HTMLElement>, actor: BeaconActor) {
     let files = (ev.target as HTMLInputElement).files;
     let jsonFile: File | null = null;
     if (files) jsonFile = files[0];
@@ -162,7 +162,7 @@ export class LancerPilotSheet extends LancerActorSheet<EntryType.PILOT> {
     });
   }
 
-  async _onPilotJsonParsed(fileData: string | null, actor: LancerActor) {
+  async _onPilotJsonParsed(fileData: string | null, actor: BeaconActor) {
     if (!fileData) return;
     const pilotData = JSON.parse(fileData) as PackedPilotData;
     console.log(`${lp} Pilot Data of selected JSON:`, pilotData);
@@ -235,7 +235,7 @@ export class LancerPilotSheet extends LancerActorSheet<EntryType.PILOT> {
     }
 
     // Accept non pilot item
-    if (LANCER.pilot_items.includes(item.Type as LancerItemType)) {
+    if (Beacon.pilot_items.includes(item.Type as BeaconItemType)) {
       return true;
     }
 
@@ -372,7 +372,7 @@ export function pilot_counters(pilot: Pilot, _helper: HelperOptions): string {
 
   return `
   <div class="card clipped double">
-    <span class="lancer-header submajor" style="padding-right: 5px">
+    <span class="Beacon-header submajor" style="padding-right: 5px">
       <span>COUNTERS</span>
       <a class="gen-control fas fa-plus" data-action="append" data-path="${custom_path}" data-action-value="(struct)counter"></a>
     </span>

@@ -1,24 +1,24 @@
-import { LancerActorSheet } from "./lancer-actor-sheet";
+import { BeaconActorSheet } from "./Beacon-actor-sheet";
 import { EntryType } from "machine-mind";
-import type { AnyMMActor } from "./lancer-actor";
-import type { AnyMMItem } from "../item/lancer-item";
+import type { AnyMMActor } from "./Beacon-actor";
+import type { AnyMMItem } from "../item/Beacon-item";
 
 /**
  * Extend the basic ActorSheet
  */
-export class LancerDeployableSheet extends LancerActorSheet<EntryType.DEPLOYABLE> {
+export class BeaconDeployableSheet extends BeaconActorSheet<EntryType.DEPLOYABLE> {
   /**
    * Extend and override the default options used by the NPC Sheet
    */
   static get defaultOptions(): ActorSheet.Options {
     return mergeObject(super.defaultOptions, {
-      classes: ["lancer", "sheet", "actor", "npc"],
+      classes: ["Beacon", "sheet", "actor", "npc"],
       template: `systems/${game.system.id}/templates/actor/deployable.hbs`,
       width: 800,
       height: 800,
       tabs: [
         {
-          navSelector: ".lancer-tabs",
+          navSelector: ".Beacon-tabs",
           contentSelector: ".sheet-body",
           initial: "status",
         },

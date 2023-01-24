@@ -1,7 +1,7 @@
 import { OpCtx, RegEntry, RegRef } from "machine-mind";
 import { EntryType } from "machine-mind";
-import { AnyMMActor, is_actor_type, LancerActor } from "../actor/lancer-actor";
-import { AnyMMItem, is_item_type, LancerItem } from "../item/lancer-item";
+import { AnyMMActor, is_actor_type, BeaconActor } from "../actor/Beacon-actor";
+import { AnyMMItem, is_item_type, BeaconItem } from "../item/Beacon-item";
 import { FoundryReg, FoundryRegName } from "../mm-util/foundry-reg";
 import { get_pack_id, mm_wrap_actor, mm_wrap_item } from "../mm-util/helpers";
 import { is_ref, safe_json_parse } from "./commons";
@@ -195,11 +195,11 @@ export type FoundryDropData = {
 export type ResolvedDropData =
   | {
       type: "Item";
-      document: LancerItem;
+      document: BeaconItem;
     }
   | {
       type: "Actor";
-      document: LancerActor;
+      document: BeaconActor;
     }
   | {
       type: "JournalEntry";
@@ -222,12 +222,12 @@ export async function resolve_native_drop(drop: string | FoundryDropData): Promi
     // Attempt uuid route
     let document = await fromUuid(drop);
     if (!document) return null;
-    if (document instanceof LancerActor) {
+    if (document instanceof BeaconActor) {
       return {
         type: "Actor",
         document,
       };
-    } else if (document instanceof LancerItem) {
+    } else if (document instanceof BeaconItem) {
       return {
         type: "Item",
         document,
@@ -247,7 +247,7 @@ export async function resolve_native_drop(drop: string | FoundryDropData): Promi
     // We presume it to be a normal dropData.
     if (drop.type == "Actor") {
       // @ts-ignore
-      let document = await LancerActor.fromDropData(drop);
+      let document = await BeaconActor.fromDropData(drop);
       return document
         ? {
             type: "Actor",
@@ -256,7 +256,7 @@ export async function resolve_native_drop(drop: string | FoundryDropData): Promi
         : null;
     } else if (drop.type == "Item") {
       // @ts-ignore
-      let document = await LancerItem.fromDropData(drop);
+      let document = await BeaconItem.fromDropData(drop);
       return document
         ? {
             type: "Item",
@@ -439,7 +439,7 @@ export class MMDragResolveCache extends FetcherCache<string, AnyMMActor | AnyMMI
 export const GlobalMMDragState = {
   dragging: false as boolean,
   curr_dragged_type: EntryType,
-  curr_dragged_entity: null as LancerActor | LancerItem | null, // If it is a native document, we set this
+  curr_dragged_entity: null as BeaconActor | BeaconItem | null, // If it is a native document, we set this
   curr_dragged_ref: null as RegRef<EntryType> | null, // If it is a ref, we set this
 };
 
@@ -447,7 +447,7 @@ function dragging_class(for_type: EntryType): string {
   return `dragging-${for_type}`;
 }
 
-function set_global_drag(to: LancerActor | LancerItem | RegRef<any>) {
+function set_global_drag(to: BeaconActor | BeaconItem | RegRef<any>) {
   // Check for duplicate work and clear if that isn't the case
   if (GlobalMMDragState.curr_dragged_entity == to || GlobalMMDragState.curr_dragged_ref == to) {
     return; // don't repeat
@@ -458,7 +458,7 @@ function set_global_drag(to: LancerActor | LancerItem | RegRef<any>) {
   GlobalMMDragState.dragging = true;
   let type: EntryType;
   let rr = to as RegRef<any>;
-  let doc = to as LancerActor | LancerItem;
+  let doc = to as BeaconActor | BeaconItem;
   if (rr.fallback_lid !== undefined) {
     GlobalMMDragState.curr_dragged_ref = rr;
     type = rr.type;

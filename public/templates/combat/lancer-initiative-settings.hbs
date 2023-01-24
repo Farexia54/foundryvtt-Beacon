@@ -1,15 +1,15 @@
 <form autocomplete="off">
-    <h2>{{ localize "LANCERINITIATIVE.IconSettingsMenu" }}</h2>
+    <h2>{{ localize "BeaconINITIATIVE.IconSettingsMenu" }}</h2>
   <div class="form-group">
-    <label>{{ localize "LANCERINITIATIVE.Icon" }}</label>
+    <label>{{ localize "BeaconINITIATIVE.Icon" }}</label>
     <input type="text" name="icon" value="{{ icon }}" data-dtype="String"/>
-    <p class="notes">{{ localize "LANCERINITIATIVE.IconDesc" }}</p>
+    <p class="notes">{{ localize "BeaconINITIATIVE.IconDesc" }}</p>
   </div>
   <div class="form-group">
-    <label>{{ localize "LANCERINITIATIVE.IconSize" }}</label>
+    <label>{{ localize "BeaconINITIATIVE.IconSize" }}</label>
     <input type="range" name="icon_size" min="1" max="4" step="0.1" value="{{ icon_size }}" data-dtype="Number"/>
     <span class="range-value">{{ icon_size }}</span>
-    <!--<p class="notes">{{ localize "LANCERINITIATIVE.IconSizeDesc" }}</p>-->
+    <!--<p class="notes">{{ localize "BeaconINITIATIVE.IconSizeDesc" }}</p>-->
   </div>
 
   <div class="app" id="preview-combat">
@@ -18,7 +18,7 @@
         <li class="combatant actor directory-item flexrow" style="border-color: {{ player_color }}">
           <img class="token-image" src="icons/svg/mystery-man.svg">
           <div class="token-name flexcol">
-            <h4>{{ localize "LANCERINITIATIVE.IconPreview" }}</h4>
+            <h4>{{ localize "BeaconINITIATIVE.IconPreview" }}</h4>
             <div class="combatant-controls flexrow">
               <a class="combatant-control " title="Toggle Visibility" data-control="toggleHidden">
                 <i class="fas fa-eye-slash"></i></a>
@@ -40,44 +40,44 @@
   </div>
 
   <div class="form-group">
-    <label>{{ localize "LANCERINITIATIVE.PCColor" }}</label>
+    <label>{{ localize "BeaconINITIATIVE.PCColor" }}</label>
     <div class="form-fields">
       <input type="text" name="player_color" value="{{ player_color }}" data-dtype="String"/>
       <input type="color" name="player_selector" value="{{ player_color }}" data-edit="player_color"/>
     </div>
-    <p class="notes">{{ localize "LANCERINITIATIVE.PCColorDesc" }}</p>
+    <p class="notes">{{ localize "BeaconINITIATIVE.PCColorDesc" }}</p>
   </div>
   <div class="form-group">
-    <label>{{ localize "LANCERINITIATIVE.FriendlyColor" }}</label>
+    <label>{{ localize "BeaconINITIATIVE.FriendlyColor" }}</label>
     <div class="form-fields">
       <input type="text" name="friendly_color" value="{{ friendly_color }}" data-dtype="String"/>
       <input type="color" name="friendly_selector" value="{{ friendly_color }}" data-edit="friendly_color"/>
     </div>
-    <p class="notes">{{ localize "LANCERINITIATIVE.FriendlyColorDesc" }}</p>
+    <p class="notes">{{ localize "BeaconINITIATIVE.FriendlyColorDesc" }}</p>
   </div>
   <div class="form-group">
-    <label>{{ localize "LANCERINITIATIVE.NeutralColor" }}</label>
+    <label>{{ localize "BeaconINITIATIVE.NeutralColor" }}</label>
     <div class="form-fields">
       <input type="text" name="neutral_color" value="{{ neutral_color }}" data-dtype="String"/>
       <input type="color" name="neutral_selector" value="{{ neutral_color }}" data-edit="neutral_color"/>
     </div>
-    <p class="notes">{{ localize "LANCERINITIATIVE.NeutralColorDesc" }}</p>
+    <p class="notes">{{ localize "BeaconINITIATIVE.NeutralColorDesc" }}</p>
   </div>
   <div class="form-group">
-    <label>{{ localize "LANCERINITIATIVE.EnemyColor" }}</label>
+    <label>{{ localize "BeaconINITIATIVE.EnemyColor" }}</label>
     <div class="form-fields">
       <input type="text" name="enemy_color" value="{{ enemy_color }}" data-dtype="String"/>
       <input type="color" name="enemy_selector" value="{{ enemy_color }}" data-edit="enemy_color"/>
     </div>
-    <p class="notes">{{ localize "LANCERINITIATIVE.EnemyColorDesc" }}</p>
+    <p class="notes">{{ localize "BeaconINITIATIVE.EnemyColorDesc" }}</p>
   </div>
   <div class="form-group">
-    <label>{{ localize "LANCERINITIATIVE.DoneColor" }}</label>
+    <label>{{ localize "BeaconINITIATIVE.DoneColor" }}</label>
     <div class="form-fields">
       <input type="text" name="done_color" value="{{ done_color }}" data-dtype="String"/>
       <input type="color" name="done_selector" value="{{ done_color }}" data-edit="done_color"/>
     </div>
-    <p class="notes">{{ localize "LANCERINITIATIVE.DoneColorDesc" }}</p>
+    <p class="notes">{{ localize "BeaconINITIATIVE.DoneColorDesc" }}</p>
   </div>
   <div class="form-group">
     <button type="submit" name="submit">

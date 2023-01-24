@@ -1,10 +1,10 @@
 // Import TypeScript modules
-import { LANCER } from "../config";
+import { Beacon } from "../config";
 import { getAutomationOptions } from "../settings";
-import type { LancerItem } from "../item/lancer-item";
-import type { LancerActor } from "../actor/lancer-actor";
-import { is_reg_mech, is_reg_npc } from "../actor/lancer-actor";
-import type { LancerAttackMacroData, LancerMacroData } from "../interfaces";
+import type { BeaconItem } from "../item/Beacon-item";
+import type { BeaconActor } from "../actor/Beacon-actor";
+import { is_reg_mech, is_reg_npc } from "../actor/Beacon-actor";
+import type { BeaconAttackMacroData, BeaconMacroData } from "../interfaces";
 import {
   DamageType,
   funcs,
@@ -25,7 +25,7 @@ import { getMacroSpeaker, ownedItemFromString } from "./_util";
 import { encodeMacroData } from "./_encode";
 import { renderMacroTemplate } from "./_render";
 
-const lp = LANCER.log_prefix;
+const lp = Beacon.log_prefix;
 
 function rollStr(bonus: number, total: number): string {
   let modStr = "";
@@ -98,7 +98,7 @@ export async function prepareEncodedAttackMacro(
 /**
  * Standalone prepare function for attacks, since they're complex.
  * @param actor   {Actor}       Actor to roll as. Assumes properly prepared item.
- * @param item    {LancerItem}  Weapon to attack with. Assumes ownership from actor.
+ * @param item    {BeaconItem}  Weapon to attack with. Assumes ownership from actor.
  * @param options {Object}      Options that can be passed through. Current options:
  *            - accBonus        Flat bonus to accuracy
  *            - damBonus        Object of form {type: val} to apply flat damage bonus of given type.
@@ -111,8 +111,8 @@ export async function prepareAttackMacro(
     item,
     options,
   }: {
-    actor: LancerActor;
-    item: LancerItem;
+    actor: BeaconActor;
+    item: BeaconItem;
     options?: {
       accBonus: number;
       damBonus: { type: DamageType; val: number };
@@ -121,7 +121,7 @@ export async function prepareAttackMacro(
   rerollData?: AccDiffData
 ) {
   if (!item.is_npc_feature() && !item.is_mech_weapon() && !item.is_pilot_weapon()) return;
-  let mData: LancerAttackMacroData = {
+  let mData: BeaconAttackMacroData = {
     title: item.name ?? "",
     grit: 0,
     acc: 0,
@@ -421,11 +421,11 @@ export async function checkTargets(
   attacks: AttackResult[];
   hits: HitResult[];
 }> {
-  if (game.settings.get(game.system.id, LANCER.setting_automation_attack) && atkRolls.targeted.length > 0) {
+  if (game.settings.get(game.system.id, Beacon.setting_automation_attack) && atkRolls.targeted.length > 0) {
     let data = await Promise.all(
       atkRolls.targeted.map(async targetingData => {
         let target = targetingData.target;
-        let actor = target.actor as LancerActor;
+        let actor = target.actor as BeaconActor;
         let attack_roll = await new Roll(targetingData.roll).evaluate({ async: true });
         // @ts-expect-error DSN options aren't typed
         attack_roll.dice.forEach(d => (d.options.rollOrder = 1));
@@ -463,10 +463,10 @@ export async function checkTargets(
 }
 
 async function rollAttackMacro(
-  actor: LancerActor,
+  actor: BeaconActor,
   atkRolls: AttackRolls,
-  data: LancerAttackMacroData,
-  rerollMacro: LancerMacroData
+  data: BeaconAttackMacroData,
+  rerollMacro: BeaconMacroData
 ) {
   const isSmart = data.tags.findIndex(tag => tag.Tag.LID === "tg_smart") > -1;
   const { attacks, hits } = await checkTargets(atkRolls, isSmart);

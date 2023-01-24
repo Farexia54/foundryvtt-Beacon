@@ -12,7 +12,7 @@
  import ConsumeLockOn from './ConsumeLockOn.svelte';
  import Total from './Total.svelte';
  import PlusMinusInput from './PlusMinusInput.svelte';
- import type { LancerItem } from '../../item/lancer-item';
+ import type { BeaconItem } from '../../item/Beacon-item';
  import { RangeType } from 'machine-mind';
  import { WeaponRangeTemplate } from '../../pixi/weapon-range-template';
  import { fade } from '../slidinghud';
@@ -22,7 +22,7 @@
  export let base: AccDiffBase;
  export let targets: AccDiffTarget[];
  export let title: string;
- export let lancerItem: LancerItem | null;
+ export let BeaconItem: BeaconItem | null;
 
  export let kind: "hase" | "attack";
 
@@ -49,7 +49,7 @@
  }
 
  function findRanges() {
-   return lancerItem?.rangesFor([
+   return BeaconItem?.rangesFor([
      RangeType.Blast,
      RangeType.Burst,
      RangeType.Cone,
@@ -58,7 +58,7 @@
  }
 
  function deployTemplate(range: WeaponRangeTemplate['range']) {
-   const creator = lancerItem?.parent;
+   const creator = BeaconItem?.parent;
    const token = (
      creator?.token?.object ??
      creator?.getActiveTokens().shift() ??
@@ -84,10 +84,10 @@
 <form id="accdiff" class="accdiff window-content" use:escToCancel
   on:submit|preventDefault={() => dispatch('submit')}>
   {#if title != ''}
-    <div class="lancer-header mech-weapon medium">
+    <div class="Beacon-header mech-weapon medium">
       {#if kind == "attack"}
         <i class="cci cci-weapon i--m i--light"></i>
-        {#if lancerItem}
+        {#if BeaconItem}
           {#each findRanges() as range}
             <button
               class="range-button"

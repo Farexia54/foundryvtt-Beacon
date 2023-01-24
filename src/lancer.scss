@@ -27,13 +27,13 @@ $document-types: join($item-types, $actor-types);
   --ha-theme-color: #6e4373;
   /* Shouldn't there be some sort of "--current-theme"??? */
 
-  /* Lancer initiative vars */
-  --lancer-initiative-icon-size: 1rem;
-  --lancer-initiative-player-color: #000000;
-  --lancer-initiative-friendly-color: #000000;
-  --lancer-initiative-neutral-color: #000000;
-  --lancer-initiative-enemy-color: #000000;
-  --lancer-initiative-done-color: #000000;
+  /* Beacon initiative vars */
+  --Beacon-initiative-icon-size: 1rem;
+  --Beacon-initiative-player-color: #000000;
+  --Beacon-initiative-friendly-color: #000000;
+  --Beacon-initiative-neutral-color: #000000;
+  --Beacon-initiative-enemy-color: #000000;
+  --Beacon-initiative-done-color: #000000;
 
   --reaction-clip-path: polygon(
     0 0,
@@ -120,32 +120,32 @@ button {
 /* ---------- */
 
 /* Elements Layer */
-.lancer.sheet .window-content *:not(.fas, .mdi, .cci),
+.Beacon.sheet .window-content *:not(.fas, .mdi, .cci),
 #chat-log .message *:not(.fas, .mdi, .cci) {
   /* An exception for each icon font */
   font-family: var(--main-font-family);
 }
 
-.lancer-sheet.editable {
+.Beacon-sheet.editable {
   height: 100%;
 }
 
-.message .lancer-weapon-header span {
+.message .Beacon-weapon-header span {
   overflow: auto;
   width: 120%;
 }
 
-.lancer.sheet select {
+.Beacon.sheet select {
   width: min-content;
 }
 
-.lancer.sheet .mount-header select {
+.Beacon.sheet .mount-header select {
   color: white;
   outline: 0;
   border: none;
 }
 
-.lancer.sheet .mount-header select option {
+.Beacon.sheet .mount-header select option {
   background-color: var(--main-theme-color, fuchsia);
   color: white;
 }
@@ -173,11 +173,11 @@ button {
 /* ---------- */
 
 /* Components Layer */
-.lancer.sheet .window-content {
+.Beacon.sheet .window-content {
   background: #ededed; /* Overwrite the parchment background */
 }
 
-.lancer.sheet header:not(.window-header) {
+.Beacon.sheet header:not(.window-header) {
   align-items: center;
   display: flex;
   flex-direction: row;
@@ -187,7 +187,7 @@ button {
   color: white;
 }
 
-.lancer.sheet header .details {
+.Beacon.sheet header .details {
   display: flex;
   /* flex-direction: column; */
   font-size: 14px;
@@ -233,53 +233,53 @@ button {
   border: 2px solid #fdcb28;
 }
 
-.lancer-hit {
+.Beacon-hit {
   display: inline-flex;
   margin: 8px;
   justify-content: space-between;
   align-items: center;
 }
 
-.card.lancer-hit-chip {
+.card.Beacon-hit-chip {
   float: right;
   width: 90px;
   color: #e6e6e6;
   background-color: #3c3c3c;
 }
 
-.card.lancer-hit-chip.hit {
+.card.Beacon-hit-chip.hit {
   color: #fff;
   background-color: #1a4015;
   width: 75px;
 }
 
-.card.lancer-hit-chip.crit {
+.card.Beacon-hit-chip.crit {
   color: #fff;
   background-color: #b36c3e;
   width: 75px;
 }
 
-.lancer-hit-thumb {
+.Beacon-hit-thumb {
   width: 50px;
   min-width: 50px;
   margin-right: 4px;
   border-right: none;
   border-left: none;
 }
-.lancer-hit-text {
+.Beacon-hit-text {
   display: inline-grid;
   text-align: start;
   width: 80%;
 }
-.lancer-hit-text-name {
+.Beacon-hit-text-name {
   font-size: 1.2em;
 }
 
-.card.lancer-charge-chip {
+.card.Beacon-charge-chip {
   color: #e6e6e6;
   background-color: #3c3c3c;
 }
-.card.lancer-charge-chip.charged {
+.card.Beacon-charge-chip.charged {
   color: #fff;
   background-color: #1a4015;
 }
@@ -413,7 +413,7 @@ button {
   max-height: 1.5em;
 }
 
-.lancer .lancer-invisible-input {
+.Beacon .Beacon-invisible-input {
   background: transparent;
   border: none;
   color: inherit;
@@ -586,7 +586,7 @@ tr.lcp-index-header {
   /* border: 1px solid #7a7971; */
 }
 
-.lancer-tabs {
+.Beacon-tabs {
   clip-path: polygon(0 0, 100% 0, calc(100% - 20px) 100%, 0 100%);
   -webkit-clip-path: polygon(0 0, 100% 0, calc(100% - 20px) 100%, 0 100%);
   display: flex;
@@ -600,13 +600,13 @@ tr.lcp-index-header {
   align-items: center;
 }
 
-.lancer-tab {
+.Beacon-tab {
   clip-path: polygon(10px 0, 100% 0, calc(100% - 10px) 100%, 0 100%);
   -webkit-clip-path: polygon(10px 0, 100% 0, calc(100% - 10px) 100%, 0 100%);
   padding: 10px;
 }
 
-.lancer-tab.active {
+.Beacon-tab.active {
   color: var(--main-theme-color, fuchsia);
   background-color: #f0f0f0;
 }
@@ -625,7 +625,7 @@ tr.lcp-index-header {
 /* The dashed-line border aesthetic found around certain items.
  * Should be used on an inner div of a card
  */
-.lancer-body {
+.Beacon-body {
   min-height: 15px;
   padding: 3px;
   flex: 1 0;
@@ -743,7 +743,7 @@ tr.lcp-index-header {
   max-width: 40px;
 }
 /* Re-allow clicking in these damn things */
-.lancer input,
+.Beacon input,
 .input,
 textarea {
   -webkit-user-select: auto;
@@ -756,7 +756,7 @@ textarea {
 }
 
 /* Some text area sizes */
-.lancer textarea {
+.Beacon textarea {
   min-height: 200px;
 }
 
@@ -821,7 +821,7 @@ textarea {
 }
 
 /* Consolidate all of our card header stuff stuff */
-.lancer-header {
+.Beacon-header {
   flex: 0 0 2em;
 
   /* Generally uglier, inconsistent. Use when header needs other stuff in it, like with talents large icons etc */
@@ -844,7 +844,7 @@ textarea {
   background-color: var(--main-theme-color, fuchsia);
 
   /* For buttons/icons, we want them to not grow but also not just get squashed into nothing 
-  * If this unbalances things, add an equal # of balancers to the other side
+  * If this unbalances things, add an equal # of baBeacons to the other side
   */
   a,
   i,
@@ -854,7 +854,7 @@ textarea {
     padding-right: 5px;
   }
 
-  div.balancer {
+  div.baBeacon {
     flex: 0 0 auto;
     padding-left: 5px;
     padding-right: 5px;
@@ -1011,7 +1011,7 @@ textarea {
   }
 }
 
-.lancer-mini-header {
+.Beacon-mini-header {
   align-items: center;
   color: white;
   background-color: var(--main-theme-color, fuchsia);
@@ -1043,11 +1043,11 @@ textarea {
   max-height: 3em;
 }
 
-.lancer-header span.minor {
+.Beacon-header span.minor {
   margin: 0 16px;
 }
 
-.lancer-header.destroyed {
+.Beacon-header.destroyed {
   background-color: #000;
 
   span {
@@ -1073,20 +1073,20 @@ textarea {
   text-align: left;
 }
 
-.lancer-stat {
+.Beacon-stat {
   margin: 0em 0.2em;
 }
 
 .effect-stat,
-input[type="number"].lancer-stat {
+input[type="number"].Beacon-stat {
   align-self: center;
   text-align: center;
   max-width: 40px;
   min-width: 25px;
 }
 
-.lancer-text-field,
-input[type="string"].lancer-input {
+.Beacon-text-field,
+input[type="string"].Beacon-input {
   align-self: center;
   text-align: left;
   width: calc(100% - 20px);
@@ -1153,7 +1153,7 @@ input[type="string"].lancer-input {
   overflow: hidden;
 }
 
-.lancer-title {
+.Beacon-title {
   text-align: center;
   margin-left: 10px;
   margin-right: 10px;
@@ -1205,7 +1205,7 @@ input[type="string"].lancer-input {
   padding: 0.5em;
 }
 
-/* Start of HORUS glitchy styles used in lancer-data */
+/* Start of HORUS glitchy styles used in Beacon-data */
 code {
   padding: 4px 12px 4px 12px;
   font-family: monospace, monospace;
@@ -1342,7 +1342,7 @@ code.horus:hover {
   }
 }
 
-/* End of HORUS glitchy styles used in lancer-data */
+/* End of HORUS glitchy styles used in Beacon-data */
 
 .roll-stat,
 .roll-attack,
@@ -1371,12 +1371,12 @@ code.horus:hover {
   max-width: min-content;
 }
 
-.lancer-dice-roll {
+.Beacon-dice-roll {
   padding: 3px;
 }
 
-.lancer-dice-formula,
-.lancer-dice-total {
+.Beacon-dice-formula,
+.Beacon-dice-total {
   margin: 5px;
   align-items: center;
   text-align: center;
@@ -1386,7 +1386,7 @@ code.horus:hover {
   box-shadow: 0 0 2px #fff inset;
 }
 
-.lancer-dice-total {
+.Beacon-dice-total {
   margin: 5px;
   min-width: max-content;
   padding: 0px 5px;
@@ -1558,18 +1558,18 @@ input.core-power-toggle:not(:checked)::before {
   }
 }
 
-.lancer-mech-trait-header,
-.lancer-core-sys-header,
-.lancer-talent-header,
-.lancer-system-header,
-.lancer-trait-header,
-.lancer-trigger-header,
-.lancer-protocol-header,
-.lancer-reaction-header,
-.lancer-tech-header,
-.lancer-corebonus-header,
-.lancer-license-header,
-.lancer-weapon-header {
+.Beacon-mech-trait-header,
+.Beacon-core-sys-header,
+.Beacon-talent-header,
+.Beacon-system-header,
+.Beacon-trait-header,
+.Beacon-trigger-header,
+.Beacon-protocol-header,
+.Beacon-reaction-header,
+.Beacon-tech-header,
+.Beacon-corebonus-header,
+.Beacon-license-header,
+.Beacon-weapon-header {
   color: white;
   background-color: var(--main-theme-color, fuchsia);
   padding-left: 15px;
@@ -1584,18 +1584,18 @@ input.core-power-toggle:not(:checked)::before {
   text-overflow: ellipsis;
 }
 
-.lancer-corebonus-header {
+.Beacon-corebonus-header {
   background-color: var(--bonus-color);
   color: var(--bonus-text);
 }
 
-.lancer-license-header {
+.Beacon-license-header {
   background-color: #ffffff;
   color: var(--main-theme-color);
   border: 1px dashed #656464;
 }
 
-.lancer-trigger-header {
+.Beacon-trigger-header {
   color: var(--main-theme-color, fuchsia);
   background-color: white;
 }
@@ -1611,7 +1611,7 @@ a.flexrow.skill-macro {
   margin-inline: 1.2em;
 }
 
-.lancer-talent-header {
+.Beacon-talent-header {
   background-color: var(--talent-color);
 }
 
@@ -1758,7 +1758,7 @@ a.activation-chip > i.mdi {
   }
 }
 
-.lancer.actor.mech.sheet {
+.Beacon.actor.mech.sheet {
   /* The main, top region */
   .stat-grid {
     display: grid;
@@ -1793,7 +1793,7 @@ a.activation-chip > i.mdi {
       margin: 0px 7px;
       flex-grow: unset;
 
-      a.lancer-macro {
+      a.Beacon-macro {
         font-size: 20px;
         max-width: 20px;
         max-height: 20px;
@@ -2004,13 +2004,13 @@ a.activation-chip > i.mdi {
 }
 
 // Macros
-.lancer-macro-grid {
+.Beacon-macro-grid {
   display: flex;
   margin-bottom: 8px;
   padding: 4px;
 }
 
-.lancer-macro-grid button {
+.Beacon-macro-grid button {
   margin: 4px;
   border-radius: 15px 0px;
   color: white;
@@ -2018,13 +2018,13 @@ a.activation-chip > i.mdi {
 }
 
 // Actions
-.lancer-action-grid {
+.Beacon-action-grid {
   display: flex;
   margin-bottom: 8px;
   padding: 4px;
 }
 
-.lancer-action-button {
+.Beacon-action-button {
   margin: 0 4px;
 
   &.enabled {
@@ -2037,10 +2037,10 @@ a.activation-chip > i.mdi {
   }
 }
 
-.track-message.lancer-action-grid {
+.track-message.Beacon-action-grid {
   flex-wrap: wrap;
 }
-.track-message .lancer-action-button {
+.track-message .Beacon-action-button {
   margin: 4px;
   width: fit-content;
 
@@ -2114,7 +2114,7 @@ a.action {
 }
 
 // TIPPY
-.tippy-box[data-theme~="lancer-small"] {
+.tippy-box[data-theme~="Beacon-small"] {
   font-size: 1.1em;
   padding-left: 8px;
   padding-right: 8px;
@@ -2125,7 +2125,7 @@ a.action {
   }
 }
 
-.tippy-box[data-theme~="lancer-large"] {
+.tippy-box[data-theme~="Beacon-large"] {
   background: var(--secondary-theme-color) !important;
   background-color: var(--secondary-theme-color) !important;
   max-width: 50vw;
@@ -2136,7 +2136,7 @@ a.action {
   line-height: 22px;
   width: auto;
 
-  .lancer-context-item {
+  .Beacon-context-item {
     padding: 0.25rem;
     text-align: left;
     cursor: pointer;
@@ -2335,7 +2335,7 @@ Here, this means we want to allow for drag stuff etc to show contextually if:
   margin-right: 0.4em;
 }
 
-/* Lancer Initiative stuff
+/* Beacon Initiative stuff
    This is plain css for now */
 .-emu #sidebar #combat #combat-tracker li.combatant,
 .-emu #combat-popout #combat #combat-tracker li.combatant,
@@ -2364,56 +2364,56 @@ Here, this means we want to allow for drag stuff etc to show contextually if:
       .token-initiative {
         i,
         a {
-          font-size: var(--lancer-initiative-icon-size);
+          font-size: var(--Beacon-initiative-icon-size);
         }
 
         i.done {
-          color: var(--lancer-initiative-done-color);
+          color: var(--Beacon-initiative-done-color);
         }
       }
     }
 
     .combatant.player {
-      border-color: var(--lancer-initiative-player-color) !important;
+      border-color: var(--Beacon-initiative-player-color) !important;
 
       .token-initiative a {
-        color: var(--lancer-initiative-player-color);
+        color: var(--Beacon-initiative-player-color);
       }
     }
     .combatant.friendly {
-      border-color: var(--lancer-initiative-friendly-color) !important;
+      border-color: var(--Beacon-initiative-friendly-color) !important;
 
       .token-initiative a {
-        color: var(--lancer-initiative-friendly-color);
+        color: var(--Beacon-initiative-friendly-color);
       }
     }
     .combatant.neutral {
-      border-color: var(--lancer-initiative-neutral-color) !important;
+      border-color: var(--Beacon-initiative-neutral-color) !important;
 
       .token-initiative a {
-        color: var(--lancer-initiative-neutral-color);
+        color: var(--Beacon-initiative-neutral-color);
       }
     }
     .combatant.enemy {
-      border-color: var(--lancer-initiative-enemy-color) !important;
+      border-color: var(--Beacon-initiative-enemy-color) !important;
 
       .token-initiative a {
-        color: var(--lancer-initiative-enemy-color);
+        color: var(--Beacon-initiative-enemy-color);
       }
     }
   }
 }
 
-#combat-carousel.lancer {
+#combat-carousel.Beacon {
   li.card {
-    div.lancer-activate {
+    div.Beacon-activate {
       a,
       i {
-        font-size: var(--lancer-initiative-icon-size);
+        font-size: var(--Beacon-initiative-icon-size);
       }
 
       i.done {
-        color: var(--lancer-initiative-done-color);
+        color: var(--Beacon-initiative-done-color);
       }
       position: absolute;
       right: 0;
@@ -2426,23 +2426,23 @@ Here, this means we want to allow for drag stuff etc to show contextually if:
   }
 
   li.card.player {
-    div.lancer-activate a {
-      color: var(--lancer-initiative-player-color);
+    div.Beacon-activate a {
+      color: var(--Beacon-initiative-player-color);
     }
   }
   li.card.friendly {
-    div.lancer-activate a {
-      color: var(--lancer-initiative-friendly-color);
+    div.Beacon-activate a {
+      color: var(--Beacon-initiative-friendly-color);
     }
   }
   li.card.neutral {
-    div.lancer-activate a {
-      color: var(--lancer-initiative-neutral-color);
+    div.Beacon-activate a {
+      color: var(--Beacon-initiative-neutral-color);
     }
   }
   li.card.enemy {
-    div.lancer-activate a {
-      color: var(--lancer-initiative-enemy-color);
+    div.Beacon-activate a {
+      color: var(--Beacon-initiative-enemy-color);
     }
   }
 }
@@ -2456,7 +2456,7 @@ Here, this means we want to allow for drag stuff etc to show contextually if:
   }
 }
 
-#lancer-initiative-settings {
+#Beacon-initiative-settings {
   input[type="color"] {
     flex: 0 0 3rem;
     cursor: pointer;

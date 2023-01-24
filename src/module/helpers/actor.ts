@@ -5,7 +5,7 @@ import { ref_commons, ref_params, simple_mm_ref } from "./refs";
 import { encodeMacroData } from "../macros";
 import { encodeOverchargeMacroData } from "../macros/overcharge";
 import type { ActionType } from "../action";
-import type { LancerActor } from "../actor/lancer-actor";
+import type { BeaconActor } from "../actor/Beacon-actor";
 import { getActionTrackerOptions } from "../settings";
 
 // ---------------------------------------
@@ -17,14 +17,14 @@ interface ButtonOverrides {
 }
 
 function _rollable_macro_button(macroData: string, overrides: ButtonOverrides = {}): string {
-  return `<a class="i--dark i--sm ${overrides.classes ?? ""} lancer-macro" data-macro="${macroData}">
+  return `<a class="i--dark i--sm ${overrides.classes ?? ""} Beacon-macro" data-macro="${macroData}">
     <i class="fas ${overrides.icon ?? "fa-dice-d20"}"></i>
   </a>`;
 }
 
 export function get_actor_id(options: HelperOptions): string | null {
   // Determine whether this is an unlinked token, so we can encode the correct id for the macro.
-  const r_actor = options.data.root.actor as LancerActor | undefined;
+  const r_actor = options.data.root.actor as BeaconActor | undefined;
   let id = r_actor?.token && !r_actor.token.isLinked ? r_actor.token.id : r_actor?.id!;
   //console.log(r_actor?.id, id);
   return id;
@@ -42,11 +42,11 @@ export function stat_edit_card_max(
   let max_val = resolve_helper_dotpath(options, max_path, 0);
   return `
     <div class="card clipped">
-      <div class="lancer-header ">
+      <div class="Beacon-header ">
         <i class="${icon} i--m header-icon"> </i>
         <span class="major">${title}</span>
       </div>
-      ${std_x_of_y(data_path, data_val, max_val, "lancer-stat")}
+      ${std_x_of_y(data_path, data_val, max_val, "Beacon-stat")}
     </div>
     `;
 }
@@ -55,11 +55,11 @@ export function stat_edit_card_max(
 export function stat_edit_card(title: string, icon: string, data_path: string, options: HelperOptions): string {
   return `
     <div class="card clipped">
-      <div class="lancer-header ">
+      <div class="Beacon-header ">
         <i class="${icon} i--m header-icon"> </i>
         <span class="major">${title}</span>
       </div>
-      ${std_num_input(data_path, ext_helper_hash(options, { classes: "lancer-stat" }))}
+      ${std_num_input(data_path, ext_helper_hash(options, { classes: "Beacon-stat" }))}
     </div>
     `;
 }
@@ -83,13 +83,13 @@ export function stat_view_card(
 
   return `
     <div class="card clipped">
-      <div class="lancer-header ">
+      <div class="Beacon-header ">
         ${inc_if(`<i class="${icon} i--m i--light header-icon"> </i>`, icon)}
         <span class="major">${title}</span>
       </div>
       <div class="flexrow ${macro_button ? "stat-macro-container" : ""}">
         ${macro_button ? macro_button : ""}
-        <span class="lancer-stat major" data-path="${data_path}">${data_val}</span>
+        <span class="Beacon-stat major" data-path="${data_path}">${data_val}</span>
         ${
           macro_button
             ? data_path == "mm.Pilot.Grit" || data_path === "mm.Tier"
@@ -113,7 +113,7 @@ export function compact_stat_view(icon: string, data_path: string, options: Help
   return `        
     <div class="compact-stat">
         <i class="${icon} i--m i--dark"></i>
-        <span class="lancer-stat minor">${data_val}</span>
+        <span class="Beacon-stat minor">${data_val}</span>
     </div>
     `;
 }
@@ -125,12 +125,12 @@ export function compact_stat_edit(icon: string, data_path: string, max_path: str
   if (max_path) {
     let max_val = resolve_helper_dotpath(options, max_path);
     max_html = `<span class="minor" style="max-width: min-content;" > / </span>
-    <span class="lancer-stat minor">${max_val}</span>`;
+    <span class="Beacon-stat minor">${max_val}</span>`;
   }
   return `        
         <div class="compact-stat">
           <i class="${icon} i--m i--dark"></i>
-          ${std_num_input(data_path, ext_helper_hash(options, { classes: "lancer-stat minor" }))}
+          ${std_num_input(data_path, ext_helper_hash(options, { classes: "Beacon-stat minor" }))}
           ${max_html}
         </div>
     `;
@@ -140,7 +140,7 @@ export function compact_stat_edit(icon: string, data_path: string, max_path: str
 export function clicker_num_input(data_path: string, max: number, options: HelperOptions) {
   return `<div class="flexrow arrow-input-container">
       <button class="mod-minus-button" type="button">-</button>
-      ${std_num_input(data_path, ext_helper_hash(options, { classes: "lancer-stat minor", default: 0 }))}
+      ${std_num_input(data_path, ext_helper_hash(options, { classes: "Beacon-stat minor", default: 0 }))}
       <button class="mod-plus-button" data-max="${max}" type="button">+</button>
     </div>`;
 }
@@ -162,9 +162,9 @@ export function clicker_stat_card(
   });
   let macroBasicData = encodeMacroData({ title: "BASIC ATTACK", fn: "prepareEncodedAttackMacro", args: [] });
   if (roller)
-    button = `<a class="lancer-macro i--dark i--sm" data-macro="${macroData}"><i class="fas fa-dice-d20"></i></a>`;
+    button = `<a class="Beacon-macro i--dark i--sm" data-macro="${macroData}"><i class="fas fa-dice-d20"></i></a>`;
   return `<div class="card clipped stat-container">
-      <div class="lancer-header ">
+      <div class="Beacon-header ">
         <i class="${icon} i--m i--light header-icon"> </i>
         <span class="major">${title}</span>
       </div>
@@ -204,7 +204,7 @@ export function action_button(
   }
 
   return `
-    <button class="lancer-action-button${active ? ` active activation-${action}` : ""}${
+    <button class="Beacon-action-button${active ? ` active activation-${action}` : ""}${
     enabled ? ` enabled` : ""
   }" data-action="${action}" data-val="${action_val}">
       ${title}
@@ -249,7 +249,7 @@ export function macro_button(
   });
 
   return `
-      <button type="button" class="lancer-macro-button lancer-macro activation-quick" data-macro="${macroData}">
+      <button type="button" class="Beacon-macro-button Beacon-macro activation-quick" data-macro="${macroData}">
         <i class="cci ${mIcon} i--m"></i> ${title}
       </button>
     `;
@@ -266,13 +266,13 @@ export function tech_flow_card(title: string, icon: string, data_path: string, o
 
   return `
     <div class="card clipped">
-      <div class="lancer-header ">
+      <div class="Beacon-header ">
         ${inc_if(`<i class="${icon} i--m i--light header-icon"> </i>`, icon)}
         <span class="major">${title}</span>
       </div>
       <div class="flexrow stat-macro-container">
       ${_rollable_macro_button(macroData)}
-        <span class="lancer-stat major" data-path="${data_path}">${data_val}</span>
+        <span class="Beacon-stat major" data-path="${data_path}">${data_val}</span>
         <div></div>
       </div>
     </div>
@@ -297,8 +297,8 @@ export function npc_clicker_stat_card(title: string, data_path: string, options:
   }
   return `
     <div class="card clipped">
-      <div class="flexrow lancer-header major">
-        <span class="lancer-header major ">${title}</span>
+      <div class="flexrow Beacon-header major">
+        <span class="Beacon-header major ">${title}</span>
         <a class="gen-control" data-path="${data_path}" data-action="set" data-action-value="(struct)npc_stat_array"><i class="fas fa-redo"></i></a>
       </div>
       ${tier_clickers.join("")}
@@ -312,7 +312,7 @@ export function npc_clicker_stat_card(title: string, data_path: string, options:
  * @param overcharge_path Path to current overcharge level, from 0 to 3
  * @param options Options object to pass to resolve_helper_dotpath
  */
-export function overcharge_button(actor: LancerActor, overcharge_path: string, options: HelperOptions): string {
+export function overcharge_button(actor: BeaconActor, overcharge_path: string, options: HelperOptions): string {
   const overcharge_sequence = actor.getOverchargeSequence() || ["+1", "+1d3", "+1d6", "+1d6 + 4"];
 
   let index = resolve_helper_dotpath(options, overcharge_path) as number;
@@ -320,7 +320,7 @@ export function overcharge_button(actor: LancerActor, overcharge_path: string, o
   let over_val = overcharge_sequence[index];
   return `
     <div class="flexcol card clipped">
-      <div class="lancer-header clipped-top flexrow">
+      <div class="Beacon-header clipped-top flexrow">
         <span class="major">OVERCHARGE</span>
       </div>
       <div class="overcharge-container">
@@ -348,7 +348,7 @@ export function npc_tier_selector(tier_path: string, helper: HelperOptions) {
   return template;
 }
 
-export function is_combatant(actor: LancerActor) {
+export function is_combatant(actor: BeaconActor) {
   const combat = game.combat;
   if (combat) {
     return combat.combatants.find(comb => comb.actor?.uuid == actor.uuid);

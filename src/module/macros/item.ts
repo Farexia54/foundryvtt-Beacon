@@ -1,10 +1,10 @@
 // Import TypeScript modules
-import { LANCER } from "../config";
+import { Beacon } from "../config";
 import type {
-  LancerStatMacroData,
-  LancerTalentMacroData,
-  LancerTextMacroData,
-  LancerReactionMacroData,
+  BeaconStatMacroData,
+  BeaconTalentMacroData,
+  BeaconTextMacroData,
+  BeaconReactionMacroData,
 } from "../interfaces";
 import { EntryType, NpcFeatureType } from "machine-mind";
 import { applyCollapseListeners } from "../helpers/collapse";
@@ -17,7 +17,7 @@ import { prepareTechMacro } from "./tech";
 import { rollTextMacro } from "./text";
 import { rollTriggerMacro } from "./trigger";
 
-const lp = LANCER.log_prefix;
+const lp = Beacon.log_prefix;
 
 /**
  * Generic macro preparer for any item.
@@ -40,7 +40,7 @@ export async function prepareItemMacro(a: string, i: string, options?: any) {
   switch (item.type) {
     // Skills
     case EntryType.SKILL:
-      let skillData: LancerStatMacroData = {
+      let skillData: BeaconStatMacroData = {
         title: item.name!,
         // @ts-expect-error Should be fixed with v10 types
         bonus: item.system.rank * 2,
@@ -63,7 +63,7 @@ export async function prepareItemMacro(a: string, i: string, options?: any) {
       // @ts-expect-error Should be fixed with v10 types
       let rank = options.rank ? options.rank : item.system.curr_rank;
 
-      let talData: LancerTalentMacroData = {
+      let talData: BeaconTalentMacroData = {
         // @ts-expect-error Should be fixed with v10 types
         talent: item.system,
         rank: rank,
@@ -73,7 +73,7 @@ export async function prepareItemMacro(a: string, i: string, options?: any) {
       break;
     // Gear
     case EntryType.PILOT_GEAR:
-      let gearData: LancerTextMacroData = {
+      let gearData: BeaconTextMacroData = {
         title: item.name!,
         // @ts-expect-error Should be fixed with v10 types
         description: item.system.description,
@@ -86,7 +86,7 @@ export async function prepareItemMacro(a: string, i: string, options?: any) {
     // Core bonuses can just be text, right?
     /*
     case EntryType.CORE_BONUS:
-      let CBdata: LancerTextMacroData = {
+      let CBdata: BeaconTextMacroData = {
         title: item.name,
         description: item.system.effect,
       };
@@ -105,7 +105,7 @@ export async function prepareItemMacro(a: string, i: string, options?: any) {
           break;
         case NpcFeatureType.System:
         case NpcFeatureType.Trait:
-          let sysData: LancerTextMacroData = {
+          let sysData: BeaconTextMacroData = {
             title: item.name!,
             // @ts-expect-error Should be fixed with v10 types
             description: item.system.effect,
@@ -116,7 +116,7 @@ export async function prepareItemMacro(a: string, i: string, options?: any) {
           await rollTextMacro(actor, sysData);
           break;
         case NpcFeatureType.Reaction:
-          let reactData: LancerReactionMacroData = {
+          let reactData: BeaconReactionMacroData = {
             title: item.name!,
             // @ts-expect-error Should be fixed with v10 types
             trigger: item.system.trigger,

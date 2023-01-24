@@ -1,8 +1,8 @@
-import type { LancerActor } from "../../actor/lancer-actor";
+import type { BeaconActor } from "../../actor/Beacon-actor";
 
-export function getTargets(): LancerActor[] {
+export function getTargets(): BeaconActor[] {
   const targets = game.user!.targets;
-  const ret: LancerActor[] = [];
+  const ret: BeaconActor[] = [];
   targets.forEach(token => {
     ret.push(token.actor!);
   });
@@ -10,7 +10,7 @@ export function getTargets(): LancerActor[] {
   return ret;
 }
 
-export async function checkForHit(tech: boolean, roll: Roll, target: LancerActor): Promise<boolean> {
+export async function checkForHit(tech: boolean, roll: Roll, target: BeaconActor): Promise<boolean> {
   // @ts-expect-error Should be fixed with v10 types
   let mm = await target.system.derived.mm_promise;
   let def: number = tech ? mm.EDefense || 8 : mm.Evasion || 5;

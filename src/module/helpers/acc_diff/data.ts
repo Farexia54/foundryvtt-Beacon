@@ -1,16 +1,16 @@
 import type { TagInstance } from "machine-mind";
 import * as t from "io-ts";
 
-import type { LancerActor } from "../../actor/lancer-actor";
+import type { BeaconActor } from "../../actor/Beacon-actor";
 import type { AccDiffPlugin, AccDiffPluginData, AccDiffPluginCodec } from "./plugin";
 import { enclass, encode, decode } from "./serde";
-import { LancerItem } from "../../item/lancer-item";
+import { BeaconItem } from "../../item/Beacon-item";
 
 import Invisibility from "./invisibility";
 import Spotter from "./spotter";
-import { LancerToken } from "../../token";
+import { BeaconToken } from "../../token";
 
-export function findEffect(actor: LancerActor, effect: string): ActiveEffect | null {
+export function findEffect(actor: BeaconActor, effect: string): ActiveEffect | null {
   // @ts-expect-error Should be fixed with v10 types
   return actor.effects.find(eff => eff.flags.core?.statusId?.endsWith(effect) ?? false) ?? null;
 }
@@ -67,7 +67,7 @@ export class AccDiffWeapon {
   }
 
   get impaired(): ActiveEffect | null {
-    return (this.#data?.lancerActor && findEffect(this.#data.lancerActor, "impaired")) ?? null;
+    return (this.#data?.BeaconActor && findEffect(this.#data.BeaconActor, "impaired")) ?? null;
   }
 
   total(cover: number) {
@@ -135,7 +135,7 @@ export class AccDiffBase {
 // and that + io-ts I think has the variance wrong
 // so if you extend AccDiffBase it's trying to assign AccDiffBase to AccDiffTarget
 export class AccDiffTarget {
-  target: LancerToken;
+  target: BeaconToken;
   accuracy: number;
   difficulty: number;
   cover: Cover;
@@ -171,7 +171,7 @@ export class AccDiffTarget {
       throw new Error("Token not found");
     }
 
-    this.target = target.object! as LancerToken;
+    this.target = target.object! as BeaconToken;
     this.accuracy = obj.accuracy;
     this.difficulty = obj.difficulty;
     this.cover = obj.cover;
@@ -239,8 +239,8 @@ export class AccDiffData {
   weapon: AccDiffWeapon;
   base: AccDiffBase;
   targets: AccDiffTarget[];
-  lancerItem?: LancerItem; // not persisted, needs to be hydrated
-  lancerActor?: LancerActor; // not persisted, needs to be hydrated
+  BeaconItem?: BeaconItem; // not persisted, needs to be hydrated
+  BeaconActor?: BeaconActor; // not persisted, needs to be hydrated
 
   static get schema() {
     return {
@@ -266,12 +266,12 @@ export class AccDiffData {
     this.hydrate();
   }
 
-  hydrate(runtimeData?: LancerItem | LancerActor) {
-    if (runtimeData instanceof LancerItem) {
-      this.lancerItem = runtimeData;
-      this.lancerActor = runtimeData.actor ?? undefined;
+  hydrate(runtimeData?: BeaconItem | BeaconActor) {
+    if (runtimeData instanceof BeaconItem) {
+      this.BeaconItem = runtimeData;
+      this.BeaconActor = runtimeData.actor ?? undefined;
     } else {
-      this.lancerActor = runtimeData ?? undefined;
+      this.BeaconActor = runtimeData ?? undefined;
     }
 
     this.weapon.hydrate(this);
@@ -304,7 +304,7 @@ export class AccDiffData {
     };
   }
 
-  static fromObject(obj: AccDiffDataSerialized, runtimeData?: LancerItem | LancerActor): AccDiffData {
+  static fromObject(obj: AccDiffDataSerialized, runtimeData?: BeaconItem | BeaconActor): AccDiffData {
     let ret = decode(obj, AccDiffData.codec);
     ret.hydrate(runtimeData);
     return ret;
@@ -331,7 +331,7 @@ export class AccDiffData {
   }
 
   static fromParams(
-    runtimeData?: LancerItem | LancerActor,
+    runtimeData?: BeaconItem | BeaconActor,
     tags?: TagInstance[],
     title?: string,
     targets?: Token[],

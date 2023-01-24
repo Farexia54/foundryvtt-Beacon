@@ -1,13 +1,13 @@
 // Import TypeScript modules
-import { LANCER } from "../config";
-import type { LancerActor } from "../actor/lancer-actor";
+import { Beacon } from "../config";
+import type { BeaconActor } from "../actor/Beacon-actor";
 import { TagInstance } from "machine-mind";
 import { getMacroSpeaker } from "./_util";
 import { renderMacroTemplate } from "./_render";
 
-const lp = LANCER.log_prefix;
+const lp = Beacon.log_prefix;
 
-export async function prepareChargeMacro(a: string | LancerActor) {
+export async function prepareChargeMacro(a: string | BeaconActor) {
   // Determine which Actor to speak as
   let actor = getMacroSpeaker(a);
   if (!actor || !actor.is_npc()) return;

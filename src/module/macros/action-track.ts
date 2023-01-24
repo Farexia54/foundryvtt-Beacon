@@ -1,6 +1,6 @@
 import { ActionData } from "../action";
 import { getActions } from "../action/actionTracker";
-import { LancerActor } from "../actor/lancer-actor";
+import { BeaconActor } from "../actor/Beacon-actor";
 import { prepareTextMacro } from "./text";
 import { getMacroSpeaker } from "./_util";
 
@@ -28,7 +28,7 @@ export function prepareActionTrackMacro(a: string, start: boolean) {
   prepareTextMacro(a, "Action Status", text);
 }
 
-function condensedActionButtonHTML(actor: LancerActor, actions: ActionData) {
+function condensedActionButtonHTML(actor: BeaconActor, actions: ActionData) {
   function constructButton(action: string, active: boolean) {
     let mIcon;
     switch (action) {
@@ -50,7 +50,7 @@ function condensedActionButtonHTML(actor: LancerActor, actions: ActionData) {
     }
 
     return `
-        <button class="action-size-${action} lancer-action-button${active ? ` active activation-${action}` : ""}${
+        <button class="action-size-${action} Beacon-action-button${active ? ` active activation-${action}` : ""}${
       false ? ` enabled` : ""
     }"><i class="${mIcon} i--m"></i></button>`;
   }
@@ -66,5 +66,5 @@ function condensedActionButtonHTML(actor: LancerActor, actions: ActionData) {
     }
     buttons += constructButton(action, active);
   }
-  return `<div class="track-message lancer-action-grid">${buttons}</div`;
+  return `<div class="track-message Beacon-action-grid">${buttons}</div`;
 }

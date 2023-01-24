@@ -1,8 +1,8 @@
 // Namespace configuration Values
 
 import { EntryType, NpcFeatureType } from "machine-mind";
-import type { LancerActorType } from "./actor/lancer-actor";
-import type { LancerItemType } from "./item/lancer-item";
+import type { BeaconActorType } from "./actor/Beacon-actor";
+import type { BeaconItemType } from "./item/Beacon-item";
 
 const ASCII = `
 ╭╮╱╱╭━━━┳━╮╱╭┳━━━┳━━━┳━━━╮ 
@@ -14,8 +14,8 @@ const ASCII = `
 
 let ET = EntryType;
 // These are general categories that items fall under, useful for the purpose of knowing when moving that item is allowed
-const mech_items: LancerItemType[] = [ET.WEAPON_MOD, ET.FRAME, ET.MECH_WEAPON, ET.MECH_SYSTEM];
-const pilot_items: LancerItemType[] = [
+const mech_items: BeaconItemType[] = [ET.WEAPON_MOD, ET.FRAME, ET.MECH_WEAPON, ET.MECH_SYSTEM];
+const pilot_items: BeaconItemType[] = [
   ET.SKILL,
   ET.TALENT,
   ET.CORE_BONUS,
@@ -28,101 +28,101 @@ const pilot_items: LancerItemType[] = [
   ET.RESERVE,
   ET.ORGANIZATION,
 ];
-const npc_items: LancerItemType[] = [ET.NPC_CLASS, ET.NPC_FEATURE, ET.NPC_TEMPLATE];
-const weapon_items: LancerItemType[] = [ET.MECH_WEAPON, ET.PILOT_WEAPON, ET.NPC_FEATURE];
+const npc_items: BeaconItemType[] = [ET.NPC_CLASS, ET.NPC_FEATURE, ET.NPC_TEMPLATE];
+const weapon_items: BeaconItemType[] = [ET.MECH_WEAPON, ET.PILOT_WEAPON, ET.NPC_FEATURE];
 
-export type LancerDocumentType = LancerItemType | LancerActorType;
+export type BeaconDocumentType = BeaconItemType | BeaconActorType;
 
 export const STATUSES = [
   {
     id: "immobilized",
     label: "Immobilized",
-    icon: `systems/lancer/assets/icons/white/condition_immobilized.svg`,
+    icon: `systems/Beacon/assets/icons/white/condition_immobilized.svg`,
   },
   {
     id: "impaired",
     label: "Impaired",
-    icon: `systems/lancer/assets/icons/white/condition_impaired.svg`,
+    icon: `systems/Beacon/assets/icons/white/condition_impaired.svg`,
   },
   {
     id: "jammed",
     label: "Jammed",
-    icon: `systems/lancer/assets/icons/white/condition_jammed.svg`,
+    icon: `systems/Beacon/assets/icons/white/condition_jammed.svg`,
   },
   {
     id: "lockon",
     label: "Lock On",
-    icon: `systems/lancer/assets/icons/white/condition_lockon.svg`,
+    icon: `systems/Beacon/assets/icons/white/condition_lockon.svg`,
   },
   {
     id: "shredded",
     label: "Shredded",
-    icon: `systems/lancer/assets/icons/white/condition_shredded.svg`,
+    icon: `systems/Beacon/assets/icons/white/condition_shredded.svg`,
   },
   {
     id: "slowed",
     label: "Slowed",
-    icon: `systems/lancer/assets/icons/white/condition_slow.svg`,
+    icon: `systems/Beacon/assets/icons/white/condition_slow.svg`,
   },
   {
     id: "stunned",
     label: "Stunned",
-    icon: `systems/lancer/assets/icons/white/condition_stunned.svg`,
+    icon: `systems/Beacon/assets/icons/white/condition_stunned.svg`,
   },
   {
     id: "dangerzone",
     label: "Danger Zone",
-    icon: `systems/lancer/assets/icons/white/status_dangerzone.svg`,
+    icon: `systems/Beacon/assets/icons/white/status_dangerzone.svg`,
   },
   {
     id: "downandout",
     label: "Down and Out",
-    icon: `systems/lancer/assets/icons/white/status_downandout.svg`,
+    icon: `systems/Beacon/assets/icons/white/status_downandout.svg`,
   },
   {
     id: "engaged",
     label: "Engaged",
-    icon: `systems/lancer/assets/icons/white/status_engaged.svg`,
+    icon: `systems/Beacon/assets/icons/white/status_engaged.svg`,
   },
   {
     id: "exposed",
     label: "Exposed",
-    icon: `systems/lancer/assets/icons/white/status_exposed.svg`,
+    icon: `systems/Beacon/assets/icons/white/status_exposed.svg`,
   },
   {
     id: "hidden",
     label: "Hidden",
-    icon: `systems/lancer/assets/icons/white/status_hidden.svg`,
+    icon: `systems/Beacon/assets/icons/white/status_hidden.svg`,
   },
   {
     id: "invisible",
     label: "Invisible",
-    icon: `systems/lancer/assets/icons/white/status_invisible.svg`,
+    icon: `systems/Beacon/assets/icons/white/status_invisible.svg`,
   },
   {
     id: "prone",
     label: "Prone",
-    icon: `systems/lancer/assets/icons/white/status_prone.svg`,
+    icon: `systems/Beacon/assets/icons/white/status_prone.svg`,
   },
   {
     id: "shutdown",
     label: "Shut Down",
-    icon: `systems/lancer/assets/icons/white/status_shutdown.svg`,
+    icon: `systems/Beacon/assets/icons/white/status_shutdown.svg`,
   },
   {
     id: "npc_tier_1",
     label: "Tier 1",
-    icon: `systems/lancer/assets/icons/white/npc_tier_1.svg`,
+    icon: `systems/Beacon/assets/icons/white/npc_tier_1.svg`,
   },
   {
     id: "npc_tier_2",
     label: "Tier 2",
-    icon: `systems/lancer/assets/icons/white/npc_tier_2.svg`,
+    icon: `systems/Beacon/assets/icons/white/npc_tier_2.svg`,
   },
   {
     id: "npc_tier_3",
     label: "Tier 3",
-    icon: `systems/lancer/assets/icons/white/npc_tier_3.svg`,
+    icon: `systems/Beacon/assets/icons/white/npc_tier_3.svg`,
   },
 ];
 
@@ -130,13 +130,13 @@ export function WELCOME(changelog: string): string {
   return `<div style="margin: 10px 5px">
   <div style="text-align: center; margin-top: .5em" class="flex-center">
     <a href="https://massifpress.com/legal">
-      <img style="max-width: 350px; border: none" src="https://massifpress.com/_next/image?url=%2Fimages%2Flegal%2Fpowered_by_Lancer-01.svg&w=640&q=75" alt="Powered by Lancer">
+      <img style="max-width: 350px; border: none" src="https://massifpress.com/_next/image?url=%2Fimages%2Flegal%2Fpowered_by_Beacon-01.svg&w=640&q=75" alt="Powered by Beacon">
     </a>
   </div>
-  <h2>Welcome to Lancer on Foundry!</h2>
+  <h2>Welcome to Beacon on Foundry!</h2>
   <p>If you haven't already, check out the project wiki for 
-  <a href="https://github.com/Eranziel/foundryvtt-lancer/wiki/FAQ">FAQ</a>
-  and a list of <a href="https://github.com/Eranziel/foundryvtt-lancer/wiki/Resources">recommended modules</a>, as well
+  <a href="https://github.com/Eranziel/foundryvtt-Beacon/wiki/FAQ">FAQ</a>
+  and a list of <a href="https://github.com/Eranziel/foundryvtt-Beacon/wiki/Resources">recommended modules</a>, as well
   as other information about how to use the system.</p>
   
   <span>Special thanks to <a class="center" href="https://www.retrogrademinis.com/">Retrograde Minis</a> for our default token artwork.</span>
@@ -148,31 +148,31 @@ export function WELCOME(changelog: string): string {
   </div>
 
   <p>You can report issues on GitHub here: 
-  <a href="https://github.com/Eranziel/foundryvtt-lancer/issues">https://github.com/Eranziel/foundryvtt-lancer/issues</a></p>
+  <a href="https://github.com/Eranziel/foundryvtt-Beacon/issues">https://github.com/Eranziel/foundryvtt-Beacon/issues</a></p>
   <br/>
   <h2>Legal</h2>
-  <p>"Lancer for FoundryVTT" is not an official <i>Lancer</i> product; it is a third party work, and is not affiliated with Massif Press. "Lancer for FoundryVTT" is published via the <i>Lancer</i> Third Party License.</p>
-  <p><i>Lancer</i> is copyright Massif Press.</p>
+  <p>"Beacon for FoundryVTT" is not an official <i>Beacon</i> product; it is a third party work, and is not affiliated with Massif Press. "Beacon for FoundryVTT" is published via the <i>Beacon</i> Third Party License.</p>
+  <p><i>Beacon</i> is copyright Massif Press.</p>
   <br/>
   <p>
     <h1>Change Log:</h1>
     ${changelog}
   </p>
   
-  <p><a href="https://github.com/Eranziel/foundryvtt-lancer/blob/master/CHANGELOG.md">Click here for the full changelog.</a></p>
+  <p><a href="https://github.com/Eranziel/foundryvtt-Beacon/blob/master/CHANGELOG.md">Click here for the full changelog.</a></p>
   </div>
   `;
 }
 
-// Modify these constants to set which Lancer version numbers need and permit migration.
+// Modify these constants to set which Beacon version numbers need and permit migration.
 export const NEEDS_MAJOR_MIGRATION_VERSION = "0.9.0";
 export const NEEDS_MINOR_MIGRATION_VERSION = "0.9.99";
 export const COMPATIBLE_MIGRATION_VERSION = "0.1.0";
 export const NEEDS_AUTOMATION_MIGRATION_VERSION = "1.0.3";
 
-export const LANCER = {
+export const Beacon = {
   ASCII,
-  log_prefix: "LANCER |" as const,
+  log_prefix: "Beacon |" as const,
   setting_migration: "systemMigrationVersion" as const,
   setting_core_data: "coreDataVersion" as const,
   setting_lcps: "installedLCPs" as const,
@@ -257,7 +257,7 @@ const FRIENDLY_DOCUMENT_NAMES_PLURAL = {
 };
 
 // Quick for single/plural
-export function friendly_entrytype_name(type: LancerItemType | LancerActorType, count?: number): string {
+export function friendly_entrytype_name(type: BeaconItemType | BeaconActorType, count?: number): string {
   if ((count ?? 1) > 1) {
     return FRIENDLY_DOCUMENT_NAMES_PLURAL[type] ?? `Unknown <${type}>s`;
   } else {
@@ -266,40 +266,40 @@ export function friendly_entrytype_name(type: LancerItemType | LancerActorType, 
 }
 
 // Icons for each document
-export const GENERIC_ITEM_ICON = "systems/lancer/assets/icons/generic_item.svg";
+export const GENERIC_ITEM_ICON = "systems/Beacon/assets/icons/generic_item.svg";
 const DOCUMENT_ICONS = {
-  [EntryType.CORE_BONUS]: `systems/lancer/assets/icons/core_bonus.svg`,
-  [EntryType.DEPLOYABLE]: `systems/lancer/assets/icons/deployable.svg`,
-  [EntryType.ENVIRONMENT]: `systems/lancer/assets/icons/orbit.svg`,
-  [EntryType.FACTION]: `systems/lancer/assets/icons/encounter.svg`,
-  [EntryType.FRAME]: `systems/lancer/assets/icons/mech.svg`,
-  [EntryType.LICENSE]: `systems/lancer/assets/icons/license.svg`,
-  [EntryType.MANUFACTURER]: `systems/lancer/assets/icons/manufacturer.svg`,
-  [EntryType.MECH]: `systems/lancer/assets/icons/mech.svg`,
-  [EntryType.MECH_SYSTEM]: `systems/lancer/assets/icons/mech_system.svg`,
-  [EntryType.MECH_WEAPON]: `systems/lancer/assets/icons/mech_weapon.svg`,
-  [EntryType.NPC]: `systems/lancer/assets/icons/npc_class.svg`,
-  [EntryType.NPC_CLASS]: `systems/lancer/assets/icons/npc_class.svg`,
-  [EntryType.NPC_FEATURE]: `systems/lancer/assets/icons/npc_feature.svg`,
-  [EntryType.NPC_FEATURE + NpcFeatureType.Trait]: `systems/lancer/assets/icons/trait.svg`,
-  [EntryType.NPC_FEATURE + NpcFeatureType.Reaction]: `systems/lancer/assets/icons/reaction.svg`,
-  [EntryType.NPC_FEATURE + NpcFeatureType.System]: `systems/lancer/assets/icons/system.svg`,
-  [EntryType.NPC_FEATURE + NpcFeatureType.Weapon]: `systems/lancer/assets/icons/weapon.svg`,
-  [EntryType.NPC_FEATURE + NpcFeatureType.Tech]: `systems/lancer/assets/icons/tech_full.svg`,
-  [EntryType.NPC_TEMPLATE]: `systems/lancer/assets/icons/npc_template.svg`,
-  [EntryType.ORGANIZATION]: `systems/lancer/assets/icons/encounter.svg`,
-  [EntryType.PILOT]: `systems/lancer/assets/icons/pilot.svg`,
-  [EntryType.PILOT_ARMOR]: `systems/lancer/assets/icons/role_tank.svg`,
-  [EntryType.PILOT_GEAR]: `systems/lancer/assets/icons/generic_item.svg`,
-  [EntryType.PILOT_WEAPON]: `systems/lancer/assets/icons/role_artillery.svg`,
-  [EntryType.QUIRK]: `systems/lancer/assets/icons/trait.svg`,
-  [EntryType.RESERVE]: `systems/lancer/assets/icons/reserve_tac.svg`,
-  [EntryType.SITREP]: `systems/lancer/assets/icons/compendium.svg`,
-  [EntryType.SKILL]: `systems/lancer/assets/icons/skill.svg`,
-  [EntryType.STATUS]: `systems/lancer/assets/icons/reticule.svg`,
-  [EntryType.TAG]: `systems/lancer/assets/icons/tag.svg`,
-  [EntryType.TALENT]: `systems/lancer/assets/icons/talent.svg`,
-  [EntryType.WEAPON_MOD]: `systems/lancer/assets/icons/weapon_mod.svg`,
+  [EntryType.CORE_BONUS]: `systems/Beacon/assets/icons/core_bonus.svg`,
+  [EntryType.DEPLOYABLE]: `systems/Beacon/assets/icons/deployable.svg`,
+  [EntryType.ENVIRONMENT]: `systems/Beacon/assets/icons/orbit.svg`,
+  [EntryType.FACTION]: `systems/Beacon/assets/icons/encounter.svg`,
+  [EntryType.FRAME]: `systems/Beacon/assets/icons/mech.svg`,
+  [EntryType.LICENSE]: `systems/Beacon/assets/icons/license.svg`,
+  [EntryType.MANUFACTURER]: `systems/Beacon/assets/icons/manufacturer.svg`,
+  [EntryType.MECH]: `systems/Beacon/assets/icons/mech.svg`,
+  [EntryType.MECH_SYSTEM]: `systems/Beacon/assets/icons/mech_system.svg`,
+  [EntryType.MECH_WEAPON]: `systems/Beacon/assets/icons/mech_weapon.svg`,
+  [EntryType.NPC]: `systems/Beacon/assets/icons/npc_class.svg`,
+  [EntryType.NPC_CLASS]: `systems/Beacon/assets/icons/npc_class.svg`,
+  [EntryType.NPC_FEATURE]: `systems/Beacon/assets/icons/npc_feature.svg`,
+  [EntryType.NPC_FEATURE + NpcFeatureType.Trait]: `systems/Beacon/assets/icons/trait.svg`,
+  [EntryType.NPC_FEATURE + NpcFeatureType.Reaction]: `systems/Beacon/assets/icons/reaction.svg`,
+  [EntryType.NPC_FEATURE + NpcFeatureType.System]: `systems/Beacon/assets/icons/system.svg`,
+  [EntryType.NPC_FEATURE + NpcFeatureType.Weapon]: `systems/Beacon/assets/icons/weapon.svg`,
+  [EntryType.NPC_FEATURE + NpcFeatureType.Tech]: `systems/Beacon/assets/icons/tech_full.svg`,
+  [EntryType.NPC_TEMPLATE]: `systems/Beacon/assets/icons/npc_template.svg`,
+  [EntryType.ORGANIZATION]: `systems/Beacon/assets/icons/encounter.svg`,
+  [EntryType.PILOT]: `systems/Beacon/assets/icons/pilot.svg`,
+  [EntryType.PILOT_ARMOR]: `systems/Beacon/assets/icons/role_tank.svg`,
+  [EntryType.PILOT_GEAR]: `systems/Beacon/assets/icons/generic_item.svg`,
+  [EntryType.PILOT_WEAPON]: `systems/Beacon/assets/icons/role_artillery.svg`,
+  [EntryType.QUIRK]: `systems/Beacon/assets/icons/trait.svg`,
+  [EntryType.RESERVE]: `systems/Beacon/assets/icons/reserve_tac.svg`,
+  [EntryType.SITREP]: `systems/Beacon/assets/icons/compendium.svg`,
+  [EntryType.SKILL]: `systems/Beacon/assets/icons/skill.svg`,
+  [EntryType.STATUS]: `systems/Beacon/assets/icons/reticule.svg`,
+  [EntryType.TAG]: `systems/Beacon/assets/icons/tag.svg`,
+  [EntryType.TALENT]: `systems/Beacon/assets/icons/talent.svg`,
+  [EntryType.WEAPON_MOD]: `systems/Beacon/assets/icons/weapon_mod.svg`,
   generic: GENERIC_ITEM_ICON,
 };
 
@@ -317,7 +317,7 @@ export function replace_default_resource(current: string, replacement: string | 
   }
 
   // If empty or from system path or mystery man, replace
-  if (!current?.trim() || current.includes("systems/lancer") || current == "icons/svg/mystery-man.svg") {
+  if (!current?.trim() || current.includes("systems/Beacon") || current == "icons/svg/mystery-man.svg") {
     return replacement;
   }
 

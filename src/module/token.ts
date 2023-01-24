@@ -1,9 +1,9 @@
 declare global {
   interface DocumentClassConfig {
-    Token: typeof LancerTokenDocument;
+    Token: typeof BeaconTokenDocument;
   }
   interface PlaceableObjectClassConfig {
-    Token: typeof LancerToken;
+    Token: typeof BeaconToken;
   }
 }
 
@@ -11,7 +11,7 @@ declare global {
  * Extend the base TokenDocument class to implement system-specific HP bar logic.
  * @extends {TokenDocument}
  */
-export class LancerTokenDocument extends TokenDocument {
+export class BeaconTokenDocument extends TokenDocument {
   /** @inheritdoc */
   getBarAttribute(barName: string, { alternative }: { alternative?: string | undefined } | undefined = {}) {
     let result = super.getBarAttribute(barName, { alternative });
@@ -31,8 +31,8 @@ export class LancerTokenDocument extends TokenDocument {
  * Extend the base Token class to implement additional system-specific logic.
  * @extends {Token}
  */
-export class LancerToken extends Token {
-  constructor(document: LancerTokenDocument) {
+export class BeaconToken extends Token {
+  constructor(document: BeaconTokenDocument) {
     super(document);
     this._spaces = {
       at: { x: -1, y: -1 },

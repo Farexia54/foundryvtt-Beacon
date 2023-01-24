@@ -1,11 +1,11 @@
 {
   "private": true,
-  "name": "foundryvtt-lancer",
+  "name": "foundryvtt-Beacon",
   "version": "1.4.2",
   "description": "",
   "sideEffects": [
-    "src/lancer.scss",
-    "src/lancer.ts"
+    "src/Beacon.scss",
+    "src/Beacon.ts"
   ],
   "scripts": {
     "package": "gulp package",
@@ -51,7 +51,7 @@
     "aws-amplify": "^4.2.9",
     "fp-ts": "^2.11.2",
     "io-ts": "^2.2.16",
-    "lancer-initiative": "^3.1.0",
+    "Beacon-initiative": "^3.1.0",
     "machine-mind": "0.2.4",
     "marked": "^4.0.10",
     "tippy.js": "^6.3.1"

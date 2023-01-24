@@ -1,12 +1,12 @@
 // Import TypeScript modules
-import type { LancerActor } from "../actor/lancer-actor";
+import type { BeaconActor } from "../actor/Beacon-actor";
 import { uuid4 } from "../helpers/collapse";
 
 /**
  *
  */
 // TODO: Indexed types for templates
-export async function renderMacroTemplate(actor: LancerActor | undefined, template: string, templateData: any) {
+export async function renderMacroTemplate(actor: BeaconActor | undefined, template: string, templateData: any) {
   const cardUUID = uuid4();
   templateData._uuid = cardUUID;
 
@@ -31,7 +31,7 @@ export async function renderMacroTemplate(actor: LancerActor | undefined, templa
   return renderMacroHTML(actor, html, roll);
 }
 
-export async function renderMacroHTML(actor: LancerActor | undefined, html: HTMLElement | string, roll?: Roll) {
+export async function renderMacroHTML(actor: BeaconActor | undefined, html: HTMLElement | string, roll?: Roll) {
   const rollMode = game.settings.get("core", "rollMode");
   const whisper_roll = rollMode !== "roll" ? ChatMessage.getWhisperRecipients("GM").filter(u => u.active) : undefined;
   let chat_data = {

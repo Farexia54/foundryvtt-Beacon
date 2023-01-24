@@ -1,9 +1,9 @@
-<form class="{{cssClass}} lancer-sheet" autocomplete="off">
+<form class="{{cssClass}} Beacon-sheet" autocomplete="off">
   {{!-- Sheet Header --}}
   <header class="sheet-header card clipped-bot">
     <div class="header-fields">
       <h1 class="charname">
-        <input class="header-field" name="name" type="text" value="{{actor.name}}" placeholder="{{localize "lancer.placeholder.name"}}" />
+        <input class="header-field" name="name" type="text" value="{{actor.name}}" placeholder="{{localize "Beacon.placeholder.name"}}" />
       </h1>
     </div>
     <div class="details flexcol">
@@ -11,9 +11,9 @@
     </div>
 
     <div class="details flexcol">
-      <span>{{localize "lancer.npc-sheet.header.class"}}</span>
+      <span>{{localize "Beacon.npc-sheet.header.class"}}</span>
       <span class="major">
-        {{#if mm.ActiveClass}} {{mm.ActiveClass.Name}} {{else}} {{localize "lancer.npc-sheet.class.none"}} {{/if}}
+        {{#if mm.ActiveClass}} {{mm.ActiveClass.Name}} {{else}} {{localize "Beacon.npc-sheet.class.none"}} {{/if}}
       </span>
     </div>
     {{{ ref-portrait-img actor.img "img" mm }}}
@@ -53,18 +53,18 @@
       {{!-- Equipment et all --}}
       <div class="card clipped flexrow">
         <div style="padding-right: 5px;">
-          <div class="lancer-header submajor" style="height: 30px;">{{localize "lancer.npc-sheet.class.label"}}</div>
+          <div class="Beacon-header submajor" style="height: 30px;">{{localize "Beacon.npc-sheet.class.label"}}</div>
           <div class="flexcol">
             {{#if mm.ActiveClass}}
               {{{ref-npc-class mm.ActiveClass "mm.ActiveClass" }}}
             {{else}}
-              {{localize "lancer.npc-sheet.class.none"}}
+              {{localize "Beacon.npc-sheet.class.none"}}
             {{/if}}
           </div>
         </div>
 
         <div class="flexcol" style="padding-left: 5px;">
-          <span class="lancer-header submajor clipped-top">{{localize "lancer.npc-sheet.templates.label"}}</span>
+          <span class="Beacon-header submajor clipped-top">{{localize "Beacon.npc-sheet.templates.label"}}</span>
           {{#each mm.Templates as |template index|}}
             {{{ref-npc-template template (concat "mm.Templates." index) }}}
           {{/each}}
@@ -72,16 +72,16 @@
       </div>
 
       <div class="card clipped">
-        <span class="lancer-header submajor">BASIC ATTACKS</span>
-        <div class="lancer-macro-grid">
+        <span class="Beacon-header submajor">BASIC ATTACKS</span>
+        <div class="Beacon-macro-grid">
           {{{macro-button "MELEE/RANGED" "prepareEncodedAttackMacro" "mm" }}}
           {{{macro-button "TECH" "prepareTechMacro" "mm" }}}
         </div>
       </div>
 
       <div class="card clipped">
-        <div class="lancer-header submajor">
-          <span style="padding-left: 41px;">{{localize "lancer.npc-sheet.features.label"}}</span>
+        <div class="Beacon-header submajor">
+          <span style="padding-left: 41px;">{{localize "Beacon.npc-sheet.features.label"}}</span>
           <a style="margin-top: 2px; font-size: 1.4em;" class="charge-macro"><i class="mdi mdi-dice-6"></i></a>
         </div>
         <div class="wraprow double">

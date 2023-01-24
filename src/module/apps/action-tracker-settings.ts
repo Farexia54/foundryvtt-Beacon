@@ -1,4 +1,4 @@
-import { LANCER } from "../config";
+import { Beacon } from "../config";
 import { ActionTrackerOptions, getActionTrackerOptions } from "../settings";
 
 /**
@@ -10,8 +10,8 @@ export class ActionTrackerConfig extends FormApplication<FormApplication.Options
   static get defaultOptions(): FormApplication.Options {
     return {
       ...super.defaultOptions,
-      title: "lancer.actionTracker.menu-label",
-      id: "lancer-actionTracker-settings",
+      title: "Beacon.actionTracker.menu-label",
+      id: "Beacon-actionTracker-settings",
       template: `systems/${game.system.id}/templates/window/actiontracker-config.hbs`,
       width: 350,
     };
@@ -21,7 +21,7 @@ export class ActionTrackerConfig extends FormApplication<FormApplication.Options
   getData(): ActionTrackerOptions {
     return {
       ...getActionTrackerOptions(true),
-      ...(game.settings.get(game.system.id, LANCER.setting_actionTracker) as Partial<ActionTrackerOptions>),
+      ...(game.settings.get(game.system.id, Beacon.setting_actionTracker) as Partial<ActionTrackerOptions>),
     };
   }
 
@@ -37,7 +37,7 @@ export class ActionTrackerConfig extends FormApplication<FormApplication.Options
   async _updateObject(_: Event, data: Record<string, unknown>): Promise<void> {
     const defs = getActionTrackerOptions();
     const set = foundry.utils.diffObject(defs, data, { inner: true });
-    game.settings.set(game.system.id, LANCER.setting_actionTracker, data);
+    game.settings.set(game.system.id, Beacon.setting_actionTracker, data);
   }
 
   /**
@@ -45,7 +45,7 @@ export class ActionTrackerConfig extends FormApplication<FormApplication.Options
    * their default values.
    */
   async resetSettings(): Promise<unknown> {
-    await game.settings.set(game.system.id, LANCER.setting_actionTracker, {});
+    await game.settings.set(game.system.id, Beacon.setting_actionTracker, {});
     return this.render();
   }
 }

@@ -14,13 +14,13 @@ import {
 } from "machine-mind";
 import type { WeaponMount } from "machine-mind";
 import { ChipIcons } from "../enums";
-import type { LancerMacroData } from "../interfaces";
+import type { BeaconMacroData } from "../interfaces";
 import { encodeMacroData } from "../macros";
 import { inc_if, resolve_helper_dotpath, array_path_edit } from "./commons";
 import { mech_weapon_refview, buildActionHTML, buildDeployableHTML, buildChipHTML } from "./item";
 import { editable_mm_ref_list_item, ref_commons, ref_params, simple_mm_ref } from "./refs";
 import { compact_tag_list } from "./tags";
-import type { LancerActor } from "../actor/lancer-actor";
+import type { BeaconActor } from "../actor/Beacon-actor";
 
 export type CollapseRegistry = { [LID: string]: number };
 
@@ -62,12 +62,12 @@ function weapon_mount(
   if (mount.Bracing) {
     return ` 
     <div class="mount card" >
-      <div class="lancer-header mount-type-ctx-root" data-path="${mount_path}">
+      <div class="Beacon-header mount-type-ctx-root" data-path="${mount_path}">
         <span>${mount.MountType} Weapon Mount</span>
         <a class="gen-control fas fa-trash" data-action="splice" data-path="${mount_path}"></a>
         <a class="reset-weapon-mount-button fas fa-redo" data-path="${mount_path}"></a>
       </div>
-      <div class="lancer-body">
+      <div class="Beacon-body">
         <span class="major">LOCKED: BRACING</span>
       </div>
     </div>`;
@@ -89,13 +89,13 @@ function weapon_mount(
 
   return ` 
     <div class="mount card" >
-      <div class="lancer-header mount-type-ctx-root" data-path="${mount_path}">
+      <div class="Beacon-header mount-type-ctx-root" data-path="${mount_path}">
         <span>${mount.MountType} Weapon Mount</span>
         <a class="gen-control fas fa-trash" data-action="splice" data-path="${mount_path}"></a>
         <a class="reset-weapon-mount-button fas fa-redo" data-path="${mount_path}"></a>
       </div>
-      ${inc_if(`<span class="lancer-header error">${err.toUpperCase()}</span>`, err)}
-      <div class="lancer-body">
+      ${inc_if(`<span class="Beacon-header error">${err.toUpperCase()}</span>`, err)}
+      <div class="Beacon-body">
         ${slots.join("")}
       </div>
     </div>`;
@@ -114,7 +114,7 @@ function all_weapon_mount_view(
   );
 
   return `
-    <span class="lancer-header loadout-category submajor">
+    <span class="Beacon-header loadout-category submajor">
         <i class="mdi mdi-unfold-less-horizontal collapse-trigger collapse-icon" data-collapse-id="weapons"></i>   
         <span>MOUNTED WEAPONS</span>
         <a class="gen-control fas fa-plus" data-action="append" data-path="${loadout_path}.WepMounts" data-action-value="(struct)wep_mount"></a>
@@ -141,7 +141,7 @@ function all_system_mount_view(
   // Archiving add button: <a class="gen-control fas fa-plus" data-action="append" data-path="${loadout_path}.SysMounts" data-action-value="(struct)sys_mount"></a>
 
   return `
-    <span class="lancer-header loadout-category submajor">
+    <span class="Beacon-header loadout-category submajor">
       <i class="mdi mdi-unfold-less-horizontal collapse-trigger collapse-icon" data-collapse-id="systems"></i>    
       <span>MOUNTED SYSTEMS</span>
       <span style="height:15px;width:48px;padding:0;"></span>
@@ -201,7 +201,7 @@ export function pilot_slot(data_path: string, options: HelperOptions): string {
  * @param helper      Standard helper options.
  * @return            HTML for the frame reference, typically for inclusion in a mech sheet.
  */
-export function mech_frame_refview(actor: LancerActor, frame_path: string, helper: HelperOptions): string {
+export function mech_frame_refview(actor: BeaconActor, frame_path: string, helper: HelperOptions): string {
   let frame = resolve_helper_dotpath<Frame | null>(helper, frame_path, null);
   if (!frame) return simple_mm_ref(EntryType.FRAME, frame, "No Frame", frame_path, true);
 
@@ -211,7 +211,7 @@ export function mech_frame_refview(actor: LancerActor, frame_path: string, helpe
 
   return `
     <div class="card mech-frame ${ref_params(cd.ref, cd.uuid)}">
-      <span class="lancer-header submajor clipped-top">
+      <span class="Beacon-header submajor clipped-top">
         ${frame.Source?.LID} ${frame.Name}
       </span>
       <div class="wraprow double">
@@ -230,7 +230,7 @@ export function mech_frame_refview(actor: LancerActor, frame_path: string, helpe
  * @param core    The core system.
  * @return        HTML for the core system, typically for inclusion in a mech sheet.
  */
-function buildCoreSysHTML(actor: LancerActor, core: CoreSystem): string {
+function buildCoreSysHTML(actor: BeaconActor, core: CoreSystem): string {
   let tags: string | undefined;
   if (core.Tags !== undefined) {
     tags = compact_tag_list("", core.Tags, false);
@@ -246,7 +246,7 @@ function buildCoreSysHTML(actor: LancerActor, core: CoreSystem): string {
   }
 
   return `<div class="core-wrapper frame-coresys clipped-top" style="padding: 0;">
-    <div class="lancer-title coresys-title clipped-top">
+    <div class="Beacon-title coresys-title clipped-top">
       <span>${core.Name}</span> // CORE
       <i 
         class="mdi mdi-unfold-less-horizontal collapse-trigger collapse-icon" 
@@ -261,13 +261,13 @@ function buildCoreSysHTML(actor: LancerActor, core: CoreSystem): string {
   </div>`;
 }
 
-function frameTraits(actor: LancerActor, frame: Frame): string {
+function frameTraits(actor: BeaconActor, frame: Frame): string {
   return frame.Traits.map((t: FrameTrait, i: number) => {
     return buildFrameTrait(actor, t, i);
   }).join("");
 }
 
-function buildFrameTrait(actor: LancerActor, trait: FrameTrait, index: number): string {
+function buildFrameTrait(actor: BeaconActor, trait: FrameTrait, index: number): string {
   let actionHTML = trait.Actions.map((a: Action, i: number | undefined) => {
     return buildActionHTML(a, { full: true, num: i });
   }).join("");
@@ -276,7 +276,7 @@ function buildFrameTrait(actor: LancerActor, trait: FrameTrait, index: number): 
     return buildDeployableHTML(d, true, i);
   }).join("");
 
-  let macroData: LancerMacroData = {
+  let macroData: BeaconMacroData = {
     title: trait.Name,
     iconPath: `systems/${game.system.id}/assets/icons/macro-icons/trait.svg`,
     fn: "prepareFrameTraitMacro",
@@ -284,11 +284,11 @@ function buildFrameTrait(actor: LancerActor, trait: FrameTrait, index: number): 
   };
 
   return `<div class="frame-trait clipped-top">
-    <div class="lancer-header submajor frame-trait-header" style="display: flex">
-      <a class="lancer-macro" data-macro="${encodeMacroData(macroData)}"><i class="mdi mdi-message"></i></a>
+    <div class="Beacon-header submajor frame-trait-header" style="display: flex">
+      <a class="Beacon-macro" data-macro="${encodeMacroData(macroData)}"><i class="mdi mdi-message"></i></a>
       <span class="minor grow">${trait.Name}</span>
     </div>
-    <div class="lancer-body">
+    <div class="Beacon-body">
       <div class="effect-text">${trait.Description}</div>
       ${actionHTML ? actionHTML : ""}
       ${depHTML ? depHTML : ""}
@@ -296,7 +296,7 @@ function buildFrameTrait(actor: LancerActor, trait: FrameTrait, index: number): 
   </div>`;
 }
 
-function frame_active(actor: LancerActor, core: CoreSystem): string {
+function frame_active(actor: BeaconActor, core: CoreSystem): string {
   // So we have a CoreSystem with all the traits of an action inside itself as Active and Passive...
   // And then it has whole other arrays for its actions
   // :pain:
@@ -310,7 +310,7 @@ function frame_active(actor: LancerActor, core: CoreSystem): string {
   }).join("");
 
   // Should find a better way to do this...
-  let coreMacroData: LancerMacroData = {
+  let coreMacroData: BeaconMacroData = {
     title: `${actor.name} | CORE POWER`,
     iconPath: `systems/${game.system.id}/assets/icons/macro-icons/corebonus.svg`,
     fn: "prepareCoreActiveMacro",
@@ -319,10 +319,10 @@ function frame_active(actor: LancerActor, core: CoreSystem): string {
 
   return `
   <div class="core-active-wrapper clipped-top">
-    <span class="lancer-header submajor">
+    <span class="Beacon-header submajor">
       ${core.ActiveName} // ACTIVE
     </span>
-    <div class="lancer-body">
+    <div class="Beacon-body">
       <div class="effect-text">
         ${core.ActiveEffect ? core.ActiveEffect : ""}
       </div>
@@ -341,10 +341,10 @@ function frame_passive(core: CoreSystem): string {
 
   return `
   <div class="core-active-wrapper clipped-top">
-    <span class="lancer-header submajor">
+    <span class="Beacon-header submajor">
       ${core.PassiveName} // PASSIVE
     </span>
-    <div class="lancer-body">
+    <div class="Beacon-body">
       <div class="effect-text">
         ${core.PassiveEffect ? core.PassiveEffect : ""}
       </div>

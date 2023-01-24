@@ -2,11 +2,11 @@
 
 <script lang="ts">
   import { createEventDispatcher } from "svelte";
-  import type { LancerActor } from "../../actor/lancer-actor";
+  import type { BeaconActor } from "../../actor/Beacon-actor";
 
   export let title: string;
   export let stat: "structure" | "stress";
-  export let lancerActor: LancerActor | null;
+  export let BeaconActor: BeaconActor | null;
 
   const dispatch = createEventDispatcher();
 
@@ -14,19 +14,19 @@
     el.focus();
   }
 
-  function getCurrent(a: LancerActor | null) {
+  function getCurrent(a: BeaconActor | null) {
     if (!a || (!a.is_mech() && !a.is_npc())) return 0;
     return Math.max(a.system.derived[stat].value - 1, 0);
   }
 
-  function getDamage(a: LancerActor | null) {
+  function getDamage(a: BeaconActor | null) {
     if (!a || (!a.is_mech() && !a.is_npc())) return 0;
     return a.system.derived[stat].max - getCurrent(a);
   }
 
   $: icon = stat === "stress" ? ("reactor" as const) : stat;
-  $: current = getCurrent(lancerActor);
-  $: damage = getDamage(lancerActor);
+  $: current = getCurrent(BeaconActor);
+  $: damage = getDamage(BeaconActor);
 </script>
 
 <form
@@ -36,13 +36,13 @@
     dispatch("submit");
   }}
 >
-  <div class="lancer-header medium">
+  <div class="Beacon-header medium">
     <i class="cci cci-{icon} i--m i--light" />
     <span>{title}</span>
   </div>
-  {#if lancerActor && (lancerActor.is_mech() || lancerActor.is_npc())}
+  {#if BeaconActor && (BeaconActor.is_mech() || BeaconActor.is_npc())}
     <div class="message-body">
-      <h3>{lancerActor?.name ?? "UNKNOWN MECH"} has taken {icon} damage!</h3>
+      <h3>{BeaconActor?.name ?? "UNKNOWN MECH"} has taken {icon} damage!</h3>
       <div class="damage-preview">
         {#each { length: current } as _}
           <i class="cci cci-{icon} i--m damage-pip" />

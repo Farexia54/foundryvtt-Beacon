@@ -21,7 +21,7 @@ import {
   Counter,
 } from "machine-mind";
 import { HTMLEditDialog } from "../apps/text-editor";
-import type { ContextMenuItem, GenControlContext, LancerActorSheetData, LancerItemSheetData } from "../interfaces";
+import type { ContextMenuItem, GenControlContext, BeaconActorSheetData, BeaconItemSheetData } from "../interfaces";
 
 import { WeaponType, ActivationType } from "machine-mind";
 import tippy from "tippy.js";
@@ -220,8 +220,8 @@ export function is_ref(v: any): v is RegRef<any> {
 
 // Check that a parsed result is probably an item
 // export function is_item(v: any): v is RegRef<any> {
-// let vt = v as LancerItem<LancerItemType> | null; // Better type
-// return vt?._id !== undefined && vt?.type !== undefined && LancerItemTypes
+// let vt = v as BeaconItem<BeaconItemType> | null; // Better type
+// return vt?._id !== undefined && vt?.type !== undefined && BeaconItemTypes
 // }
 // Helper function to format a dotpath to not have any square brackets, instead using pure dot notation
 export function format_dotpath(path: string): string {
@@ -310,7 +310,7 @@ export function ext_helper_hash(
  *    - if prefixed with (int), will parse as int
  *    - if prefixed with (float), will parse as float
  *    - if prefixed with (bool), will parse as boolean
- *    - if prefixed with (struct), will refer to the LANCER.control_structs above, generating whatever value matches the key
+ *    - if prefixed with (struct), will refer to the Beacon.control_structs above, generating whatever value matches the key
  * - "append": append the item to array at the specified path, using same semantics as data-action-value
  * - "insert": insert the item to array at the specified path, using same semantics as data-action-value. Resolves path in same way as "splice". Inserts before.
  * all using a similar api: a `path` to the item, and an `action` to perform on that item. In some cases, a `val` will be used
@@ -325,7 +325,7 @@ export function ext_helper_hash(
  * It has no influence on the behavior of the operation, but can nonetheless be useful for augmenting other behaviors.
  * (e.x. to delete associated entities when remove buttons cleared)
  */
-export function HANDLER_activate_general_controls<T extends LancerActorSheetData<any> | LancerItemSheetData<any>>(
+export function HANDLER_activate_general_controls<T extends BeaconActorSheetData<any> | BeaconItemSheetData<any>>(
   html: JQuery,
   // Retrieves the data that we will operate on
   data_getter: () => Promise<T> | T,
@@ -593,9 +593,9 @@ export function std_num_input(path: string, options: HelperOptions) {
 // Shows a [X] / Y display, where X is an editable value and Y is some total (e.x. max hp)
 export function std_x_of_y(x_path: string, x: number, y: number, add_classes: string = "") {
   return ` <div class="flexrow flex-center no-wrap ${add_classes}">
-              <input class="lancer-stat lancer-stat" type="number" name="${x_path}" value="${x}" data-dtype="Number" style="justify-content: left"/>
+              <input class="Beacon-stat Beacon-stat" type="number" name="${x_path}" value="${x}" data-dtype="Number" style="justify-content: left"/>
               <span>/</span>
-              <span class="lancer-stat" style="justify-content: left"> ${y}</span>
+              <span class="Beacon-stat" style="justify-content: left"> ${y}</span>
             </div>`;
 }
 
@@ -682,7 +682,7 @@ export function popout_editor_button(path: string) {
   return `<a class="fas fa-edit popout-text-edit-button" data-path="${path}"> </a>`;
 }
 
-export function HANDLER_activate_popout_text_editor<T extends LancerActorSheetData<any> | LancerItemSheetData<any>>(
+export function HANDLER_activate_popout_text_editor<T extends BeaconActorSheetData<any> | BeaconItemSheetData<any>>(
   html: JQuery,
   // Retrieves the data that we will operate on
   data_getter: () => Promise<T> | T,
@@ -717,7 +717,7 @@ export function large_textbox_card(title: string, text_path: string, helper: Hel
   let resolved = resolve_helper_dotpath(helper, text_path, "");
   return `
   <div class="card full clipped">
-    <div class="lancer-header">
+    <div class="Beacon-header">
       <span>${title}</span>
       ${popout_editor_button(text_path)}
     </div>
@@ -748,9 +748,9 @@ export function create_context_menu(
   options: ContextMenuItem[],
   on_select_any?: () => void
 ): Element {
-  let menu = $(`<div class="lancer-context-menu flexcol" />`);
+  let menu = $(`<div class="Beacon-context-menu flexcol" />`);
   for (let o of options) {
-    let ro = $(`<div class="lancer-context-item">${o.icon ?? ""}${o.name}</div>`);
+    let ro = $(`<div class="Beacon-context-item">${o.icon ?? ""}${o.name}</div>`);
     ro.on("click", () => {
       o.callback(parent);
       if (on_select_any) on_select_any();
@@ -787,7 +787,7 @@ export function tippy_context_menu(
       trigger: "manual",
       interactive: true,
       allowHTML: true,
-      theme: "lancer-large",
+      theme: "Beacon-large",
     });
 
     // Generate the content

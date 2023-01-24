@@ -1,9 +1,9 @@
-<form class="{{cssClass}} lancer-sheet" autocomplete="off">
+<form class="{{cssClass}} Beacon-sheet" autocomplete="off">
   {{! Sheet Header }}
   <header class="sheet-header card clipped-bot">
     <h1 class="charname grow">
       <input class="header-field" name="name" type="text" value="{{item.name}}"
-             placeholder="{{localize "lancer.placeholder.name"}}" />
+             placeholder="{{localize "Beacon.placeholder.name"}}" />
     </h1>
     {{{ref-portrait-img item.img "img" mm}}}
   </header>
@@ -20,7 +20,7 @@
   <div class="flexcol">
     {{#each unlocks as |unlock_array rank|}}
       <div class="card">
-        <div class="lancer-header">
+        <div class="Beacon-header">
           <span class="left">
             //RANK
             {{rank}}

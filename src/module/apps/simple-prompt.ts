@@ -24,7 +24,7 @@ export function promptText(title: string, prefill: string = ""): Promise<string 
         default: "confirm",
       },
       {
-        classes: ["lancer"],
+        classes: ["Beacon"],
       }
     ).render(true);
   });

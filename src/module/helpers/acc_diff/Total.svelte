@@ -52,7 +52,7 @@
     in:send={{key: `${id}-img`, delay: 100, duration: 200}}
     out:recv={{key: `${id}-img`, duration: 200}}
     class="accdiff-grid {pluginClasses}">
-    <img class="lancer-hit-thumb accdiff-target-has-dropdown"
+    <img class="Beacon-hit-thumb accdiff-target-has-dropdown"
          alt={target.target.name ?? undefined}
          src={target.target.document.texture?.src} bind:this={imgElement} />
     <label for={lockonId} class:checked={target.usingLockOn} class:disabled={!target.lockOnAvailable}
@@ -111,7 +111,7 @@
  .inaccurate > .card.total { background-color: #9c0d0d }
  .total-container.inaccurate { filter: drop-shadow(1px 1px 0px #5c0d0d); }
  .disabled { opacity: 0.4; }
- .lancer-hit-thumb {
+ .Beacon-hit-thumb {
      margin-right: 0px;
      margin-left: 4px;
      margin-bottom: 4px;

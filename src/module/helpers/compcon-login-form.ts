@@ -11,7 +11,7 @@ export default class CompconLoginForm extends FormApplication {
       width: 480,
       height: "auto",
       resizable: false,
-      classes: ["lancer"],
+      classes: ["Beacon"],
       submitOnChange: false,
       submitOnClose: false,
       closeOnSubmit: false,

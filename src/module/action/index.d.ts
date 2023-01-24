@@ -1,4 +1,4 @@
-import { LancerActor } from "../actor/lancer-actor";
+import { BeaconActor } from "../actor/Beacon-actor";
 
 export type ActionData = {
   protocol: boolean;

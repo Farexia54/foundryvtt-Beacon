@@ -1,6 +1,6 @@
-import { getTrackerAppearance, setAppearance } from "lancer-initiative";
-import type { LancerCombat, LancerCombatant } from "lancer-initiative";
-import { LANCER } from "./config";
+import { getTrackerAppearance, setAppearance } from "Beacon-initiative";
+import type { BeaconCombat, BeaconCombatant } from "Beacon-initiative";
+import { Beacon } from "./config";
 import { AutomationConfig } from "./apps/automation-settings";
 import CompconLoginForm from "./helpers/compcon-login-form";
 import { ActionTrackerConfig } from "./apps/action-tracker-settings";
@@ -9,7 +9,7 @@ export const registerSettings = function () {
   /**
    * Track the system version upon which point a migration was last applied
    */
-  game.settings.register(game.system.id, LANCER.setting_migration, {
+  game.settings.register(game.system.id, Beacon.setting_migration, {
     name: "System Migration Version",
     scope: "world",
     config: false,
@@ -17,8 +17,8 @@ export const registerSettings = function () {
     default: "0",
   });
 
-  game.settings.register(game.system.id, LANCER.setting_core_data, {
-    name: "Lancer Data Version",
+  game.settings.register(game.system.id, Beacon.setting_core_data, {
+    name: "Beacon Data Version",
     scope: "world",
     config: false,
     type: String,
@@ -27,7 +27,7 @@ export const registerSettings = function () {
     // default: "3.0.21",
   });
 
-  game.settings.register(game.system.id, LANCER.setting_lcps, {
+  game.settings.register(game.system.id, Beacon.setting_lcps, {
     name: "Installed LCPs",
     scope: "world",
     config: false,
@@ -36,7 +36,7 @@ export const registerSettings = function () {
     default: { index: [] },
   });
 
-  game.settings.registerMenu(game.system.id, LANCER.setting_compcon_login, {
+  game.settings.registerMenu(game.system.id, Beacon.setting_compcon_login, {
     name: "Comp/Con Login",
     label: "Log in to Comp/Con",
     hint: "Log in to Comp/Con to automatically load any pilots and mechs you have access to",
@@ -46,24 +46,24 @@ export const registerSettings = function () {
   });
 
   game.settings.registerMenu(game.system.id, "AutomationMenu", {
-    name: "lancer.automation.menu-name",
-    label: "lancer.automation.menu-label",
-    hint: "lancer.automation.menu-hint",
+    name: "Beacon.automation.menu-name",
+    label: "Beacon.automation.menu-label",
+    hint: "Beacon.automation.menu-hint",
     icon: "mdi mdi-state-machine",
     type: AutomationConfig,
     restricted: true,
   });
 
   game.settings.registerMenu(game.system.id, "ActionTrackerMenu", {
-    name: "lancer.actionTracker.menu-name",
-    label: "lancer.actionTracker.menu-label",
-    hint: "lancer.actionTracker.menu-hint",
+    name: "Beacon.actionTracker.menu-name",
+    label: "Beacon.actionTracker.menu-label",
+    hint: "Beacon.actionTracker.menu-hint",
     icon: "mdi mdi-state-machine",
     type: ActionTrackerConfig,
     restricted: true,
   });
 
-  game.settings.register(game.system.id, LANCER.setting_stock_icons, {
+  game.settings.register(game.system.id, Beacon.setting_stock_icons, {
     name: "Keep Stock Icons",
     scope: "world",
     config: true,
@@ -71,53 +71,53 @@ export const registerSettings = function () {
     default: false,
   });
 
-  game.settings.register(game.system.id, LANCER.setting_welcome, {
+  game.settings.register(game.system.id, Beacon.setting_welcome, {
     name: "Hide Welcome Message",
-    hint: "Hide the welcome message for the latest update to the Lancer system.",
+    hint: "Hide the welcome message for the latest update to the Beacon system.",
     scope: "user",
     config: true,
     type: Boolean,
     default: false,
   });
 
-  game.settings.register(game.system.id, LANCER.setting_square_grid_diagonals, {
-    name: "lancer.squaregriddiagonals.name",
-    hint: "lancer.squaregriddiagonals.hint",
+  game.settings.register(game.system.id, Beacon.setting_square_grid_diagonals, {
+    name: "Beacon.squaregriddiagonals.name",
+    hint: "Beacon.squaregriddiagonals.hint",
     scope: "world",
     config: true,
     type: String,
     choices: {
-      "111": "lancer.squaregriddiagonals.111",
-      "121": "lancer.squaregriddiagonals.121",
-      "222": "lancer.squaregriddiagonals.222",
-      euc: "lancer.squaregriddiagonals.euc",
+      "111": "Beacon.squaregriddiagonals.111",
+      "121": "Beacon.squaregriddiagonals.121",
+      "222": "Beacon.squaregriddiagonals.222",
+      euc: "Beacon.squaregriddiagonals.euc",
     },
     default: "111",
   });
 
-  game.settings.register(game.system.id, LANCER.setting_automation, {
+  game.settings.register(game.system.id, Beacon.setting_automation, {
     scope: "world",
     config: false,
     type: Object,
     default: {},
   });
 
-  game.settings.register(game.system.id, LANCER.setting_actionTracker, {
+  game.settings.register(game.system.id, Beacon.setting_actionTracker, {
     scope: "world",
     config: false,
     type: Object,
     default: {},
   });
 
-  game.settings.register(game.system.id, LANCER.setting_dsn_setup, {
+  game.settings.register(game.system.id, Beacon.setting_dsn_setup, {
     scope: "world",
     config: false,
     type: Boolean,
     default: false,
   });
 
-  // Lancer initiative stuff
-  CONFIG.LancerInitiative = {
+  // Beacon initiative stuff
+  CONFIG.BeaconInitiative = {
     module: game.system.id,
     templatePath: `systems/${game.system.id}/templates/combat/combat-tracker.hbs`,
     def_appearance: {
@@ -143,19 +143,19 @@ export const registerSettings = function () {
     config: false,
     type: Boolean,
     onChange: v => {
-      CONFIG.LancerInitiative.sort = v as boolean;
+      CONFIG.BeaconInitiative.sort = v as boolean;
       game.combats?.render();
     },
     default: true,
   });
-  Hooks.callAll("LancerInitiativeInit");
+  Hooks.callAll("BeaconInitiativeInit");
   setAppearance(getTrackerAppearance());
 
   /**
    * TODO: Remove when automation setting migration no longer needed.
    * @deprecated since 1.0.3
    */
-  game.settings.register(game.system.id, LANCER.setting_automation_switch, {
+  game.settings.register(game.system.id, Beacon.setting_automation_switch, {
     scope: "world",
     config: false,
     type: Boolean,
@@ -166,7 +166,7 @@ export const registerSettings = function () {
    * TODO: Remove when automation setting migration no longer needed.
    * @deprecated since 1.0.3
    */
-  game.settings.register(game.system.id, LANCER.setting_automation_attack, {
+  game.settings.register(game.system.id, Beacon.setting_automation_attack, {
     scope: "world",
     config: false,
     type: Boolean,
@@ -177,7 +177,7 @@ export const registerSettings = function () {
    * TODO: Remove when automation setting migration no longer needed.
    * @deprecated since 1.0.3
    */
-  game.settings.register(game.system.id, LANCER.setting_auto_structure, {
+  game.settings.register(game.system.id, Beacon.setting_auto_structure, {
     scope: "world",
     config: false,
     type: Boolean,
@@ -188,7 +188,7 @@ export const registerSettings = function () {
    * TODO: Remove when automation setting migration no longer needed.
    * @deprecated since 1.0.3
    */
-  game.settings.register(game.system.id, LANCER.setting_pilot_oc_heat, {
+  game.settings.register(game.system.id, Beacon.setting_pilot_oc_heat, {
     scope: "world",
     config: false,
     type: Boolean,
@@ -199,7 +199,7 @@ export const registerSettings = function () {
    * TODO: Remove when automation setting migration no longer needed.
    * @deprecated since 1.0.3
    */
-  game.settings.register(game.system.id, LANCER.setting_overkill_heat, {
+  game.settings.register(game.system.id, Beacon.setting_overkill_heat, {
     scope: "world",
     config: false,
     type: Boolean,
@@ -226,7 +226,7 @@ export function getAutomationOptions(useDefault = false): AutomationOptions {
     remove_templates: false,
   };
   if (useDefault) return def;
-  const set = game.settings.get(game.system.id, LANCER.setting_automation);
+  const set = game.settings.get(game.system.id, Beacon.setting_automation);
   if (set.enabled ?? true) {
     return {
       ...def,
@@ -305,7 +305,7 @@ export function getActionTrackerOptions(useDefault = false): ActionTrackerOption
     printMessages: false,
   };
   if (useDefault) return def;
-  const set = game.settings.get(game.system.id, LANCER.setting_actionTracker) as Partial<ActionTrackerOptions>;
+  const set = game.settings.get(game.system.id, Beacon.setting_actionTracker) as Partial<ActionTrackerOptions>;
   return {
     ...def,
     ...set,
@@ -336,7 +336,7 @@ export interface ActionTrackerOptions {
 // > GLOBALS
 declare global {
   interface DocumentClassConfig {
-    Combat: typeof LancerCombat;
-    Combatant: typeof LancerCombatant;
+    Combat: typeof BeaconCombat;
+    Combatant: typeof BeaconCombatant;
   }
 }

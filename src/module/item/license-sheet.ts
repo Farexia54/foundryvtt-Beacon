@@ -1,17 +1,17 @@
 import type { EntryType, LicensedItem } from "machine-mind";
 import { FoundryReg } from "../mm-util/foundry-reg";
-import { LancerItemSheet } from "./item-sheet";
+import { BeaconItemSheet } from "./item-sheet";
 import { HANDLER_activate_item_context_menus } from "../helpers/item";
-import { LancerItemSheetData } from "../interfaces";
+import { BeaconItemSheetData } from "../interfaces";
 
 /**
- * Extend the generic Lancer item sheet
- * @extends {LancerItemSheet}
+ * Extend the generic Beacon item sheet
+ * @extends {BeaconItemSheet}
  */
-export class LancerLicenseSheet extends LancerItemSheet<EntryType.LICENSE> {
+export class BeaconLicenseSheet extends BeaconItemSheet<EntryType.LICENSE> {
   /**
    * @override
-   * Extend and override the default options used by the generic Lancer item sheet
+   * Extend and override the default options used by the generic Beacon item sheet
    */
   static get defaultOptions(): ItemSheet.Options {
     return mergeObject(super.defaultOptions, {
@@ -50,8 +50,8 @@ export class LancerLicenseSheet extends LancerItemSheet<EntryType.LICENSE> {
   _activate_context_listeners(
     html: JQuery,
     // Retrieves the data that we will operate on
-    data_getter: () => Promise<LancerItemSheetData<EntryType.LICENSE>> | LancerItemSheetData<EntryType.LICENSE>,
-    commit_func: (data: LancerItemSheetData<EntryType.LICENSE>) => void | Promise<void>
+    data_getter: () => Promise<BeaconItemSheetData<EntryType.LICENSE>> | BeaconItemSheetData<EntryType.LICENSE>,
+    commit_func: (data: BeaconItemSheetData<EntryType.LICENSE>) => void | Promise<void>
   ) {
     // Enable custom context menu triggers with only the "view" option.
     HANDLER_activate_item_context_menus(html, data_getter, commit_func, true);

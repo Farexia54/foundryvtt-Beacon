@@ -1,6 +1,6 @@
 import { EntryType, TagInstance, TagTemplate } from "machine-mind";
 import { array_path_edit, resolve_dotpath } from "./commons";
-import type { LancerActorSheetData, LancerItemSheetData } from "../interfaces";
+import type { BeaconActorSheetData, BeaconItemSheetData } from "../interfaces";
 import { HANDLER_enable_mm_dropping, MMDragResolveCache } from "./dragdrop";
 import { ref_params } from "./refs";
 import { promptText } from "../apps/simple-prompt";
@@ -46,7 +46,7 @@ export function compact_tag_list(tag_array_path: string, tags: TagInstance[], al
 }
 
 // Allows user to remove tags or edit their value via right click
-export function HANDLER_activate_tag_context_menus<T extends LancerActorSheetData<any> | LancerItemSheetData<any>>(
+export function HANDLER_activate_tag_context_menus<T extends BeaconActorSheetData<any> | BeaconItemSheetData<any>>(
   html: JQuery,
   // Retrieves the data that we will operate on
   data_getter: () => Promise<T> | T,
@@ -75,7 +75,7 @@ export function HANDLER_activate_tag_context_menus<T extends LancerActorSheetDat
   let set_value = {
     name: "Edit Value",
     icon: '<i class="fas fa-fw fa-edit"></i>',
-    classes: "lancer dialog",
+    classes: "Beacon dialog",
     // condition: game.user.isGM,
     callback: async (html: JQuery) => {
       let cd = await data_getter();

@@ -38,7 +38,7 @@ export class ActionEditDialog<O> extends Dialog {
       template: `systems/${game.system.id}/templates/window/action_editor.hbs`,
       width: 400,
       height: "auto",
-      classes: ["lancer"],
+      classes: ["Beacon"],
     });
   }
 

@@ -1,10 +1,10 @@
 // Import TypeScript modules
-import { LANCER } from "../config";
+import { Beacon } from "../config";
 import { getAutomationOptions } from "../settings";
-import type { LancerItem } from "../item/lancer-item";
-import type { LancerActor } from "../actor/lancer-actor";
-import { is_reg_mech } from "../actor/lancer-actor";
-import type { LancerMacroData, LancerTechMacroData } from "../interfaces";
+import type { BeaconItem } from "../item/Beacon-item";
+import type { BeaconActor } from "../actor/Beacon-actor";
+import { is_reg_mech } from "../actor/Beacon-actor";
+import type { BeaconMacroData, BeaconTechMacroData } from "../interfaces";
 import { ActivationType, EntryType, Mech, MechSystem, Npc, NpcFeature, Pilot, Talent } from "machine-mind";
 import { is_limited, is_tagged } from "machine-mind/dist/funcs";
 import type { AccDiffDataSerialized } from "../helpers/acc_diff";
@@ -15,7 +15,7 @@ import { getMacroSpeaker } from "./_util";
 import { renderMacroHTML } from "./_render";
 import { rollTechMacro } from "./tech";
 
-const lp = LANCER.log_prefix;
+const lp = Beacon.log_prefix;
 
 export function encodeActivationMacroData(actor: any, item: any): string {
   return encodeMacroData({
@@ -45,7 +45,7 @@ export async function prepareActivationMacro(
   if (!actor) return;
 
   // Get the item
-  let item: LancerItem | undefined;
+  let item: BeaconItem | undefined;
   item = actor.items.get(i);
   if (!item && actor.is_mech()) {
     // @ts-expect-error Should be fixed with v10 types
@@ -124,7 +124,7 @@ async function _prepareTechActionMacro(
   actorEnt: Mech | Pilot,
   itemEnt: Talent | MechSystem | NpcFeature,
   index: number,
-  partialMacroData: LancerMacroData,
+  partialMacroData: BeaconMacroData,
   rerollData?: AccDiffDataSerialized
 ) {
   // Support this later...
@@ -133,7 +133,7 @@ async function _prepareTechActionMacro(
 
   let action = itemEnt.Actions[index];
 
-  let mData: LancerTechMacroData = {
+  let mData: BeaconTechMacroData = {
     title: action.Name,
     t_atk: is_reg_mech(actorEnt) ? actorEnt.TechAttack : 0,
     acc: 0,

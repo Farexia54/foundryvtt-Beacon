@@ -1,8 +1,8 @@
 // Import TypeScript modules
-import { LANCER } from "../config";
-import type { LancerItem } from "../item/lancer-item";
-import type { LancerActor } from "../actor/lancer-actor";
-import type { LancerMacroData, LancerTechMacroData } from "../interfaces";
+import { Beacon } from "../config";
+import type { BeaconItem } from "../item/Beacon-item";
+import type { BeaconActor } from "../actor/Beacon-actor";
+import type { BeaconMacroData, BeaconTechMacroData } from "../interfaces";
 import type { NpcFeature } from "machine-mind";
 import type { AccDiffDataSerialized } from "../helpers/acc_diff";
 import { encodeMacroData } from "./_encode";
@@ -10,14 +10,14 @@ import { getMacroSpeaker } from "./_util";
 import { renderMacroTemplate } from "./_render";
 import { attackRolls, checkTargets } from "./attack";
 
-const lp = LANCER.log_prefix;
+const lp = Beacon.log_prefix;
 
 export async function prepareTechMacro(a: string, t: string, rerollData?: AccDiffDataSerialized) {
   // Determine which Actor to speak as
   let actor = getMacroSpeaker(a);
   if (!actor) return;
 
-  let mData: LancerTechMacroData = {
+  let mData: BeaconTechMacroData = {
     title: "",
     t_atk: 0,
     acc: 0,
@@ -25,7 +25,7 @@ export async function prepareTechMacro(a: string, t: string, rerollData?: AccDif
     tags: [],
     action: "",
   };
-  let item: LancerItem | undefined;
+  let item: BeaconItem | undefined;
 
   if (!t) {
     // if we weren't passed an item assume generic "basic tech attack" roll
@@ -61,8 +61,8 @@ export async function prepareTechMacro(a: string, t: string, rerollData?: AccDif
     if (item.is_mech_system()) {
       debugger;
       /*
-      const tData = item.system as LancerMechSystemData;
-      mData.t_atk = (item.actor!.data as LancerPilotActorData).data.mech.tech_attack;
+      const tData = item.system as BeaconMechSystemData;
+      mData.t_atk = (item.actor!.data as BeaconPilotActorData).data.mech.tech_attack;
       mData.tags = tData.tags;
       mData.effect = ""; // TODO */
     } else if (item.is_npc_feature()) {
@@ -106,11 +106,11 @@ export async function prepareTechMacro(a: string, t: string, rerollData?: AccDif
 }
 
 export async function rollTechMacro(
-  actor: LancerActor,
-  data: LancerTechMacroData,
-  partialMacroData: LancerMacroData,
+  actor: BeaconActor,
+  data: BeaconTechMacroData,
+  partialMacroData: BeaconMacroData,
   rerollData?: AccDiffDataSerialized,
-  item?: LancerItem
+  item?: BeaconItem
 ) {
   const targets = Array.from(game!.user!.targets);
   let { AccDiffData } = await import("../helpers/acc_diff");

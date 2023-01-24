@@ -1,13 +1,13 @@
 import { EntryType, License, LicensedItem, LiveEntryTypes, OpCtx, Pilot, RegEntry } from "machine-mind";
-import { is_actor_type, LancerActor, LancerActorType } from "../actor/lancer-actor";
+import { is_actor_type, BeaconActor, BeaconActorType } from "../actor/Beacon-actor";
 import { PACK_SCOPE } from "../compBuilder";
 import { friendly_entrytype_name } from "../config";
-import type { AnyMMItem, LancerItem, LancerItemType } from "../item/lancer-item";
+import type { AnyMMItem, BeaconItem, BeaconItemType } from "../item/Beacon-item";
 import { FetcherCache } from "../util/async";
 import { FoundryFlagData, FoundryReg } from "./foundry-reg";
 
-export async function mm_wrap_item<T extends LancerItemType>(
-  item: LancerItem,
+export async function mm_wrap_item<T extends BeaconItemType>(
+  item: BeaconItem,
   use_existing_ctx: OpCtx
 ): Promise<LiveEntryTypes<T>> {
   // Get the reg that'd hold this item
@@ -72,8 +72,8 @@ export async function mm_wrap_item<T extends LancerItemType>(
   return entry;
 }
 
-export async function mm_wrap_actor<T extends EntryType & LancerActorType>(
-  actor: LancerActor,
+export async function mm_wrap_actor<T extends EntryType & BeaconActorType>(
+  actor: BeaconActor,
   use_existing_ctx: OpCtx
 ): Promise<LiveEntryTypes<T>> {
   // Get our reg. Thankfully simpler than mm_wrap_item since we don't really need to worry as much about parent
@@ -117,7 +117,7 @@ export async function mm_wrap_actor<T extends EntryType & LancerActorType>(
 }
 
 // Sort mm items. Moves moverand to dest, either before or after depending on third arg
-export async function resort_item(moverand: LancerItem, dest: LancerItem, sort_before = true) {
+export async function resort_item(moverand: BeaconItem, dest: BeaconItem, sort_before = true) {
   // Make sure owner is the same
   if (!dest.actor || !moverand.actor || dest.actor != moverand.actor) {
     console.warn("Cannot sort items from two separate actors / unowned items");
@@ -125,7 +125,7 @@ export async function resort_item(moverand: LancerItem, dest: LancerItem, sort_b
   }
 
   // Ok, now get siblings
-  let siblings: LancerItem[] = dest.collection.contents;
+  let siblings: BeaconItem[] = dest.collection.contents;
   siblings = siblings.filter(s => s.id != moverand.id);
 
   // Now resort
@@ -146,14 +146,14 @@ export async function mm_resort_item(moverand: AnyMMItem, dest: AnyMMItem, sort_
 }
 
 // Define a helper to check if a license includes the specified item. Checks by lid. Maybe change that in the future?
-// export function license_has(license: License, item: LiveEntryTypes<LancerItemType>) {
+// export function license_has(license: License, item: LiveEntryTypes<BeaconItemType>) {
 // return license.FlatUnlocks.some(unlockable => unlockable.LID == (item as any).LID);
 // }
 
 // Helper for finding what license an item comes from. Checks by name, an inelegant solution but probably good enough
 export async function find_license_for(
-  mm: LiveEntryTypes<LancerItemType>,
-  in_actor?: LancerActor
+  mm: LiveEntryTypes<BeaconItemType>,
+  in_actor?: BeaconActor
 ): Promise<License | null> {
   // If the item does not have a license name, then we just bail
   let license_name = (mm as LicensedItem).License;
@@ -210,11 +210,11 @@ const world_and_comp_license_cache = new FetcherCache<string, License | null>(as
 }, 60_000);
 
 // Get the owner of an item, or null if none exists
-export function mm_owner<T extends LancerItemType>(item: RegEntry<T>): LancerActor | null {
+export function mm_owner<T extends BeaconItemType>(item: RegEntry<T>): BeaconActor | null {
   let flags = item.Flags as FoundryFlagData<T>;
-  let owner = (flags.orig_doc as LancerItem).actor;
+  let owner = (flags.orig_doc as BeaconItem).actor;
   if (owner) {
-    return owner as LancerActor;
+    return owner as BeaconActor;
   } else {
     return null;
   }
@@ -259,7 +259,7 @@ export function get_pack_id(type: EntryType): string {
 // Retrieve a pack, or create it as necessary
 // async to handle the latter case
 export async function get_pack(
-  type: LancerItemType | LancerActorType
+  type: BeaconItemType | BeaconActorType
 ): Promise<CompendiumCollection<CompendiumCollection.Metadata>> {
   // Find existing world compendium
   let pack = game.packs.get(get_pack_id(type));
@@ -274,7 +274,7 @@ export async function get_pack(
       //@ts-ignore - entity property deprecated, v9 uses type instead.
       type: entity_type,
       label: friendly_entrytype_name(type),
-      system: "lancer",
+      system: "Beacon",
       package: "world",
       path: `./packs/${type}.db`,
       private: false,

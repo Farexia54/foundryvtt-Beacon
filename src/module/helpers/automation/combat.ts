@@ -1,6 +1,6 @@
-import { LancerCombat } from "lancer-initiative";
+import { BeaconCombat } from "Beacon-initiative";
 import { modAction } from "../../action/actionTracker";
-import { LancerActor } from "../../actor/lancer-actor";
+import { BeaconActor } from "../../actor/Beacon-actor";
 import { prepareChargeMacro } from "../../macros";
 import { prepareActionTrackMacro } from "../../macros/action-track";
 import { getActionTrackerOptions, getAutomationOptions } from "../../settings";
@@ -28,7 +28,7 @@ export async function handleCombatUpdate(...[combat, changed]: Parameters<Hooks.
   }
 }
 
-function processStartTurn(actor: LancerActor) {
+function processStartTurn(actor: BeaconActor) {
   console.log(`Processing start-of-turn combat automation for ${actor.name}`);
 
   // Handle NPC charges.
@@ -46,7 +46,7 @@ function processStartTurn(actor: LancerActor) {
   }
 }
 
-function processEndTurn(actor: LancerActor) {
+function processEndTurn(actor: BeaconActor) {
   console.log(`Processing end-of-turn combat automation for ${actor.name}`);
 
   // Dump extra actions.
@@ -58,13 +58,13 @@ function processEndTurn(actor: LancerActor) {
   }
 }
 
-function lookup(combat: LancerCombat, id: String | null) {
+function lookup(combat: BeaconCombat, id: String | null) {
   if (id) {
     return combat.combatants.find(com => com.id === id)?.actor;
   } else return undefined;
 }
 
-function refreshReactions(combat: LancerCombat | null) {
+function refreshReactions(combat: BeaconCombat | null) {
   if (combat) {
     combat.combatants.map(comb => {
       if (comb.actor) {

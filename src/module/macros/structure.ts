@@ -1,11 +1,11 @@
 // Import TypeScript modules
-import { LANCER } from "../config";
-import type { LancerActor } from "../actor/lancer-actor";
+import { Beacon } from "../config";
+import type { BeaconActor } from "../actor/Beacon-actor";
 import { getAutomationOptions } from "../settings";
 import { getMacroSpeaker } from "./_util";
 import { prepareTextMacro } from "./text";
 
-const lp = LANCER.log_prefix;
+const lp = Beacon.log_prefix;
 
 /**
  * Performs a roll on the structure table for the given actor
@@ -13,7 +13,7 @@ const lp = LANCER.log_prefix;
  * @param reroll_data - Data to use if rerolling. Setting this also supresses the dialog.
  */
 export async function prepareStructureMacro(
-  a: string | LancerActor,
+  a: string | BeaconActor,
   reroll_data?: { structure: number }
 ): Promise<void> {
   // Determine which Actor to speak as
@@ -34,7 +34,7 @@ export async function prepareStructureMacro(
     }
     const { open } = await import("../helpers/slidinghud");
     try {
-      await open("struct", { stat: "structure", title: "Structure Damage", lancerActor: actor });
+      await open("struct", { stat: "structure", title: "Structure Damage", BeaconActor: actor });
     } catch (_e) {
       return;
     }
@@ -53,11 +53,11 @@ export function prepareStructureSecondaryRollMacro(registryId: string) {
       registryId,
       "Destroy Weapons",
       `
-<div class="dice-roll lancer-dice-roll">
+<div class="dice-roll Beacon-dice-roll">
   <div class="dice-result">
-    <div class="dice-formula lancer-dice-formula flexrow">
+    <div class="dice-formula Beacon-dice-formula flexrow">
       <span style="text-align: left; margin-left: 5px;">${roll.formula}</span>
-      <span class="dice-total lancer-dice-total major">${result}</span>
+      <span class="dice-total Beacon-dice-total major">${result}</span>
     </div>
   </div>
 </div>
@@ -68,11 +68,11 @@ export function prepareStructureSecondaryRollMacro(registryId: string) {
       registryId,
       "Destroy Systems",
       `
-<div class="dice-roll lancer-dice-roll">
+<div class="dice-roll Beacon-dice-roll">
   <div class="dice-result">
-    <div class="dice-formula lancer-dice-formula flexrow">
+    <div class="dice-formula Beacon-dice-formula flexrow">
       <span style="text-align: left; margin-left: 5px;">${roll.formula}</span>
-      <span class="dice-total lancer-dice-total major">${result}</span>
+      <span class="dice-total Beacon-dice-total major">${result}</span>
     </div>
   </div>
 </div>

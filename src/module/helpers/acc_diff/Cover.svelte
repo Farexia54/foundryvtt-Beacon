@@ -21,11 +21,11 @@
  let [send, recv] = crossfade({});
 </script>
 
-<div class="lancer-cover-radio {klass}" class:disabled={disabled}>
+<div class="Beacon-cover-radio {klass}" class:disabled={disabled}>
   {#each inputs as input}
     <input type="radio" id="{id}-{input.slug}" class="no-grow {input.slug}-cover"
            bind:group={cover} value={input.value} disabled={disabled} />
-    <label for="{id}-{input.slug}" class="lancer-cover-radio-label {labelClass}">
+    <label for="{id}-{input.slug}" class="Beacon-cover-radio-label {labelClass}">
       <i class="mdi mdi-{input.icon} i--s" title={input.human}></i>
       <span class="no-grow">{input.human}</span>
       {#if input.value == cover}

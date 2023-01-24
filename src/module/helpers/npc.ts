@@ -14,18 +14,18 @@ import { limited_uses_indicator, ref_params } from "./refs";
 import { compact_tag_list } from "./tags";
 
 export const EffectIcons = {
-  Generic: `systems/lancer/assets/icons/generic_item.svg`,
-  Basic: `systems/lancer/assets/icons/generic_item.svg`,
-  Charge: `systems/lancer/assets/icons/mine.svg`,
-  Deployable: `systems/lancer/assets/icons/deployable.svg`,
-  AI: `systems/lancer/assets/icons/mech_system.svg`,
-  Protocol: `systems/lancer/assets/icons/protocol.svg`,
-  Reaction: `systems/lancer/assets/icons/reaction.svg`,
-  Tech: `systems/lancer/assets/icons/tech_quick.svg`,
-  Drone: `systems/lancer/assets/icons/drone.svg`,
-  Bonus: `systems/lancer/assets/icons/shape_polygon_plus.svg`,
-  Offensive: `systems/lancer/assets/icons/sword_array.svg`,
-  Profile: `systems/lancer/assets/icons/weapon_profile.svg`,
+  Generic: `systems/Beacon/assets/icons/generic_item.svg`,
+  Basic: `systems/Beacon/assets/icons/generic_item.svg`,
+  Charge: `systems/Beacon/assets/icons/mine.svg`,
+  Deployable: `systems/Beacon/assets/icons/deployable.svg`,
+  AI: `systems/Beacon/assets/icons/mech_system.svg`,
+  Protocol: `systems/Beacon/assets/icons/protocol.svg`,
+  Reaction: `systems/Beacon/assets/icons/reaction.svg`,
+  Tech: `systems/Beacon/assets/icons/tech_quick.svg`,
+  Drone: `systems/Beacon/assets/icons/drone.svg`,
+  Bonus: `systems/Beacon/assets/icons/shape_polygon_plus.svg`,
+  Offensive: `systems/Beacon/assets/icons/sword_array.svg`,
+  Profile: `systems/Beacon/assets/icons/weapon_profile.svg`,
 };
 
 /* ------------------------------------ */
@@ -77,11 +77,11 @@ function npc_feature_scaffold(path: string, npc_feature: NpcFeature, body: strin
     npc_feature.as_ref(),
     npc_feature.Flags.orig_doc.uuid
   )}>
-    <div class="flexrow lancer-header clipped-top ${npc_feature.Destroyed ? "destroyed" : ""}">
+    <div class="flexrow Beacon-header clipped-top ${npc_feature.Destroyed ? "destroyed" : ""}">
       <i class="${npc_feature.Destroyed ? "mdi mdi-cog" : `cci ${icon} i--m i--light`}"> </i>
       ${macro_button}
       <span class="minor grow">${npc_feature.Name}</span>
-      <a class="lancer-context-menu" data-context-menu="${EntryType.NPC_FEATURE}" data-path="${path}">
+      <a class="Beacon-context-menu" data-context-menu="${EntryType.NPC_FEATURE}" data-path="${path}">
         <i class="fas fa-ellipsis-v"></i>
       </a>
     </div>
@@ -94,7 +94,7 @@ export function npc_reaction_effect_preview(path: string, options: HelperOptions
   return npc_feature_scaffold(
     path,
     npc_feature,
-    `<div class="flexcol lancer-body">
+    `<div class="flexcol Beacon-body">
       ${npc_feature.Tags.find(tag => tag.Tag.LID === "tg_recharge") ? charged_box(npc_feature.Charged, path) : ""}
       ${effect_box("TRIGGER", npc_feature.Trigger)}
       ${effect_box("EFFECT", npc_feature.Effect)}
@@ -110,7 +110,7 @@ function npc_system_trait_effect_preview(path: string, options: HelperOptions) {
   return npc_feature_scaffold(
     path,
     npc_feature,
-    `<div class="flexcol lancer-body">
+    `<div class="flexcol Beacon-body">
       ${npc_feature.Tags.find(tag => tag.Tag.LID === "tg_limited") ? limited_uses_indicator(npc_feature, path) : ""}
       ${npc_feature.Tags.find(tag => tag.Tag.LID === "tg_recharge") ? charged_box(npc_feature.Charged, path) : ""}
       ${effect_box("EFFECT", npc_feature.Effect)}
@@ -163,7 +163,7 @@ export function npc_tech_effect_preview(path: string, options: HelperOptions) {
     path,
     npc_feature,
     `
-    <div class="lancer-body flex-col">
+    <div class="Beacon-body flex-col">
       <div class="flexrow">
         ${subheader_items.join(sep)}
       </div>
@@ -217,7 +217,7 @@ export function npc_weapon_effect_preview(path: string, options: HelperOptions) 
     path,
     npc_feature,
     `
-    <div class="lancer-body flex-col">
+    <div class="Beacon-body flex-col">
       <div class="flexrow no-wrap">
         ${subheader_items.join(sep)}
       </div>

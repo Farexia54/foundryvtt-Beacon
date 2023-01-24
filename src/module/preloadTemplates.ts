@@ -7,7 +7,7 @@ export const preloadTemplates = async function () {
     `systems/${game.system.id}/templates/chat/tech-attack-card.hbs`,
     `systems/${game.system.id}/templates/combat/combat-tracker-config.hbs`,
     `systems/${game.system.id}/templates/combat/combat-tracker.hbs`,
-    `systems/${game.system.id}/templates/combat/lancer-initiative-settings.hbs`,
+    `systems/${game.system.id}/templates/combat/Beacon-initiative-settings.hbs`,
     `systems/${game.system.id}/templates/item/core_bonus.hbs`,
     `systems/${game.system.id}/templates/item/frame.hbs`,
     `systems/${game.system.id}/templates/item/license.hbs`,

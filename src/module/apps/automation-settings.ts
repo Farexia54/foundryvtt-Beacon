@@ -1,6 +1,6 @@
 import { getAutomationOptions } from "../settings";
 import type { AutomationOptions } from "../settings";
-import { LANCER } from "../config";
+import { Beacon } from "../config";
 /**
  * Settings form for customizing the icon appearance of the icon used in the
  * tracker
@@ -10,8 +10,8 @@ export class AutomationConfig extends FormApplication<FormApplication.Options, A
   static get defaultOptions(): FormApplication.Options {
     return {
       ...super.defaultOptions,
-      title: "lancer.automation.menu-label",
-      id: "lancer-automation-settings",
+      title: "Beacon.automation.menu-label",
+      id: "Beacon-automation-settings",
       template: `systems/${game.system.id}/templates/window/automation-config.hbs`,
       width: 350,
     };
@@ -21,7 +21,7 @@ export class AutomationConfig extends FormApplication<FormApplication.Options, A
   getData(): AutomationOptions {
     return {
       ...getAutomationOptions(true),
-      ...game.settings.get(game.system.id, LANCER.setting_automation),
+      ...game.settings.get(game.system.id, Beacon.setting_automation),
     };
   }
 
@@ -37,7 +37,7 @@ export class AutomationConfig extends FormApplication<FormApplication.Options, A
   async _updateObject(_: Event, data: Record<string, unknown>): Promise<void> {
     const defs = getAutomationOptions(true);
     const set = foundry.utils.diffObject(defs, data, { inner: true });
-    game.settings.set(game.system.id, LANCER.setting_automation, set);
+    game.settings.set(game.system.id, Beacon.setting_automation, set);
   }
 
   /**
@@ -45,7 +45,7 @@ export class AutomationConfig extends FormApplication<FormApplication.Options, A
    * their default values.
    */
   async resetSettings(): Promise<unknown> {
-    await game.settings.set(game.system.id, LANCER.setting_automation, {});
+    await game.settings.set(game.system.id, Beacon.setting_automation, {});
     return this.render();
   }
 }

@@ -1,7 +1,7 @@
 {
   "dataPath": "/path/to/foundry/data",
-  "systemName": "lancer",
-  "repository": "https://github.com/Eranziel/foundryvtt-lancer",
-  "rawURL": "https://github.com/Eranziel/foundryvtt-lancer/releases/latest/download",
-  "downloadURL": "https://github.com/Eranziel/foundryvtt-lancer/releases/download"
+  "systemName": "Beacon",
+  "repository": "https://github.com/Farexia54/foundryvtt-Beacon",
+  "rawURL": "https://github.com/Farexia54/foundryvtt-Beacon/releases/latest/download",
+  "downloadURL": "https://github.com/Farexia54/foundryvtt-Beacon/releases/download"
 }

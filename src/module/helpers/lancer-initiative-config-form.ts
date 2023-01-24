@@ -1,9 +1,9 @@
-import { getTrackerAppearance } from "lancer-initiative";
-type Appearance = NonNullable<typeof CONFIG.LancerInitiative.def_appearance>;
+import { getTrackerAppearance } from "Beacon-initiative";
+type Appearance = NonNullable<typeof CONFIG.BeaconInitiative.def_appearance>;
 
-export class LancerCombatTrackerConfig extends CombatTrackerConfig<
+export class BeaconCombatTrackerConfig extends CombatTrackerConfig<
   FormApplication.Options,
-  ClientSettings.Values["lancer.combatTrackerConfig"]
+  ClientSettings.Values["Beacon.combatTrackerConfig"]
 > {
   static get defaultOptions(): FormApplication.Options {
     return {
@@ -19,12 +19,12 @@ export class LancerCombatTrackerConfig extends CombatTrackerConfig<
   }
 
   activateListeners(html: JQuery<HTMLElement>) {
-    html.find("button#tracker-appearance").on("click", () => new LancerCombatAppearanceConfig({}).render(true));
+    html.find("button#tracker-appearance").on("click", () => new BeaconCombatAppearanceConfig({}).render(true));
   }
 
   async _updateObject(
     event: Event,
-    formData: ClientSettings.Values["lancer.combatTrackerConfig"]
+    formData: ClientSettings.Values["Beacon.combatTrackerConfig"]
   ): Promise<ClientSettings.Values["core.combatTrackerConfig"]> {
     let res = await super._updateObject(event, formData);
     console.log(formData);
@@ -37,13 +37,13 @@ export class LancerCombatTrackerConfig extends CombatTrackerConfig<
  * Settings form for customizing the icon appearance of the icon used in the
  * tracker
  */
-class LancerCombatAppearanceConfig extends FormApplication<FormApplication.Options, Appearance> {
+class BeaconCombatAppearanceConfig extends FormApplication<FormApplication.Options, Appearance> {
   static get defaultOptions(): FormApplication.Options {
     return {
       ...super.defaultOptions,
-      title: "Lancer Intiative",
-      id: "lancer-initiative-settings",
-      template: `systems/${game.system.id}/templates/combat/lancer-initiative-settings.hbs`,
+      title: "Beacon Intiative",
+      id: "Beacon-initiative-settings",
+      template: `systems/${game.system.id}/templates/combat/Beacon-initiative-settings.hbs`,
       width: 350,
     };
   }
@@ -79,7 +79,7 @@ class LancerCombatAppearanceConfig extends FormApplication<FormApplication.Optio
   }
 
   async _updateObject(_: Event, data: Record<string, unknown>): Promise<void> {
-    const config = CONFIG.LancerInitiative;
+    const config = CONFIG.BeaconInitiative;
     game.settings.set(
       config.module,
       "combat-tracker-appearance",
@@ -92,7 +92,7 @@ class LancerCombatAppearanceConfig extends FormApplication<FormApplication.Optio
    * their default values.
    */
   async resetSettings(): Promise<unknown> {
-    const config = CONFIG.LancerInitiative;
+    const config = CONFIG.BeaconInitiative;
     await game.settings.set(config.module, "combat-tracker-appearance", {});
     return this.render();
   }

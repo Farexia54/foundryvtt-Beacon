@@ -1,5 +1,5 @@
-import type { LancerActor } from "../actor/lancer-actor";
-import type { LancerItem } from "../item/lancer-item";
+import type { BeaconActor } from "../actor/Beacon-actor";
+import type { BeaconItem } from "../item/Beacon-item";
 
 /**
  * Interface for the destructured options to fromLid and fromLidSync.
@@ -13,8 +13,8 @@ interface FromLidOpts {
 }
 
 /**
- * Retrieve a Document by its Lancer ID
- * @param lid    - The Lancer ID to look up
+ * Retrieve a Document by its Beacon ID
+ * @param lid    - The Beacon ID to look up
  * @param source - Where to look for the item
  */
 export async function fromLid(lid: string, { source = "all" }: Partial<FromLidOpts> = {}) {
@@ -40,15 +40,15 @@ export async function fromLid(lid: string, { source = "all" }: Partial<FromLidOp
     ).find(e => e !== undefined);
   }
 
-  return document as LancerActor | LancerItem | undefined;
+  return document as BeaconActor | BeaconItem | undefined;
 }
 
 /**
- * Retrieve a Document by its Lancer ID synchronously. If the id
+ * Retrieve a Document by its Beacon ID synchronously. If the id
  * resolves to a compendium, returns that document's index instead. If
  * the index has not been regenerated to contain lids, only the world
  * collections will be searched.
- * @param lid    - The Lancer ID to look up
+ * @param lid    - The Beacon ID to look up
  * @param source - Where to look for the item
  */
 export function fromLidSync(lid: string, { source = "all" }: Partial<FromLidOpts> = {}) {
@@ -75,8 +75,8 @@ export function fromLidSync(lid: string, { source = "all" }: Partial<FromLidOpts
   }
 
   return document as
-    | LancerActor
-    | LancerItem
+    | BeaconActor
+    | BeaconItem
     | {
         _id: string;
         img: string;

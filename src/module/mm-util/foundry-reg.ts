@@ -39,8 +39,8 @@ import {
   InventoriedRegEntry,
   LoadOptions,
 } from "machine-mind";
-import { LancerActor, LancerActorType } from "../actor/lancer-actor";
-import type { LancerItem, LancerItemType } from "../item/lancer-item";
+import { BeaconActor, BeaconActorType } from "../actor/Beacon-actor";
+import type { BeaconItem, BeaconItemType } from "../item/Beacon-item";
 import { DocumentCollectionWrapper, EntFor as DocFor, GetResult, NuWrapper } from "./db_abstractions";
 import { is_core_pack_name } from "./helpers";
 
@@ -195,7 +195,7 @@ export class FoundryReg extends Registry {
   async switch_reg_inv(for_inv_item: InventoriedRegEntry<EntryType>): Promise<Registry> {
     // Determine based on actor metadata
     let flags = for_inv_item.Flags as FoundryFlagData<EntryType>;
-    let actor = flags.orig_doc as LancerActor;
+    let actor = flags.orig_doc as BeaconActor;
 
     // If a compendium actor, make a comp_actor reg
     // If a token, make a scene_token reg
@@ -549,13 +549,13 @@ export class FoundryRegCat<T extends EntryType> extends RegCat<T> {
   // BE CAREFUL! IF YOU WRAP A DOCUMENT IN A REGISTRY THAT WOULDNT HAVE FETCHED IT, IT WONT WRITE BACK PROPERLY
   async dangerous_wrap_doc(
     ctx: OpCtx,
-    ent: T extends LancerActorType ? LancerActor : T extends LancerItemType ? LancerItem : never,
+    ent: T extends BeaconActorType ? BeaconActor : T extends BeaconItemType ? BeaconItem : never,
     wait_ready: boolean = true
   ): Promise<LiveEntryTypes<T> | null> {
     let id = ent.id!;
 
     // ID is different if we are an unlinked token
-    if (ent instanceof LancerActor && ent.isToken) {
+    if (ent instanceof BeaconActor && ent.isToken) {
       id = ent.token!.id!;
     }
 

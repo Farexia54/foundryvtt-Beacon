@@ -1,21 +1,21 @@
-<form class="{{cssClass}} lancer-sheet" autocomplete="off">
+<form class="{{cssClass}} Beacon-sheet" autocomplete="off">
   {{! Sheet Header }}
   <div>
     <header class="sheet-header card clipped-bot">
       <div grow>
         <h1 class="charname">
           <input class="header-field" name="name" type="text" value="{{actor.name}}" placeholder="{{localize "
-            lancer.placeholder.name"}}" />
+            Beacon.placeholder.name"}}" />
         </h1>
       </div>
       {{{ref-portrait-img actor.img "img" mm}}}
     </header>
 
     {{!-- Sheet Tab Navigation --}}
-    <nav class="lancer-tabs" data-group="primary">
-      <a class="item lancer-tab medium" data-tab="stats">{{localize "lancer.mech-sheet.tabs.stats"}}</a>
-      <a class="item lancer-tab medium" data-tab="loadout">{{localize "lancer.mech-sheet.tabs.loadout"}}</a>
-      <a class="item lancer-tab medium" data-tab="talents">{{localize "lancer.mech-sheet.tabs.talents"}}</a>
+    <nav class="Beacon-tabs" data-group="primary">
+      <a class="item Beacon-tab medium" data-tab="stats">{{localize "Beacon.mech-sheet.tabs.stats"}}</a>
+      <a class="item Beacon-tab medium" data-tab="loadout">{{localize "Beacon.mech-sheet.tabs.loadout"}}</a>
+      <a class="item Beacon-tab medium" data-tab="talents">{{localize "Beacon.mech-sheet.tabs.talents"}}</a>
     </nav>
   </div>
 
@@ -46,9 +46,9 @@
         </div>
         {{{overcharge-button actor "mm.OverchargeCount"}}}
         <div class="flexcol card clipped">
-          <div class="lancer-header">
+          <div class="Beacon-header">
             <span class="major">
-              {{localize "lancer.mech-sheet.core.label"}}
+              {{localize "Beacon.mech-sheet.core.label"}}
             </span>
           </div>
           <div class="flexrow stat-container">
@@ -71,10 +71,10 @@
       </div>
       <div class="pilot-frame-wrapper flexrow">
         <div class="card">
-          <span class="lancer-header submajor clipped-top">
-            {{localize "lancer.mech-sheet.macros.label" }}
+          <span class="Beacon-header submajor clipped-top">
+            {{localize "Beacon.mech-sheet.macros.label" }}
           </span>
-          <div class="lancer-macro-grid">
+          <div class="Beacon-macro-grid">
             {{{macro-button "STABILIZE" "stabilizeMacro" "mm" }}}
             {{{macro-button "FULL REPAIR" "fullRepairMacro" "mm" }}}
             <div style="margin:0px 8px;border-left: 2px solid #a2a2a2;"></div>
@@ -84,10 +84,10 @@
         </div>
         {{#if (is-combatant actor)}}
         <div style="min-width:560px" class="card">
-          <span class="lancer-header submajor clipped-top">
-            {{localize "lancer.mech-sheet.actions.label"}}
+          <span class="Beacon-header submajor clipped-top">
+            {{localize "Beacon.mech-sheet.actions.label"}}
           </span>
-          <div class="lancer-action-grid">
+          <div class="Beacon-action-grid">
             {{{action-button "Protocol" "system.action_tracker.protocol" "protocol"}}}
             {{{action-button "Movement" "system.action_tracker.move" "move"}}}
             {{{action-button "Full Action" "system.action_tracker.full" "full"}}}
@@ -102,15 +102,15 @@
     <div class="tab loadout" data-group="primary" data-tab="loadout">
       {{{mech-frame actor "mm.Loadout.Frame"}}}
       <div class="card clipped">
-        <span class="lancer-header submajor">BASIC ATTACKS</span>
-        <div class="lancer-macro-grid">
+        <span class="Beacon-header submajor">BASIC ATTACKS</span>
+        <div class="Beacon-macro-grid">
           {{{macro-button "MELEE/RANGED" "prepareEncodedAttackMacro" "mm" }}}
           {{{macro-button "TECH" "prepareTechMacro" "mm" }}}
         </div>
       </div>
       <div class="card">
-        <span class="lancer-header major">
-          {{localize "lancer.mech-sheet.system.label" total=mm.Loadout.TotalSP max=mm.MaxSP}}
+        <span class="Beacon-header major">
+          {{localize "Beacon.mech-sheet.system.label" total=mm.Loadout.TotalSP max=mm.MaxSP}}
         </span>
         {{{mech-loadout "mm"}}}
       </div>
@@ -119,7 +119,7 @@
     <div class="tab talents" data-group="primary" data-tab="talents">
       {{!-- Talents --}}
       <div class="card clipped">
-        <h2 class="lancer-title clipped">{{localize "lancer.pilot-sheet.abilities.talents"}}</h2>
+        <h2 class="Beacon-title clipped">{{localize "Beacon.pilot-sheet.abilities.talents"}}</h2>
         {{#each mm.Pilot.Talents as |skill index|}}
         {{{ref-mm-controllable-item (concat "mm.Pilot.Talents." index) ""}}}
         {{/each}}

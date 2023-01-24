@@ -73,7 +73,7 @@ export function applyCollapseListeners() {
 const handleCollapse = (ev: Event) => {
   ev.stopPropagation();
 
-  let prefix = `lancer-collapse`;
+  let prefix = `Beacon-collapse`;
   // On click, find matching collapse, and toggle collapsed class.
   let store = (ev.currentTarget as Element).getAttribute("data-collapse-store");
   let id = (ev.currentTarget as Element).getAttribute("data-collapse-id");

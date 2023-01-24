@@ -27,11 +27,11 @@ If applicable, add screenshots to help explain your problem.
  - OS: [e.g. Windows]
  - Browser [e.g. chrome, firefox]
  - Foundry version [e.g. 0.6.6]
- - Lancer system version [e.g. 0.1.10]
+ - Beacon system version [e.g. 0.1.10]
 
 **Additional context**
 Add any other context about the problem here.
 
 **Discord contact info**
 If you are willing to answer questions regarding this bug report on Discord, or if you want to be notified when it is fixed, please leave your Discord ID here.
-e.g. Eranziel#1234
+e.g. Person#1234

@@ -3,16 +3,16 @@
  * Registers custom settings, sheets, and constants using the Foundry API.
  *
  * Author: Eranziel
- * Content License: LANCER is copyright 2019, Massif Press Inc.
+ * Content License: Beacon is copyright 2019, Massif Press Inc.
  * Software License: GNU GPLv3
  */
 
 // Import SCSS into our build
-import "./lancer.scss";
+import "./Beacon.scss";
 
 // Import TypeScript modules
 import {
-  LANCER,
+  Beacon,
   COMPATIBLE_MIGRATION_VERSION,
   NEEDS_MAJOR_MIGRATION_VERSION,
   NEEDS_MINOR_MIGRATION_VERSION,
@@ -20,22 +20,22 @@ import {
   WELCOME,
   NEEDS_AUTOMATION_MIGRATION_VERSION,
 } from "./module/config";
-import { LancerActor } from "./module/actor/lancer-actor";
-import { LancerItem } from "./module/item/lancer-item";
+import { BeaconActor } from "./module/actor/Beacon-actor";
+import { BeaconItem } from "./module/item/Beacon-item";
 import { populatePilotCache } from "./module/compcon";
 
 import { action_type_selector } from "./module/helpers/npc";
 
-import { LancerActionManager } from "./module/action/actionManager";
+import { BeaconActionManager } from "./module/action/actionManager";
 
 // Import applications
-import { LancerPilotSheet, pilot_counters, all_mech_preview } from "./module/actor/pilot-sheet";
-import { LancerNPCSheet } from "./module/actor/npc-sheet";
-import { LancerDeployableSheet } from "./module/actor/deployable-sheet";
-import { LancerMechSheet } from "./module/actor/mech-sheet";
-import { LancerItemSheet } from "./module/item/item-sheet";
-import { LancerFrameSheet } from "./module/item/frame-sheet";
-import { LancerLicenseSheet } from "./module/item/license-sheet";
+import { BeaconPilotSheet, pilot_counters, all_mech_preview } from "./module/actor/pilot-sheet";
+import { BeaconNPCSheet } from "./module/actor/npc-sheet";
+import { BeaconDeployableSheet } from "./module/actor/deployable-sheet";
+import { BeaconMechSheet } from "./module/actor/mech-sheet";
+import { BeaconItemSheet } from "./module/item/item-sheet";
+import { BeaconFrameSheet } from "./module/item/frame-sheet";
+import { BeaconLicenseSheet } from "./module/item/license-sheet";
 import { WeaponRangeTemplate } from "./module/pixi/weapon-range-template";
 
 // Import helpers
@@ -54,8 +54,8 @@ import * as macros from "./module/macros";
 // Import Tippy.js
 import tippy from "tippy.js";
 import "tippy.js/dist/tippy.css"; // optional for styling
-tippy.setDefaultProps({ theme: "lancer-small", arrow: false, delay: [400, 200] });
-// tippy.setDefaultProps({ theme: "lancer", arrow: false, delay: [400, 200], hideOnClick: false, trigger: "click"});
+tippy.setDefaultProps({ theme: "Beacon-small", arrow: false, delay: [400, 200] });
+// tippy.setDefaultProps({ theme: "Beacon", arrow: false, delay: [400, 200], hideOnClick: false, trigger: "click"});
 
 // Import node modules
 import * as mm from "machine-mind";
@@ -147,18 +147,18 @@ import { applyCollapseListeners } from "./module/helpers/collapse";
 import { handleCombatUpdate } from "./module/helpers/automation/combat";
 import { handleActorExport, validForExport } from "./module/helpers/io";
 import { runEncodedMacro } from "./module/macros";
-import { LancerToken, LancerTokenDocument } from "./module/token";
+import { BeaconToken, BeaconTokenDocument } from "./module/token";
 import { FoundryReg } from "./module/mm-util/foundry-reg";
 import { applyGlobalDragListeners } from "./module/helpers/dragdrop";
 import { gridDist } from "./module/helpers/automation/targeting";
 import CompconLoginForm from "./module/helpers/compcon-login-form";
-import { LancerCombat, LancerCombatant, LancerCombatTracker } from "lancer-initiative";
-import { LancerCombatTrackerConfig } from "./module/helpers/lancer-initiative-config-form";
+import { BeaconCombat, BeaconCombatant, BeaconCombatTracker } from "Beacon-initiative";
+import { BeaconCombatTrackerConfig } from "./module/helpers/Beacon-initiative-config-form";
 import { handleRenderCombatCarousel } from "./module/helpers/combat-carousel";
 import { measureDistances } from "./module/grid";
 import { fromLid, fromLidSync } from "./module/helpers/from-lid";
 
-const lp = LANCER.log_prefix;
+const lp = Beacon.log_prefix;
 
 window.addEventListener("unhandledrejection", function (event) {
   console.error("Unhandled rejection (promise: ", event.promise, ", reason: ", event.reason, ").");
@@ -168,7 +168,7 @@ window.addEventListener("unhandledrejection", function (event) {
 /* Initialize system                    */
 /* ------------------------------------ */
 Hooks.once("init", async function () {
-  console.log(`Initializing LANCER RPG System ${LANCER.ASCII}`);
+  console.log(`Initializing Beacon RPG System ${Beacon.ASCII}`);
 
   // Register custom system settings
   registerSettings();
@@ -178,17 +178,17 @@ Hooks.once("init", async function () {
   configureAmplify();
 
   // Assign custom classes and constants here
-  // Create a Lancer namespace within the game global
-  game.lancer = {
+  // Create a Beacon namespace within the game global
+  game.Beacon = {
     applications: {
-      LancerPilotSheet,
-      LancerNPCSheet,
-      LancerDeployableSheet,
-      LancerItemSheet,
+      BeaconPilotSheet,
+      BeaconNPCSheet,
+      BeaconDeployableSheet,
+      BeaconItemSheet,
     },
     entities: {
-      LancerActor,
-      LancerItem,
+      BeaconActor,
+      BeaconItem,
     },
     canvas: {
       WeaponRangeTemplate,
@@ -230,28 +230,28 @@ Hooks.once("init", async function () {
   };
 
   // Record Configuration Values
-  CONFIG.Actor.documentClass = LancerActor;
+  CONFIG.Actor.documentClass = BeaconActor;
   // @ts-expect-error v10
   CONFIG.Actor.compendiumIndexFields.push("system.lid");
-  CONFIG.Item.documentClass = LancerItem;
+  CONFIG.Item.documentClass = BeaconItem;
   // @ts-expect-error v10
   CONFIG.Item.compendiumIndexFields.push("system.lid");
-  CONFIG.Token.documentClass = LancerTokenDocument;
-  CONFIG.Token.objectClass = LancerToken;
-  CONFIG.Combat.documentClass = LancerCombat;
-  CONFIG.Combatant.documentClass = LancerCombatant;
+  CONFIG.Token.documentClass = BeaconTokenDocument;
+  CONFIG.Token.objectClass = BeaconToken;
+  CONFIG.Combat.documentClass = BeaconCombat;
+  CONFIG.Combatant.documentClass = BeaconCombatant;
   // @ts-expect-error Because of mismatched versions of types
-  CONFIG.ui.combat = LancerCombatTracker;
+  CONFIG.ui.combat = BeaconCombatTracker;
 
   // Set up system status icons
-  const keepStock = game.settings.get(game.system.id, LANCER.setting_stock_icons);
+  const keepStock = game.settings.get(game.system.id, Beacon.setting_stock_icons);
   let statuses: { id: string; label: string; icon: string }[] = [];
   if (keepStock) statuses = statuses.concat(CONFIG.statusEffects);
   statuses = statuses.concat(STATUSES);
   CONFIG.statusEffects = statuses;
 
   // Register Web Components
-  customElements.define("card-clipped", class LancerClippedCard extends HTMLDivElement {}, {
+  customElements.define("card-clipped", class BeaconClippedCard extends HTMLDivElement {}, {
     extends: "div",
   });
 
@@ -596,7 +596,7 @@ export const system_ready: Promise<void> = new Promise(success => {
     // let ready: boolean = false;
     // while (!ready) {
     //   await sleep(100);
-    //   ready = !!(<LancerGame>game).lancer?.finishedInit;
+    //   ready = !!(<BeaconGame>game).Beacon?.finishedInit;
     // }
     console.log(`${lp} Foundry ready, doing final checks.`);
 
@@ -606,7 +606,7 @@ export const system_ready: Promise<void> = new Promise(success => {
     applyCollapseListeners();
     applyGlobalDragListeners();
 
-    game.action_manager = new LancerActionManager();
+    game.action_manager = new BeaconActionManager();
     await game.action_manager!.init();
 
     success();
@@ -615,10 +615,10 @@ export const system_ready: Promise<void> = new Promise(success => {
 
 // Set up Dice So Nice to icrementally show attacks then damge rolls
 Hooks.once("ready", () => {
-  if (game.modules.get("dice-so-nice")?.active && !game.settings.get(game.system.id, LANCER.setting_dsn_setup)) {
+  if (game.modules.get("dice-so-nice")?.active && !game.settings.get(game.system.id, Beacon.setting_dsn_setup)) {
     console.log(`${lp} First login setup for Dice So Nice`);
     game.settings.set("dice-so-nice", "enabledSimultaneousRollForMessage", false);
-    game.settings.set(game.system.id, LANCER.setting_dsn_setup, true);
+    game.settings.set(game.system.id, Beacon.setting_dsn_setup, true);
   }
 });
 
@@ -653,7 +653,7 @@ Hooks.on("deleteCombat", (_actor: Actor) => {
 Hooks.on("updateCombat", (_combat: Combat, changes: DeepPartial<Combat["data"]>) => {
   if (getAutomationOptions().remove_templates && "turn" in changes && game.user?.isGM) {
     canvas.templates?.placeables.forEach(t => {
-      if (t.document.getFlag("lancer", "isAttack")) t.document.delete();
+      if (t.document.getFlag("Beacon", "isAttack")) t.document.delete();
     });
   }
   // This can be removed in v10
@@ -714,7 +714,7 @@ Hooks.on("renderCombatTracker", (...[_app, html]: Parameters<Hooks.RenderApplica
     .off("click")
     .on("click", ev => {
       ev.preventDefault();
-      new LancerCombatTrackerConfig(undefined, {}).render(true);
+      new BeaconCombatTrackerConfig(undefined, {}).render(true);
     });
 });
 
@@ -748,7 +748,7 @@ async function promptInstallCoreData() {
   let text = `
   <h2 style="text-align: center">WELCOME GAME MASTER</h2>
   <p style="text-align: center;margin-bottom: 1em">THIS IS YOUR <span class="horus--very--subtle">FIRST</span> TIME LAUNCHING</p>
-  <p style="text-align: center;margin-bottom: 1em">WOULD YOU LIKE TO INSTALL <span class="horus--very--subtle">CORE</span> LANCER DATA <span class="horus--very--subtle">v${version}?</span></p>`;
+  <p style="text-align: center;margin-bottom: 1em">WOULD YOU LIKE TO INSTALL <span class="horus--very--subtle">CORE</span> Beacon DATA <span class="horus--very--subtle">v${version}?</span></p>`;
   new Dialog(
     {
       title: `Install Core Data`,
@@ -774,15 +774,15 @@ async function promptInstallCoreData() {
 
 function setupSheets() {
   Actors.unregisterSheet("core", ActorSheet);
-  Actors.registerSheet("lancer", LancerPilotSheet, { types: [EntryType.PILOT], makeDefault: true });
-  Actors.registerSheet("lancer", LancerMechSheet, { types: [EntryType.MECH], makeDefault: true });
-  Actors.registerSheet("lancer", LancerNPCSheet, { types: [EntryType.NPC], makeDefault: true });
-  Actors.registerSheet("lancer", LancerDeployableSheet, {
+  Actors.registerSheet("Beacon", BeaconPilotSheet, { types: [EntryType.PILOT], makeDefault: true });
+  Actors.registerSheet("Beacon", BeaconMechSheet, { types: [EntryType.MECH], makeDefault: true });
+  Actors.registerSheet("Beacon", BeaconNPCSheet, { types: [EntryType.NPC], makeDefault: true });
+  Actors.registerSheet("Beacon", BeaconDeployableSheet, {
     types: [EntryType.DEPLOYABLE],
     makeDefault: true,
   });
   Items.unregisterSheet("core", ItemSheet);
-  Items.registerSheet("lancer", LancerItemSheet, {
+  Items.registerSheet("Beacon", BeaconItemSheet, {
     types: [
       EntryType.SKILL,
       EntryType.TALENT,
@@ -806,10 +806,10 @@ function setupSheets() {
     ],
     makeDefault: true,
   });
-  Items.registerSheet("lancer", LancerFrameSheet, { types: [EntryType.FRAME], makeDefault: true });
-  Items.registerSheet("lancer", LancerLicenseSheet, { types: [EntryType.LICENSE], makeDefault: true });
-  // Items.registerSheet("lancer", LancerNPCClassSheet, {
-  Items.registerSheet("lancer", LancerItemSheet, {
+  Items.registerSheet("Beacon", BeaconFrameSheet, { types: [EntryType.FRAME], makeDefault: true });
+  Items.registerSheet("Beacon", BeaconLicenseSheet, { types: [EntryType.LICENSE], makeDefault: true });
+  // Items.registerSheet("Beacon", BeaconNPCClassSheet, {
+  Items.registerSheet("Beacon", BeaconItemSheet, {
     types: [EntryType.NPC_CLASS, EntryType.NPC_TEMPLATE],
     makeDefault: true,
   });
@@ -822,17 +822,17 @@ function setupSheets() {
  */
 async function versionCheck(): Promise<"none" | "minor" | "major"> {
   // Determine whether a system migration is required and feasible
-  const currentVersion = game.settings.get(game.system.id, LANCER.setting_migration);
+  const currentVersion = game.settings.get(game.system.id, Beacon.setting_migration);
 
   // If it's 0 then it's a fresh install
   if (currentVersion === "0" || currentVersion === "") {
     // @ts-expect-error Should be fixed with v10 types
-    await game.settings.set(game.system.id, LANCER.setting_migration, game.system.version);
+    await game.settings.set(game.system.id, Beacon.setting_migration, game.system.version);
     await promptInstallCoreData();
     return "none";
   }
 
-  // Modify these constants to set which Lancer version numbers need and permit migration.
+  // Modify these constants to set which Beacon version numbers need and permit migration.
   if (foundry.utils.isNewerVersion(NEEDS_MAJOR_MIGRATION_VERSION, currentVersion)) {
     return "major";
   } else if (foundry.utils.isNewerVersion(NEEDS_MINOR_MIGRATION_VERSION, currentVersion)) {
@@ -849,18 +849,18 @@ async function versionCheck(): Promise<"none" | "minor" | "major"> {
  */
 async function doMigration() {
   // Determine whether a system migration is required and feasible
-  const currentVersion = game.settings.get(game.system.id, LANCER.setting_migration);
+  const currentVersion = game.settings.get(game.system.id, Beacon.setting_migration);
   let migration = await versionCheck();
   // Check whether system has been updated since last run.
   if (migration != "none" && game.user!.isGM) {
     // Un-hide the welcome message
-    await game.settings.set(game.system.id, LANCER.setting_welcome, false);
+    await game.settings.set(game.system.id, Beacon.setting_welcome, false);
 
     if (migration == "major") {
       if (currentVersion && foundry.utils.isNewerVersion(COMPATIBLE_MIGRATION_VERSION, currentVersion)) {
         // System version is too old for migration
         ui.notifications!.error(
-          `Your LANCER system data is from too old a version and cannot be reliably migrated to the latest version. The process will be attempted, but errors may occur.`,
+          `Your Beacon system data is from too old a version and cannot be reliably migrated to the latest version. The process will be attempted, but errors may occur.`,
           { permanent: true }
         );
       }
@@ -871,7 +871,7 @@ async function doMigration() {
       await migrations.minor09Migration();
     }
     // Set the version for future migration and welcome message checking
-    await game.settings.set(game.system.id, LANCER.setting_migration, game.system.data.version);
+    await game.settings.set(game.system.id, Beacon.setting_migration, game.system.data.version);
   }
 
   // Migrate old automation settings into the the new config option.
@@ -880,18 +880,18 @@ async function doMigration() {
     console.log(`${lp} Migrating automation settings.`);
     const defs = getAutomationOptions(true);
     const auto = {
-      enabled: game.settings.get(game.system.id, LANCER.setting_automation_switch),
-      attack_self_heat: game.settings.get(game.system.id, LANCER.setting_overkill_heat),
-      attacks: game.settings.get(game.system.id, LANCER.setting_automation_attack),
-      overcharge_heat: game.settings.get(game.system.id, LANCER.setting_pilot_oc_heat),
-      structure: game.settings.get(game.system.id, LANCER.setting_auto_structure),
+      enabled: game.settings.get(game.system.id, Beacon.setting_automation_switch),
+      attack_self_heat: game.settings.get(game.system.id, Beacon.setting_overkill_heat),
+      attacks: game.settings.get(game.system.id, Beacon.setting_automation_attack),
+      overcharge_heat: game.settings.get(game.system.id, Beacon.setting_pilot_oc_heat),
+      structure: game.settings.get(game.system.id, Beacon.setting_auto_structure),
     };
     await game.settings.set(
       game.system.id,
-      LANCER.setting_automation,
+      Beacon.setting_automation,
       foundry.utils.diffObject(defs, auto, { inner: true })
     );
-    await game.settings.set(game.system.id, LANCER.setting_migration, game.system.data.version);
+    await game.settings.set(game.system.id, Beacon.setting_migration, game.system.data.version);
   }
 }
 
@@ -917,18 +917,18 @@ async function configureAmplify() {
 
 async function showChangelog() {
   // Show welcome message if not hidden.
-  if (!game.settings.get(game.system.id, LANCER.setting_welcome)) {
+  if (!game.settings.get(game.system.id, Beacon.setting_welcome)) {
     let renderChangelog = (changelog: string) => {
       new Dialog(
         {
           // @ts-expect-error Should be fixed with v10 types
-          title: `Welcome to LANCER v${game.system.version}`,
+          title: `Welcome to Beacon v${game.system.version}`,
           content: WELCOME(changelog),
           buttons: {
             dont_show: {
               label: "Do Not Show Again",
               callback: async () => {
-                await game.settings.set(game.system.id, LANCER.setting_welcome, true);
+                await game.settings.set(game.system.id, Beacon.setting_welcome, true);
               },
             },
             close: {
@@ -946,7 +946,7 @@ async function showChangelog() {
     // Get an automatic changelog for our version
     let req = $.get(
       // @ts-expect-error Should be fixed with v10 types
-      `https://raw.githubusercontent.com/Eranziel/foundryvtt-lancer/v${game.system.version}/CHANGELOG.md`
+      `https://raw.githubusercontent.com/Eranziel/foundryvtt-Beacon/v${game.system.version}/CHANGELOG.md`
     );
     req.done(async (data, _status) => {
       // Regex magic to only grab the first 25 lines
@@ -976,7 +976,7 @@ async function showChangelog() {
 
 function addSettingsButtons(_app: Application, html: HTMLElement) {
   const faqButton = $(`<button id="triggler-form" data-action="triggler">
-            <i class="fas fa-robot"></i>LANCER Help
+            <i class="fas fa-robot"></i>Beacon Help
         </button>`);
 
   const loginButton = $(`<button id="triggler-form" data-action="triggler">
@@ -992,11 +992,11 @@ function addSettingsButtons(_app: Application, html: HTMLElement) {
   });
 
   faqButton.on("click", async () => {
-    let helpContent = await renderTemplate(`systems/${game.system.id}/templates/window/lancerHelp.hbs`, {});
+    let helpContent = await renderTemplate(`systems/${game.system.id}/templates/window/BeaconHelp.hbs`, {});
 
     new Dialog(
       {
-        title: `LANCER Help`,
+        title: `Beacon Help`,
         content: helpContent,
         buttons: {
           close: {

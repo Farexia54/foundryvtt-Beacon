@@ -1,11 +1,11 @@
-import { LANCER } from "./config";
-const lp = LANCER.log_prefix;
+import { Beacon } from "./config";
+const lp = Beacon.log_prefix;
 import { EntryType, funcs, IContentPack, RegEnv, StaticReg } from "machine-mind";
 import { FoundryReg } from "./mm-util/foundry-reg";
 import { LCPIndex } from "./apps/lcpManager";
 import { get_pack } from "./mm-util/helpers";
-import type { LancerActor } from "./actor/lancer-actor";
-import type { LancerItem } from "./item/lancer-item";
+import type { BeaconActor } from "./actor/Beacon-actor";
+import type { BeaconItem } from "./item/Beacon-item";
 
 export const PACK_SCOPE = "world";
 
@@ -55,7 +55,7 @@ export async function import_cp(
       let docs = await pack.getDocuments();
       // Get their ids
       // @ts-expect-error Should be fixed with v10 types
-      let doc_lids = docs.map(d => (d as LancerActor | LancerItem).system.lid);
+      let doc_lids = docs.map(d => (d as BeaconActor | BeaconItem).system.lid);
       existing_lids.push(...doc_lids);
     }
 
@@ -101,10 +101,10 @@ export async function set_all_lock(lock = false) {
 }
 
 export async function clearCompendiumData() {
-  ui.notifications!.info(`Clearing all LANCER Compendium data. Please wait.`);
-  console.log(`${lp} Clearing all LANCER Compendium data.`);
-  await game.settings.set(game.system.id, LANCER.setting_core_data, "0.0.0");
-  await game.settings.set(game.system.id, LANCER.setting_lcps, new LCPIndex(null));
+  ui.notifications!.info(`Clearing all Beacon Compendium data. Please wait.`);
+  console.log(`${lp} Clearing all Beacon Compendium data.`);
+  await game.settings.set(game.system.id, Beacon.setting_core_data, "0.0.0");
+  await game.settings.set(game.system.id, Beacon.setting_lcps, new LCPIndex(null));
   await clear_all();
-  ui.notifications!.info(`LANCER Compendiums cleared.`);
+  ui.notifications!.info(`Beacon Compendiums cleared.`);
 }

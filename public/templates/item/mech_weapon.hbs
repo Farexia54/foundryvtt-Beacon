@@ -1,8 +1,8 @@
-<form class="{{cssClass}} lancer-sheet" autocomplete="off">
+<form class="{{cssClass}} Beacon-sheet" autocomplete="off">
   {{!-- Sheet Header --}}
   <header class="sheet-header card clipped-bot">
     <div class="flexcol grow">
-      <h1 class="charname"><input class="header-field" name="name" type="text" value="{{item.name}}" placeholder="{{localize "lancer.placeholder.name"}}"/></h1>
+      <h1 class="charname"><input class="header-field" name="name" type="text" value="{{item.name}}" placeholder="{{localize "Beacon.placeholder.name"}}"/></h1>
       <div class="flexrow">
         {{{item-edit-license}}}
       </div>
@@ -11,15 +11,15 @@
   </header>
 
   {{!-- Sheet Tab Navigation --}}
-  <nav class="lancer-tabs" data-group="primary">
+  <nav class="Beacon-tabs" data-group="primary">
     {{#each mm.Profiles as |profile prof_index|}}
-      <a class="item lancer-tab medium weapon-profile-tab" data-tab="profile{{prof_index}}" data-path="mm.Profiles.{{prof_index}}"> 
+      <a class="item Beacon-tab medium weapon-profile-tab" data-tab="profile{{prof_index}}" data-path="mm.Profiles.{{prof_index}}"> 
         &lt;{{profile.Name}}&gt;
       </a>
     {{/each}}
 
     {{!-- Fake tab to add new profiles --}}
-    <a class="item lancer-tab medium gen-control" data-action="append" data-action-value="(struct)weapon_profile" data-path="mm.Profiles">+</a>
+    <a class="item Beacon-tab medium gen-control" data-action="append" data-action-value="(struct)weapon_profile" data-path="mm.Profiles">+</a>
   </nav>
 
 
@@ -28,13 +28,13 @@
     <div class="wraprow double">
       {{!-- Size --}}
       <div class="card clipped">
-        <div class="lancer-header major ">SIZE</div>
+        <div class="Beacon-header major ">SIZE</div>
         {{{wpn-size-sel "mm.Size"}}}
       </div>
 
       {{!-- Status --}}
       <div class="card clipped">
-        <div class="lancer-header major ">STATUS</div>
+        <div class="Beacon-header major ">STATUS</div>
         <div class="flexrow" style="align-self: center;">
           {{#if (is-loading mm)}}
             {{{loading-indicator mm.Loaded "mm"}}}
@@ -51,7 +51,7 @@
 
           {{!-- Type --}}
           <div class="card clipped">
-            <span class="lancer-header submajor ">TYPE</span>
+            <span class="Beacon-header submajor ">TYPE</span>
             {{{wpn-type-sel (concat "mm.Profiles." prof_index ".WepType") }}}
           </div>
 
@@ -81,7 +81,7 @@
 
           {{!-- Tags --}}
           <div class="card full">
-            <span class="lancer-header submajor">TAGS</span>
+            <span class="Beacon-header submajor">TAGS</span>
             {{{mm-tag-list (concat "mm.Profiles." prof_index ".Tags") profile.Tags ../editable}}}
           </div>
         </div>

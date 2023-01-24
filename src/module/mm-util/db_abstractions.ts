@@ -1,20 +1,20 @@
 import { AnyRegNpcFeatureData, EntryType, LiveEntryTypes, RegEntryTypes } from "machine-mind";
-import { is_actor_type, LancerActor, LancerActorType } from "../actor/lancer-actor";
+import { is_actor_type, BeaconActor, BeaconActorType } from "../actor/Beacon-actor";
 import { TypeIcon } from "../config";
-import type { LancerItem, LancerItemType } from "../item/lancer-item";
+import type { BeaconItem, BeaconItemType } from "../item/Beacon-item";
 import type { FoundryFlagData, FoundryRegNameParsed } from "./foundry-reg";
 import { get_pack, get_pack_id } from "./helpers";
 
 // The associated document to a given entry type. Type's a lil complex, but we need it to get things correct between abstracters that take items vs actors
-// tl;dr maps entrytype to LancerItem or LancerActor
-// export type EntFor<T extends EntryType & (LancerItemType | LancerActorType) > = T extends LancerItemType ? LancerItem<T> : (T extends LancerActorType ? LancerActor<T> : never);
-export type EntFor<T extends EntryType> = T extends LancerItemType
-  ? LancerItem
-  : T extends LancerActorType
-  ? LancerActor
+// tl;dr maps entrytype to BeaconItem or BeaconActor
+// export type EntFor<T extends EntryType & (BeaconItemType | BeaconActorType) > = T extends BeaconItemType ? BeaconItem<T> : (T extends BeaconActorType ? BeaconActor<T> : never);
+export type EntFor<T extends EntryType> = T extends BeaconItemType
+  ? BeaconItem
+  : T extends BeaconActorType
+  ? BeaconActor
   : never;
 
-export interface GetResult<T extends LancerItemType | LancerActorType> {
+export interface GetResult<T extends BeaconItemType | BeaconActorType> {
   data: RegEntryTypes<T>;
   document: EntFor<T>;
   id: string; // only truly necessary on enums, but still convenient
@@ -113,7 +113,7 @@ export class NuWrapper<T extends EntryType> extends DocumentCollectionWrapper<T>
       }
 
       // Get our desired actor document from the pack
-      let actor = (await actor_pack.getDocument(cfg.actor_id)) as LancerActor | null | undefined;
+      let actor = (await actor_pack.getDocument(cfg.actor_id)) as BeaconActor | null | undefined;
       if (!actor) {
         throw new Error("Pack " + cfg.comp_id + " didn't have actor with id " + cfg.actor_id);
       }
@@ -400,7 +400,7 @@ export class NuWrapper<T extends EntryType> extends DocumentCollectionWrapper<T>
 /*
 const PackContentMapCache = new FetcherCache(
   COMPENDIUM_CACHE_TIMEOUT,
-  async (type: LancerItemType | LancerActorType) => {
+  async (type: BeaconItemType | BeaconActorType) => {
     let pack = await get_pack(type);
     let data = await (pack as any).getDocuments();
     let map = new Map();
@@ -412,9 +412,9 @@ const PackContentMapCache = new FetcherCache(
 );
 
 // This wraps interfacing with above caches, but with better typing!
-export async function cached_get_pack_map<T extends LancerItemType | LancerActorType>(
+export async function cached_get_pack_map<T extends BeaconItemType | BeaconActorType>(
   type: T
-): Promise<Map<string, T extends LancerItemType ? LancerItem<T> : T extends LancerActorType ? LancerActor<T> : never>> {
+): Promise<Map<string, T extends BeaconItemType ? BeaconItem<T> : T extends BeaconActorType ? BeaconActor<T> : never>> {
   // console.log("Cache flushing should be triggered off of compendium CRUD hooks");
   return PackContentMapCache.fetch(type);
 }

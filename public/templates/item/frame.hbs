@@ -1,8 +1,8 @@
-<form class="{{cssClass}} lancer-sheet" autocomplete="off">
+<form class="{{cssClass}} Beacon-sheet" autocomplete="off">
   {{!-- Sheet Header --}}
   <header class="sheet-header card clipped-bot">
     <div class="flexcol grow">
-      <h1 class="charname"><input class="header-field" name="name" type="text" value="{{item.name}}" placeholder="{{localize "lancer.placeholder.name"}}"/></h1>
+      <h1 class="charname"><input class="header-field" name="name" type="text" value="{{item.name}}" placeholder="{{localize "Beacon.placeholder.name"}}"/></h1>
       <div class="flexrow">
         {{{item-edit-license}}}
       </div>
@@ -58,15 +58,15 @@
 
   {{!-- Traits --}}
   <div class="card">
-    <div class="lancer-header">
+    <div class="Beacon-header">
       <span class="major left">TRAITS</span>
       <a class="gen-control" data-action="append" data-path="mm.Traits" data-action-value="(struct)frame_trait" style="float: right">+</a>
     </div>
     {{#each mm.Traits as |trait trait_index|}}
       <div class="card clipped frame_trait">
-        <div class="lancer-header major">
+        <div class="Beacon-header major">
           <i class="cci cci-trait i--m i--light header-icon"> </i>
-          <input class="lancer-invisible-input i--light" name="mm.Traits.{{trait_index}}.Name" value="{{trait.Name}}" data-dtype="String" />
+          <input class="Beacon-invisible-input i--light" name="mm.Traits.{{trait_index}}.Name" value="{{trait.Name}}" data-dtype="String" />
           {{{popout-editor-button (concat "mm.Traits." trait_index ".Description") }}}
           <a class="gen-control" data-action="splice" data-path="mm.Traits.{{trait_index}}">
             <i class="fas fa-trash"></i>
@@ -81,9 +81,9 @@
   {{!-- Core System --}}
   <div class="card clipped frame-core">
     {{!-- General Description --}}
-    <div class="lancer-header frame_core medium">
+    <div class="Beacon-header frame_core medium">
       <i></i>
-      <input class="lancer-invisible-input major i--light" name="mm.CoreSystem.Name" value="{{mm.CoreSystem.Name}}" data-dtype="String" />
+      <input class="Beacon-invisible-input major i--light" name="mm.CoreSystem.Name" value="{{mm.CoreSystem.Name}}" data-dtype="String" />
       <div class="medium i--faded" style="justify-self: right;"> // CORE SYSTEM</div>
       {{{popout-editor-button "mm.CoreSystem.Description" }}}
     </div>
@@ -91,7 +91,7 @@
 
     {{!-- Integrated --}}
     <div class="integrated-wrapper card clipped flexcol">
-      <div class="lancer-header">INTEGRATED GEAR</div>
+      <div class="Beacon-header">INTEGRATED GEAR</div>
       {{#each mm.CoreSystem.Integrated as |integrated index|}}
         {{#if (eq integrated.Type "mech_system")}}
           {{{ref-mm-controllable-item-native (concat "mm.CoreSystem.Integrated." index) null }}}
@@ -111,9 +111,9 @@
 
     {{!-- Passive Description + Bonuses --}}
     <div class="card clipped frame_core">
-      <div class="lancer-header">
+      <div class="Beacon-header">
         <i class="mdi mdi-circle-expand i--m i--light"> </i>
-        <input class="lancer-invisible-input medium i--light" name="mm.CoreSystem.PassiveName" value="{{mm.CoreSystem.PassiveName}}" data-dtype="String" />
+        <input class="Beacon-invisible-input medium i--light" name="mm.CoreSystem.PassiveName" value="{{mm.CoreSystem.PassiveName}}" data-dtype="String" />
         <div class="medium i--faded" style="justify-self: right;"> // PASSIVE</div>
         {{{popout-editor-button "mm.CoreSystem.PassiveEffect" }}}
       </div>
@@ -126,9 +126,9 @@
 
     {{!-- Active Description + Bonuses --}}
     <div class="card clipped frame_core">
-      <div class="lancer-header">
+      <div class="Beacon-header">
         <i class="cci cci-corebonus i--m i--light"> </i>
-        <input class="lancer-invisible-input medium i--light" name="mm.CoreSystem.ActiveName" value="{{mm.CoreSystem.ActiveName}}" data-dtype="String" />
+        <input class="Beacon-invisible-input medium i--light" name="mm.CoreSystem.ActiveName" value="{{mm.CoreSystem.ActiveName}}" data-dtype="String" />
         <div class="i--faded" style="justify-self: right;"> // ACTIVE</div>
         {{{popout-editor-button "mm.CoreSystem.ActiveEffect" }}}
       </div>
@@ -139,7 +139,7 @@
       {{/each}}
     </div>
     <div class="tags-container" style="margin: 10px;">
-      <div class="flexcol lancer-title">
+      <div class="flexcol Beacon-title">
         <span class="major">TAGS</span>
         {{{mm-tag-list "mm.CoreSystem.Tags" mm.CoreSystem.Tags editable}}}
       </div>

@@ -1,4 +1,4 @@
-import { LANCER } from "../config";
+import { Beacon } from "../config";
 import {
   HANDLER_activate_general_controls,
   gentle_merge,
@@ -14,9 +14,9 @@ import {
   HANDLER_activate_ref_clicking,
   HANDLER_activate_uses_editor,
 } from "../helpers/refs";
-import type { LancerActorSheetData, LancerMacroData, LancerStatMacroData } from "../interfaces";
-import type { AnyMMItem } from "../item/lancer-item";
-import { AnyMMActor, is_actor_type, LancerActor, LancerActorType } from "./lancer-actor";
+import type { BeaconActorSheetData, BeaconMacroData, BeaconStatMacroData } from "../interfaces";
+import type { AnyMMItem } from "../item/Beacon-item";
+import { AnyMMActor, is_actor_type, BeaconActor, BeaconActorType } from "./Beacon-actor";
 import { prepareActivationMacro, prepareChargeMacro, prepareItemMacro, runEncodedMacro } from "../macros";
 import {
   EntryType,
@@ -45,14 +45,14 @@ import { HANDLER_activate_item_context_menus, HANDLER_activate_edit_counter } fr
 import { getActionTrackerOptions } from "../settings";
 import { modAction } from "../action/actionTracker";
 import { PrototypeTokenData } from "@league-of-foundry-developers/foundry-vtt-types/src/foundry/common/data/data.mjs";
-const lp = LANCER.log_prefix;
+const lp = Beacon.log_prefix;
 
 /**
  * Extend the basic ActorSheet
  */
-export class LancerActorSheet<T extends LancerActorType> extends ActorSheet<
+export class BeaconActorSheet<T extends BeaconActorType> extends ActorSheet<
   ActorSheet.Options,
-  LancerActorSheetData<T>
+  BeaconActorSheetData<T>
 > {
   // Tracks collapse state between renders
   protected collapse_handler = new CollapseHandler();
@@ -165,11 +165,11 @@ export class LancerActorSheet<T extends LancerActorType> extends ActorSheet<
       .find('li[class*="item"]')
       .add('span[class*="item"]')
       .add('[class*="macroable"]')
-      .add('[class*="lancer-macro"]')
+      .add('[class*="Beacon-macro"]')
       .each((_i, item) => {
         if (item.classList.contains("inventory-header")) return;
         item.setAttribute("draggable", "true");
-        if (item.classList.contains("lancer-macro")) {
+        if (item.classList.contains("Beacon-macro")) {
           item.addEventListener("dragstart", EncodedMacroHandler, false);
           return;
         }
@@ -198,7 +198,7 @@ export class LancerActorSheet<T extends LancerActorType> extends ActorSheet<
   }
 
   _activateCollapses(html: JQuery) {
-    let prefix = `lancer-collapse-${this.object._id}-`;
+    let prefix = `Beacon-collapse-${this.object._id}-`;
     let triggers = html.find(".collapse-trigger");
     // Init according to session store.
     triggers.each((_index, trigger) => {
@@ -215,7 +215,7 @@ export class LancerActorSheet<T extends LancerActorType> extends ActorSheet<
   }
 
   async _activateActionGridListeners(html: JQuery) {
-    let elements = html.find(".lancer-action-button");
+    let elements = html.find(".Beacon-action-button");
     elements.on("click", async ev => {
       ev.stopPropagation();
 
@@ -240,7 +240,7 @@ export class LancerActorSheet<T extends LancerActorType> extends ActorSheet<
 
   _activateMacroListeners(html: JQuery) {
     // Encoded macros
-    let encMacros = html.find(".lancer-macro");
+    let encMacros = html.find(".Beacon-macro");
     encMacros.on("click", ev => {
       ev.stopPropagation(); // Avoids triggering parent event handlers
       runEncodedMacro(ev.currentTarget);
@@ -290,7 +290,7 @@ export class LancerActorSheet<T extends LancerActorType> extends ActorSheet<
     });
 
     // Action-chip (system? Or broader?) macros
-    html.find("a.activation-chip:not(.lancer-macro)").on("click", (ev: JQuery.ClickEvent) => {
+    html.find("a.activation-chip:not(.Beacon-macro)").on("click", (ev: JQuery.ClickEvent) => {
       ev.stopPropagation();
 
       const el = ev.currentTarget;
@@ -347,7 +347,7 @@ export class LancerActorSheet<T extends LancerActorType> extends ActorSheet<
     }
 
     // send as a generated macro:
-    let macroData: LancerMacroData = {
+    let macroData: BeaconMacroData = {
       iconPath: `systems/${game.system.id}/assets/icons/macro-icons/mech_system.svg`,
       title: title,
       fn: "prepareActivationMacro",
@@ -360,9 +360,9 @@ export class LancerActorSheet<T extends LancerActorType> extends ActorSheet<
   getStatPath(event: any): string | null {
     if (!event.currentTarget) return null;
     // Find the stat input to get the stat's key to pass to the macro function
-    let el = $(event.currentTarget).closest(".stat-container").find(".lancer-stat")[0] as HTMLElement;
+    let el = $(event.currentTarget).closest(".stat-container").find(".Beacon-stat")[0] as HTMLElement;
 
-    if (!el) el = $(event.currentTarget).siblings(".lancer-stat")[0];
+    if (!el) el = $(event.currentTarget).siblings(".Beacon-stat")[0];
 
     if (el.nodeName === "INPUT") {
       return (<HTMLInputElement>el).name;
@@ -383,7 +383,7 @@ export class LancerActorSheet<T extends LancerActorType> extends ActorSheet<
 
     button.on("click", async (ev: Event) => {
       ev.preventDefault();
-      return InventoryDialog.show_inventory(this.actor as LancerActor);
+      return InventoryDialog.show_inventory(this.actor as BeaconActor);
     });
   }
 
@@ -398,7 +398,7 @@ export class LancerActorSheet<T extends LancerActorType> extends ActorSheet<
       if (!ev.currentTarget) return; // No target, let other handlers take care of it.
       ev.stopPropagation(); // Avoids triggering parent event handlers
 
-      let mData: LancerStatMacroData = {
+      let mData: BeaconStatMacroData = {
         title: $(ev.currentTarget).closest(".skill-compact").find(".modifier-name").text(),
         bonus: parseInt($(ev.currentTarget).find(".roll-modifier").text()),
       };
@@ -494,7 +494,7 @@ export class LancerActorSheet<T extends LancerActorType> extends ActorSheet<
    * This defines how to update the subject of the form when the form is submitted
    * @private
    */
-  async _updateObject(_event: Event, formData: any): Promise<LancerActor | undefined> {
+  async _updateObject(_event: Event, formData: any): Promise<BeaconActor | undefined> {
     // Fetch the curr data
     let ct = await this.getDataLazy();
 
@@ -517,7 +517,7 @@ export class LancerActorSheet<T extends LancerActorType> extends ActorSheet<
    * Prepare data for rendering the Actor sheet
    * The prepared data object contains both the actor data as well as additional sheet options
    */
-  async getData(): Promise<LancerActorSheetData<T>> {
+  async getData(): Promise<BeaconActorSheetData<T>> {
     const data = await super.getData(); // Not fully populated yet!
 
     // Drag up the mm context (when ready) to a top level entry in the sheet data
@@ -535,8 +535,8 @@ export class LancerActorSheet<T extends LancerActorType> extends ActorSheet<
     return data;
   }
   // Cached getdata
-  protected _currData: LancerActorSheetData<T> | null = null;
-  async getDataLazy(): Promise<LancerActorSheetData<T>> {
+  protected _currData: BeaconActorSheetData<T> | null = null;
+  async getDataLazy(): Promise<BeaconActorSheetData<T>> {
     return this._currData ?? (await this.getData());
   }
 
@@ -556,9 +556,9 @@ export class LancerActorSheet<T extends LancerActorType> extends ActorSheet<
 
   // Get the ctx that our actor + its items reside in
   getCtx(): OpCtx {
-    return (this.actor as LancerActor)._actor_ctx;
+    return (this.actor as BeaconActor)._actor_ctx;
   }
 }
-function rollStatMacro(_actor: unknown, _mData: LancerStatMacroData) {
+function rollStatMacro(_actor: unknown, _mData: BeaconStatMacroData) {
   throw new Error("Function not implemented.");
 }

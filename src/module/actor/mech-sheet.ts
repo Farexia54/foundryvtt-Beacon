@@ -1,27 +1,27 @@
-import { LANCER } from "../config";
-import { LancerActorSheet } from "./lancer-actor-sheet";
+import { Beacon } from "../config";
+import { BeaconActorSheet } from "./Beacon-actor-sheet";
 import { EntryType, MountType, SystemMount, WeaponMount } from "machine-mind";
 import { resolve_dotpath } from "../helpers/commons";
-import type { AnyMMItem, LancerItemType } from "../item/lancer-item";
+import type { AnyMMItem, BeaconItemType } from "../item/Beacon-item";
 import tippy from "tippy.js";
-import type { AnyMMActor } from "./lancer-actor";
+import type { AnyMMActor } from "./Beacon-actor";
 
 /**
  * Extend the basic ActorSheet
  */
-export class LancerMechSheet extends LancerActorSheet<EntryType.MECH> {
+export class BeaconMechSheet extends BeaconActorSheet<EntryType.MECH> {
   /**
    * Extend and override the default options used by the NPC Sheet
    */
   static get defaultOptions() {
     return mergeObject(super.defaultOptions, {
-      classes: ["lancer", "sheet", "actor", "mech"],
+      classes: ["Beacon", "sheet", "actor", "mech"],
       template: `systems/${game.system.id}/templates/actor/mech.hbs`,
       width: 800,
       height: 800,
       tabs: [
         {
-          navSelector: ".lancer-tabs",
+          navSelector: ".Beacon-tabs",
           contentSelector: ".sheet-body",
           initial: "stats",
         },
@@ -39,7 +39,7 @@ export class LancerMechSheet extends LancerActorSheet<EntryType.MECH> {
   activateListeners(html: JQuery<HTMLElement>) {
     super.activateListeners(html);
 
-    LancerMechSheet._activateTooltips();
+    BeaconMechSheet._activateTooltips();
 
     // Everything below here is only needed if the sheet is editable
     if (!this.options.editable) return;
@@ -65,7 +65,7 @@ export class LancerMechSheet extends LancerActorSheet<EntryType.MECH> {
       return true;
     }
 
-    return LANCER.mech_items.includes(item.Type as LancerItemType);
+    return Beacon.mech_items.includes(item.Type as BeaconItemType);
   }
 
   async on_root_drop(base_drop: AnyMMItem | AnyMMActor): Promise<void> {

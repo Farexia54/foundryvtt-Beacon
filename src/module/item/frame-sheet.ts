@@ -1,14 +1,14 @@
 import type { EntryType } from "machine-mind";
-import { LancerItemSheet } from "./item-sheet";
+import { BeaconItemSheet } from "./item-sheet";
 
 /**
- * Extend the generic Lancer item sheet
- * @extends {LancerItemSheet}
+ * Extend the generic Beacon item sheet
+ * @extends {BeaconItemSheet}
  */
-export class LancerFrameSheet extends LancerItemSheet<EntryType.FRAME> {
+export class BeaconFrameSheet extends BeaconItemSheet<EntryType.FRAME> {
   /**
    * @override
-   * Extend and override the default options used by the generic Lancer item sheet
+   * Extend and override the default options used by the generic Beacon item sheet
    */
   static get defaultOptions(): ItemSheet.Options {
     return mergeObject(super.defaultOptions, {

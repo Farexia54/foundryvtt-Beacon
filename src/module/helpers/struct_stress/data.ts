@@ -1,7 +1,7 @@
-import { LancerActor } from "../../actor/lancer-actor";
+import { BeaconActor } from "../../actor/Beacon-actor";
 
 export interface StructStressData {
   title: string;
   stat: "structure" | "stress";
-  lancerActor?: LancerActor;
+  BeaconActor?: BeaconActor;
 }

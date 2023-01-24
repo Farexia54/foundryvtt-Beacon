@@ -1,5 +1,5 @@
 import * as t from "io-ts";
-import { LancerActor } from "../../actor/lancer-actor";
+import { BeaconActor } from "../../actor/Beacon-actor";
 import { AccDiffPlugin, AccDiffCheckboxPluginData, AccDiffPluginCodec } from "./plugin";
 import { AccDiffData, AccDiffTarget, findEffect } from "./index";
 import { enclass } from "./serde";
@@ -57,7 +57,7 @@ export default class Invisibility implements AccDiffCheckboxPluginData {
     if (!this.token) {
       return false;
     }
-    return !!findEffect(this.token.actor as LancerActor, "invisible");
+    return !!findEffect(this.token.actor as BeaconActor, "invisible");
   }
 
   // UI behaviour

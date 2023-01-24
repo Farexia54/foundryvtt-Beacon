@@ -1,11 +1,11 @@
-import { LANCER } from "../config";
-const lp = LANCER.log_prefix;
+import { Beacon } from "../config";
+const lp = Beacon.log_prefix;
 import { import_cp, clearCompendiumData, set_all_lock } from "../compBuilder";
 import * as mm from "machine-mind";
 import type { IContentPack, IContentPackManifest } from "machine-mind";
 
 // TODO: use the version from MM... once it's real.
-export const core_update = "3.0.46"; // typed_lancer_data.info.version;
+export const core_update = "3.0.46"; // typed_Beacon_data.info.version;
 
 function addLCPManager(app: Application, html: any) {
   if (app.options.id == "compendium") {
@@ -19,7 +19,7 @@ function addLCPManager(app: Application, html: any) {
     }
     let button = document.createElement("button");
     button.setAttribute("style", "flex-basis: 100%;margin-top: 5px;");
-    button.innerHTML = "<i class='cci cci-content-manager i--s'></i> LANCER Compendium Manager";
+    button.innerHTML = "<i class='cci cci-content-manager i--s'></i> Beacon Compendium Manager";
     buttons.append(button);
     button.addEventListener("click", () => {
       new LCPManager().render(true);
@@ -70,17 +70,17 @@ class LCPManager extends Application {
     this.lcpFile = null;
     this.cp = null;
     this.manifest = null;
-    this.coreVersion = game.settings.get(game.system.id, LANCER.setting_core_data);
+    this.coreVersion = game.settings.get(game.system.id, Beacon.setting_core_data);
     // TODO: pull available core version from machine-mind
     this.coreUpdate = core_update;
-    console.log(`${lp} Lancer Data version:`, this.coreVersion);
-    this.lcpIndex = new LCPIndex(game.settings.get(game.system.id, LANCER.setting_lcps).index);
+    console.log(`${lp} Beacon Data version:`, this.coreVersion);
+    this.lcpIndex = new LCPIndex(game.settings.get(game.system.id, Beacon.setting_lcps).index);
   }
 
   static get defaultOptions() {
     return mergeObject(super.defaultOptions, {
       template: `systems/${game.system.id}/templates/lcp/lcp-manager.hbs`,
-      title: "LANCER Compendium Manager",
+      title: "Beacon Compendium Manager",
       width: 800,
       height: 800,
     });
@@ -98,15 +98,15 @@ class LCPManager extends Application {
   }
 
   updateLcpIndex(manifest: IContentPackManifest) {
-    if (!this.lcpIndex) this.lcpIndex = new LCPIndex(game.settings.get(game.system.id, LANCER.setting_lcps).index);
+    if (!this.lcpIndex) this.lcpIndex = new LCPIndex(game.settings.get(game.system.id, Beacon.setting_lcps).index);
     else this.lcpIndex.updateManifest(manifest);
-    game.settings.set(game.system.id, LANCER.setting_lcps, this.lcpIndex).then(() => this.render());
+    game.settings.set(game.system.id, Beacon.setting_lcps, this.lcpIndex).then(() => this.render());
   }
 
   async clearCompendiums() {
     await clearCompendiumData();
-    this.coreVersion = game.settings.get(game.system.id, LANCER.setting_core_data);
-    this.lcpIndex = new LCPIndex(game.settings.get(game.system.id, LANCER.setting_lcps).index);
+    this.coreVersion = game.settings.get(game.system.id, Beacon.setting_core_data);
+    this.lcpIndex = new LCPIndex(game.settings.get(game.system.id, Beacon.setting_lcps).index);
     this.render(true);
   }
 
@@ -143,7 +143,7 @@ class LCPManager extends Application {
     if (!game.user?.isGM) return ui.notifications!.warn(`Only GM can modify the Compendiums.`);
     if (!ev.currentTarget) return;
     new Dialog({
-      title: "Confirm Clearing LANCER Compendiums",
+      title: "Confirm Clearing Beacon Compendiums",
       content: `Are you sure you want to delete ALL data from the Compendiums created by the LCP Manager?`,
       buttons: {
         confirm: {
@@ -235,26 +235,26 @@ export async function updateCore(version: string, manager?: LCPManager) {
     const denom = 4;
     let incr = Math.ceil(y / denom);
     if (x >= incr * progress) {
-      ui.notifications!.info(`${progress * (100 / denom)}% of Lancer Core data updated`);
+      ui.notifications!.info(`${progress * (100 / denom)}% of Beacon Core data updated`);
       progress += 1;
     }
   };
 
-  ui.notifications!.info(`Updating Lancer Core data to v${version}. Please wait.`);
+  ui.notifications!.info(`Updating Beacon Core data to v${version}. Please wait.`);
 
-  console.log(`${lp} Updating Lancer Core data to v${version}`);
+  console.log(`${lp} Updating Beacon Core data to v${version}`);
   try {
     await import_cp(mm.funcs.get_base_content_pack(), progress_func);
   } catch (err) {
     console.error(err);
 
     ui.notifications!.warn(
-      `Lancer Core data update ran into an issue... Please open the compendium manager and attempt an update after clearing LCPs.`
+      `Beacon Core data update ran into an issue... Please open the compendium manager and attempt an update after clearing LCPs.`
     );
     await set_all_lock(true);
     return;
   }
 
-  ui.notifications!.info(`Lancer Core data update complete.`);
-  await game.settings.set(game.system.id, LANCER.setting_core_data, version);
+  ui.notifications!.info(`Beacon Core data update complete.`);
+  await game.settings.set(game.system.id, Beacon.setting_core_data, version);
 }

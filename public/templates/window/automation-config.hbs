@@ -1,12 +1,12 @@
 <form autocomplete="off">
-  <h2>{{ localize "lancer.automation.menu-label" }}</h2>
+  <h2>{{ localize "Beacon.automation.menu-label" }}</h2>
   <div class="form-group">
-    <label>{{ localize "lancer.automation.master-switch" }}</label>
+    <label>{{ localize "Beacon.automation.master-switch" }}</label>
     <input type="checkbox" name="enabled" {{#if enabled}}checked{{/if}} data-dtype="Boolean"/>
-    <p class="notes">{{ localize "lancer.automation.master-switch-desc" }}</p>
+    <p class="notes">{{ localize "Beacon.automation.master-switch-desc" }}</p>
   </div>
   <div class="form-group">
-    <label>{{ localize "lancer.automation.attacks" }}</label>
+    <label>{{ localize "Beacon.automation.attacks" }}</label>
     <input
         type="checkbox"
         name="attacks"
@@ -14,10 +14,10 @@
         {{#unless enabled}}disabled{{/unless}}
         data-dtype="Boolean"
     />
-    <p class="notes">{{ localize "lancer.automation.attacks-desc" }}</p>
+    <p class="notes">{{ localize "Beacon.automation.attacks-desc" }}</p>
   </div>
   <div class="form-group">
-    <label>{{ localize "lancer.automation.structure" }}</label>
+    <label>{{ localize "Beacon.automation.structure" }}</label>
     <input
         type="checkbox"
         name="structure"
@@ -25,10 +25,10 @@
         {{#unless enabled}}disabled{{/unless}}
         data-dtype="Boolean"
     />
-    <p class="notes">{{ localize "lancer.automation.structure-desc" }}</p>
+    <p class="notes">{{ localize "Beacon.automation.structure-desc" }}</p>
   </div>
   <div class="form-group">
-    <label>{{ localize "lancer.automation.overcharge_heat" }}</label>
+    <label>{{ localize "Beacon.automation.overcharge_heat" }}</label>
     <input
         type="checkbox"
         name="overcharge_heat"
@@ -36,10 +36,10 @@
         {{#unless enabled}}disabled{{/unless}}
         data-dtype="Boolean"
     />
-    <p class="notes">{{ localize "lancer.automation.overcharge_heat-desc" }}</p>
+    <p class="notes">{{ localize "Beacon.automation.overcharge_heat-desc" }}</p>
   </div>
   <div class="form-group">
-    <label>{{ localize "lancer.automation.attack_self_heat" }}</label>
+    <label>{{ localize "Beacon.automation.attack_self_heat" }}</label>
     <input
         type="checkbox"
         name="attack_self_heat"
@@ -47,10 +47,10 @@
         {{#unless enabled}}disabled{{/unless}}
         data-dtype="Boolean"
     />
-    <p class="notes">{{ localize "lancer.automation.attack_self_heat-desc" }}</p>
+    <p class="notes">{{ localize "Beacon.automation.attack_self_heat-desc" }}</p>
   </div>
   <div class="form-group">
-    <label>{{ localize "lancer.automation.limited_loading" }}</label>
+    <label>{{ localize "Beacon.automation.limited_loading" }}</label>
     <input
         type="checkbox"
         name="limited_loading"
@@ -58,10 +58,10 @@
         {{#unless enabled}}disabled{{/unless}}
         data-dtype="Boolean"
     />
-    <p class="notes">{{ localize "lancer.automation.limited_loading-desc" }}</p>
+    <p class="notes">{{ localize "Beacon.automation.limited_loading-desc" }}</p>
   </div>
   <div class="form-group">
-    <label>{{ localize "lancer.automation.remove_templates" }}</label>
+    <label>{{ localize "Beacon.automation.remove_templates" }}</label>
     <input
         type="checkbox"
         name="remove_templates"
@@ -69,7 +69,7 @@
         {{#unless enabled}}disabled{{/unless}}
         data-dtype="Boolean"
     />
-    <p class="notes">{{ localize "lancer.automation.remove_templates-desc" }}</p>
+    <p class="notes">{{ localize "Beacon.automation.remove_templates-desc" }}</p>
   </div>
   <div class="form-group">
     <button type="submit" name="submit">

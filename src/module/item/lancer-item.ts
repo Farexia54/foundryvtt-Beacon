@@ -1,4 +1,4 @@
-import { LANCER, TypeIcon } from "../config";
+import { Beacon, TypeIcon } from "../config";
 import {
   EntryType,
   funcs,
@@ -13,23 +13,23 @@ import {
   RegEntryTypes,
   RegRangeData,
 } from "machine-mind";
-import { system_ready } from "../../lancer";
+import { system_ready } from "../../Beacon";
 import { mm_wrap_item } from "../mm-util/helpers";
 
-const lp = LANCER.log_prefix;
+const lp = Beacon.log_prefix;
 
-interface DerivedProperties<T extends LancerItemType> {
+interface DerivedProperties<T extends BeaconItemType> {
   // license: RegRef<EntryType.LICENSE> | null; // The license granting this item, if one could be found
   max_uses: number; // The max uses, augmented to also include any actor bonuses
   mm: LiveEntryTypes<T> | null;
   mm_promise: Promise<LiveEntryTypes<T>>; // The above, in promise form. More robust
 }
 
-interface LancerItemDataSource<T extends LancerItemType> {
+interface BeaconItemDataSource<T extends BeaconItemType> {
   type: T;
   data: RegEntryTypes<T>;
 }
-interface LancerItemDataProperties<T extends LancerItemType> {
+interface BeaconItemDataProperties<T extends BeaconItemType> {
   type: T;
   data: RegEntryTypes<T> & {
     derived: DerivedProperties<T>;
@@ -39,73 +39,73 @@ interface LancerItemDataProperties<T extends LancerItemType> {
 /**
  * Union type for Item.data._source. Only really used in prepareData
  */
-type LancerItemSource =
-  | LancerItemDataSource<EntryType.CORE_BONUS>
-  | LancerItemDataSource<EntryType.ENVIRONMENT>
-  | LancerItemDataSource<EntryType.FACTION>
-  | LancerItemDataSource<EntryType.FRAME>
-  | LancerItemDataSource<EntryType.LICENSE>
-  | LancerItemDataSource<EntryType.MANUFACTURER>
-  | LancerItemDataSource<EntryType.MECH_SYSTEM>
-  | LancerItemDataSource<EntryType.MECH_WEAPON>
-  | LancerItemDataSource<EntryType.NPC_CLASS>
-  | LancerItemDataSource<EntryType.NPC_FEATURE>
-  | LancerItemDataSource<EntryType.NPC_TEMPLATE>
-  | LancerItemDataSource<EntryType.ORGANIZATION>
-  | LancerItemDataSource<EntryType.PILOT_ARMOR>
-  | LancerItemDataSource<EntryType.PILOT_GEAR>
-  | LancerItemDataSource<EntryType.PILOT_WEAPON>
-  | LancerItemDataSource<EntryType.QUIRK>
-  | LancerItemDataSource<EntryType.RESERVE>
-  | LancerItemDataSource<EntryType.SITREP>
-  | LancerItemDataSource<EntryType.SKILL>
-  | LancerItemDataSource<EntryType.STATUS>
-  | LancerItemDataSource<EntryType.TAG>
-  | LancerItemDataSource<EntryType.TALENT>
-  | LancerItemDataSource<EntryType.WEAPON_MOD>;
+type BeaconItemSource =
+  | BeaconItemDataSource<EntryType.CORE_BONUS>
+  | BeaconItemDataSource<EntryType.ENVIRONMENT>
+  | BeaconItemDataSource<EntryType.FACTION>
+  | BeaconItemDataSource<EntryType.FRAME>
+  | BeaconItemDataSource<EntryType.LICENSE>
+  | BeaconItemDataSource<EntryType.MANUFACTURER>
+  | BeaconItemDataSource<EntryType.MECH_SYSTEM>
+  | BeaconItemDataSource<EntryType.MECH_WEAPON>
+  | BeaconItemDataSource<EntryType.NPC_CLASS>
+  | BeaconItemDataSource<EntryType.NPC_FEATURE>
+  | BeaconItemDataSource<EntryType.NPC_TEMPLATE>
+  | BeaconItemDataSource<EntryType.ORGANIZATION>
+  | BeaconItemDataSource<EntryType.PILOT_ARMOR>
+  | BeaconItemDataSource<EntryType.PILOT_GEAR>
+  | BeaconItemDataSource<EntryType.PILOT_WEAPON>
+  | BeaconItemDataSource<EntryType.QUIRK>
+  | BeaconItemDataSource<EntryType.RESERVE>
+  | BeaconItemDataSource<EntryType.SITREP>
+  | BeaconItemDataSource<EntryType.SKILL>
+  | BeaconItemDataSource<EntryType.STATUS>
+  | BeaconItemDataSource<EntryType.TAG>
+  | BeaconItemDataSource<EntryType.TALENT>
+  | BeaconItemDataSource<EntryType.WEAPON_MOD>;
 
 /**
  * Union type for Item.data
  * Can be discriminated by testing Item.data.type
  */
-type LancerItemProperties =
-  | LancerItemDataProperties<EntryType.CORE_BONUS>
-  | LancerItemDataProperties<EntryType.ENVIRONMENT>
-  | LancerItemDataProperties<EntryType.FACTION>
-  | LancerItemDataProperties<EntryType.FRAME>
-  | LancerItemDataProperties<EntryType.LICENSE>
-  | LancerItemDataProperties<EntryType.MANUFACTURER>
-  | LancerItemDataProperties<EntryType.MECH_SYSTEM>
-  | LancerItemDataProperties<EntryType.MECH_WEAPON>
-  | LancerItemDataProperties<EntryType.NPC_CLASS>
-  | LancerItemDataProperties<EntryType.NPC_FEATURE>
-  | LancerItemDataProperties<EntryType.NPC_TEMPLATE>
-  | LancerItemDataProperties<EntryType.ORGANIZATION>
-  | LancerItemDataProperties<EntryType.PILOT_ARMOR>
-  | LancerItemDataProperties<EntryType.PILOT_GEAR>
-  | LancerItemDataProperties<EntryType.PILOT_WEAPON>
-  | LancerItemDataProperties<EntryType.QUIRK>
-  | LancerItemDataProperties<EntryType.RESERVE>
-  | LancerItemDataProperties<EntryType.SITREP>
-  | LancerItemDataProperties<EntryType.SKILL>
-  | LancerItemDataProperties<EntryType.STATUS>
-  | LancerItemDataProperties<EntryType.TAG>
-  | LancerItemDataProperties<EntryType.TALENT>
-  | LancerItemDataProperties<EntryType.WEAPON_MOD>;
+type BeaconItemProperties =
+  | BeaconItemDataProperties<EntryType.CORE_BONUS>
+  | BeaconItemDataProperties<EntryType.ENVIRONMENT>
+  | BeaconItemDataProperties<EntryType.FACTION>
+  | BeaconItemDataProperties<EntryType.FRAME>
+  | BeaconItemDataProperties<EntryType.LICENSE>
+  | BeaconItemDataProperties<EntryType.MANUFACTURER>
+  | BeaconItemDataProperties<EntryType.MECH_SYSTEM>
+  | BeaconItemDataProperties<EntryType.MECH_WEAPON>
+  | BeaconItemDataProperties<EntryType.NPC_CLASS>
+  | BeaconItemDataProperties<EntryType.NPC_FEATURE>
+  | BeaconItemDataProperties<EntryType.NPC_TEMPLATE>
+  | BeaconItemDataProperties<EntryType.ORGANIZATION>
+  | BeaconItemDataProperties<EntryType.PILOT_ARMOR>
+  | BeaconItemDataProperties<EntryType.PILOT_GEAR>
+  | BeaconItemDataProperties<EntryType.PILOT_WEAPON>
+  | BeaconItemDataProperties<EntryType.QUIRK>
+  | BeaconItemDataProperties<EntryType.RESERVE>
+  | BeaconItemDataProperties<EntryType.SITREP>
+  | BeaconItemDataProperties<EntryType.SKILL>
+  | BeaconItemDataProperties<EntryType.STATUS>
+  | BeaconItemDataProperties<EntryType.TAG>
+  | BeaconItemDataProperties<EntryType.TALENT>
+  | BeaconItemDataProperties<EntryType.WEAPON_MOD>;
 
 declare global {
   interface SourceConfig {
-    Item: LancerItemSource;
+    Item: BeaconItemSource;
   }
   interface DataConfig {
-    Item: LancerItemProperties;
+    Item: BeaconItemProperties;
   }
   interface DocumentClassConfig {
-    Item: typeof LancerItem;
+    Item: typeof BeaconItem;
   }
 }
 
-export class LancerItem extends Item {
+export class BeaconItem extends Item {
   /**
    * Returns all ranges for the item that match the provided range types
    */
@@ -184,7 +184,7 @@ export class LancerItem extends Item {
 
     // Spool up our Machine Mind wrapping process
     // Promise<A | B> is apparently unassignable to Promise<A> | Promise<B>
-    (<Promise<LiveEntryTypes<LancerItemType>>>dr.mm_promise) = system_ready
+    (<Promise<LiveEntryTypes<BeaconItemType>>>dr.mm_promise) = system_ready
       .then(() => mm_wrap_item(this, actor_ctx ?? new OpCtx()))
       .then(async mm => {
         // If our job ticker doesnt match, then another prepared object has usurped us in setting these values.
@@ -262,7 +262,7 @@ export class LancerItem extends Item {
     }
     let img = TypeIcon(icon_lookup);
 
-    let default_data: RegEntryTypes<LancerItemType>;
+    let default_data: RegEntryTypes<BeaconItemType>;
     switch (this.type) {
       default:
       case EntryType.CORE_BONUS:
@@ -347,81 +347,81 @@ export class LancerItem extends Item {
   }
 
   // Typeguards
-  is_core_bonus(): this is LancerItem & { data: LancerItemDataProperties<EntryType.CORE_BONUS> } {
+  is_core_bonus(): this is BeaconItem & { data: BeaconItemDataProperties<EntryType.CORE_BONUS> } {
     return this.type === EntryType.CORE_BONUS;
   }
-  is_environment(): this is LancerItem & { data: LancerItemDataProperties<EntryType.ENVIRONMENT> } {
+  is_environment(): this is BeaconItem & { data: BeaconItemDataProperties<EntryType.ENVIRONMENT> } {
     return this.type === EntryType.ENVIRONMENT;
   }
-  is_faction(): this is LancerItem & { data: LancerItemDataProperties<EntryType.FACTION> } {
+  is_faction(): this is BeaconItem & { data: BeaconItemDataProperties<EntryType.FACTION> } {
     return this.type === EntryType.FACTION;
   }
-  is_frame(): this is LancerItem & { data: LancerItemDataProperties<EntryType.FRAME> } {
+  is_frame(): this is BeaconItem & { data: BeaconItemDataProperties<EntryType.FRAME> } {
     return this.type === EntryType.FRAME;
   }
-  is_license(): this is LancerItem & { data: LancerItemDataProperties<EntryType.LICENSE> } {
+  is_license(): this is BeaconItem & { data: BeaconItemDataProperties<EntryType.LICENSE> } {
     return this.type === EntryType.LICENSE;
   }
-  is_manufacturer(): this is LancerItem & { data: LancerItemDataProperties<EntryType.MANUFACTURER> } {
+  is_manufacturer(): this is BeaconItem & { data: BeaconItemDataProperties<EntryType.MANUFACTURER> } {
     return this.type === EntryType.MANUFACTURER;
   }
-  is_mech_system(): this is LancerItem & { data: LancerItemDataProperties<EntryType.MECH_SYSTEM> } {
+  is_mech_system(): this is BeaconItem & { data: BeaconItemDataProperties<EntryType.MECH_SYSTEM> } {
     return this.type === EntryType.MECH_SYSTEM;
   }
-  is_mech_weapon(): this is LancerItem & { data: LancerItemDataProperties<EntryType.MECH_WEAPON> } {
+  is_mech_weapon(): this is BeaconItem & { data: BeaconItemDataProperties<EntryType.MECH_WEAPON> } {
     return this.type === EntryType.MECH_WEAPON;
   }
-  is_npc_class(): this is LancerItem & { data: LancerItemDataProperties<EntryType.NPC_CLASS> } {
+  is_npc_class(): this is BeaconItem & { data: BeaconItemDataProperties<EntryType.NPC_CLASS> } {
     return this.type === EntryType.NPC_CLASS;
   }
-  is_npc_feature(): this is LancerItem & { data: LancerItemDataProperties<EntryType.NPC_FEATURE> } {
+  is_npc_feature(): this is BeaconItem & { data: BeaconItemDataProperties<EntryType.NPC_FEATURE> } {
     return this.type === EntryType.NPC_FEATURE;
   }
-  is_npc_template(): this is LancerItem & { data: LancerItemDataProperties<EntryType.NPC_TEMPLATE> } {
+  is_npc_template(): this is BeaconItem & { data: BeaconItemDataProperties<EntryType.NPC_TEMPLATE> } {
     return this.type === EntryType.NPC_TEMPLATE;
   }
-  is_organization(): this is LancerItem & { data: LancerItemDataProperties<EntryType.ORGANIZATION> } {
+  is_organization(): this is BeaconItem & { data: BeaconItemDataProperties<EntryType.ORGANIZATION> } {
     return this.type === EntryType.ORGANIZATION;
   }
-  is_pilot_armor(): this is LancerItem & { data: LancerItemDataProperties<EntryType.PILOT_ARMOR> } {
+  is_pilot_armor(): this is BeaconItem & { data: BeaconItemDataProperties<EntryType.PILOT_ARMOR> } {
     return this.type === EntryType.PILOT_ARMOR;
   }
-  is_pilot_gear(): this is LancerItem & { data: LancerItemDataProperties<EntryType.PILOT_GEAR> } {
+  is_pilot_gear(): this is BeaconItem & { data: BeaconItemDataProperties<EntryType.PILOT_GEAR> } {
     return this.type === EntryType.PILOT_GEAR;
   }
-  is_pilot_weapon(): this is LancerItem & { data: LancerItemDataProperties<EntryType.PILOT_WEAPON> } {
+  is_pilot_weapon(): this is BeaconItem & { data: BeaconItemDataProperties<EntryType.PILOT_WEAPON> } {
     return this.type === EntryType.PILOT_WEAPON;
   }
-  is_quirk(): this is LancerItem & { data: LancerItemDataProperties<EntryType.QUIRK> } {
+  is_quirk(): this is BeaconItem & { data: BeaconItemDataProperties<EntryType.QUIRK> } {
     return this.type === EntryType.QUIRK;
   }
-  is_reserve(): this is LancerItem & { data: LancerItemDataProperties<EntryType.RESERVE> } {
+  is_reserve(): this is BeaconItem & { data: BeaconItemDataProperties<EntryType.RESERVE> } {
     return this.type === EntryType.RESERVE;
   }
-  is_sitrep(): this is LancerItem & { data: LancerItemDataProperties<EntryType.SITREP> } {
+  is_sitrep(): this is BeaconItem & { data: BeaconItemDataProperties<EntryType.SITREP> } {
     return this.type === EntryType.SITREP;
   }
-  is_skill(): this is LancerItem & { data: LancerItemDataProperties<EntryType.SKILL> } {
+  is_skill(): this is BeaconItem & { data: BeaconItemDataProperties<EntryType.SKILL> } {
     return this.type === EntryType.SKILL;
   }
-  is_status(): this is LancerItem & { data: LancerItemDataProperties<EntryType.STATUS> } {
+  is_status(): this is BeaconItem & { data: BeaconItemDataProperties<EntryType.STATUS> } {
     return this.type === EntryType.STATUS;
   }
-  is_tag(): this is LancerItem & { data: LancerItemDataProperties<EntryType.TAG> } {
+  is_tag(): this is BeaconItem & { data: BeaconItemDataProperties<EntryType.TAG> } {
     return this.type === EntryType.TAG;
   }
-  is_talent(): this is LancerItem & { data: LancerItemDataProperties<EntryType.TALENT> } {
+  is_talent(): this is BeaconItem & { data: BeaconItemDataProperties<EntryType.TALENT> } {
     return this.type === EntryType.TALENT;
   }
-  is_weapon_mod(): this is LancerItem & { data: LancerItemDataProperties<EntryType.WEAPON_MOD> } {
+  is_weapon_mod(): this is BeaconItem & { data: BeaconItemDataProperties<EntryType.WEAPON_MOD> } {
     return this.type === EntryType.WEAPON_MOD;
   }
 }
 
 // This seems like it could be removed eventually
-export type AnyMMItem = LiveEntryTypes<LancerItemType>;
+export type AnyMMItem = LiveEntryTypes<BeaconItemType>;
 
-export type LancerItemType =
+export type BeaconItemType =
   | EntryType.CORE_BONUS
   | EntryType.FACTION
   | EntryType.FRAME
@@ -445,7 +445,7 @@ export type LancerItemType =
   | EntryType.SITREP
   | EntryType.ENVIRONMENT
   | EntryType.TAG;
-export const LancerItemTypes = [
+export const BeaconItemTypes = [
   EntryType.CORE_BONUS,
   EntryType.FACTION,
   EntryType.FRAME,
@@ -470,8 +470,8 @@ export const LancerItemTypes = [
   EntryType.ENVIRONMENT,
   EntryType.TAG,
 ];
-export function is_item_type(type: EntryType): type is LancerItemType {
-  return LancerItemTypes.includes(type);
+export function is_item_type(type: EntryType): type is BeaconItemType {
+  return BeaconItemTypes.includes(type);
 }
 
 // export function has_lid<T extends AnyMMItem | AnyMMActor>(item: AnyMMItem | AnyMMActor): item is T & {ID: string} {

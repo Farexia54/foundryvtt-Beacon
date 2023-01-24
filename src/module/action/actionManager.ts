@@ -1,4 +1,4 @@
-import type { LancerActor } from "../actor/lancer-actor";
+import type { BeaconActor } from "../actor/Beacon-actor";
 import type { ActionData, ActionType } from ".";
 import tippy from "tippy.js";
 import { getActionTrackerOptions } from "../settings";
@@ -18,12 +18,12 @@ declare global {
   }
 }
 
-export class LancerActionManager extends Application {
+export class BeaconActionManager extends Application {
   static DEF_LEFT = 600;
   static DEF_TOP = 20;
   static enabled: boolean;
 
-  target: LancerActor | null = null;
+  target: BeaconActor | null = null;
 
   constructor() {
     super();
@@ -31,8 +31,8 @@ export class LancerActionManager extends Application {
 
   async init() {
     // TODO: find the correct place to specify what game.system.id is expected to be
-    LancerActionManager.enabled = getActionTrackerOptions().showHotbar && !game.settings.get("core", "noCanvas");
-    if (LancerActionManager.enabled) {
+    BeaconActionManager.enabled = getActionTrackerOptions().showHotbar && !game.settings.get("core", "noCanvas");
+    if (BeaconActionManager.enabled) {
       this.loadUserPos();
       await this.updateControlledToken();
       this.render(true);
@@ -45,8 +45,8 @@ export class LancerActionManager extends Application {
       template: `systems/${game.system.id}/templates/window/action_manager.hbs`,
       width: 310,
       height: 70,
-      left: LancerActionManager.DEF_LEFT,
-      top: LancerActionManager.DEF_TOP,
+      left: BeaconActionManager.DEF_LEFT,
+      top: BeaconActionManager.DEF_TOP,
       scale: 1,
       popOut: false,
       minimizable: false,
@@ -77,9 +77,9 @@ export class LancerActionManager extends Application {
   /**
    * Set proxy for ease of migration when we change over to MM data backing.
    */
-  private async updateActions(actor: LancerActor, actions: ActionData) {
+  private async updateActions(actor: BeaconActor, actions: ActionData) {
     await updateActions(actor, actions);
-    // this.token?.update({ "flags.lancer.actions": actions });
+    // this.token?.update({ "flags.Beacon.actions": actions });
   }
 
   async reset() {
@@ -88,7 +88,7 @@ export class LancerActionManager extends Application {
   }
 
   async update(_force?: boolean) {
-    if (LancerActionManager.enabled) {
+    if (BeaconActionManager.enabled) {
       // console.log("Action Manager updating...");
       await this.updateControlledToken();
       this.render(true);
@@ -98,10 +98,10 @@ export class LancerActionManager extends Application {
   async updateConfig() {
     if (getActionTrackerOptions().showHotbar && !game.settings.get("core", "noCanvas")) {
       await this.update();
-      LancerActionManager.enabled = true;
+      BeaconActionManager.enabled = true;
     } else {
       this.close();
-      LancerActionManager.enabled = false;
+      BeaconActionManager.enabled = false;
     }
   }
 
@@ -169,8 +169,8 @@ export class LancerActionManager extends Application {
       function loop() {
         let ele = document.getElementById("action-manager");
         if (ele) {
-          const newTop = pos.top < 5 || pos.top > window.innerHeight + 5 ? LancerActionManager.DEF_TOP : pos.top;
-          const newLeft = pos.left < 5 || pos.left > window.innerWidth + 5 ? LancerActionManager.DEF_LEFT : pos.left;
+          const newTop = pos.top < 5 || pos.top > window.innerHeight + 5 ? BeaconActionManager.DEF_TOP : pos.top;
+          const newLeft = pos.left < 5 || pos.left > window.innerWidth + 5 ? BeaconActionManager.DEF_LEFT : pos.left;
 
           appPos.top = newTop;
           appPos.left = newLeft;

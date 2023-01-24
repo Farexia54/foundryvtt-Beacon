@@ -1,14 +1,14 @@
-import { LancerItemType } from "./item/lancer-item";
+import { BeaconItemType } from "./item/Beacon-item";
 import { EffectData } from "./helpers/npc";
 import { Damage, License, LiveEntryTypes, TagInstance } from "machine-mind";
-import { LancerActorType } from "./actor/lancer-actor";
+import { BeaconActorType } from "./actor/Beacon-actor";
 
 // ------------------------------------------------------
 // |       SHEET DATA TYPES                             |
 // ------------------------------------------------------
 
 // These single generic type should cover all basic sheet use cases
-export interface LancerItemSheetData<T extends LancerItemType> extends ItemSheet.Data<ItemSheet.Options> {
+export interface BeaconItemSheetData<T extends BeaconItemType> extends ItemSheet.Data<ItemSheet.Options> {
   // reg ctx
   mm: LiveEntryTypes<T>;
 
@@ -23,7 +23,7 @@ export type CachedCloudPilot = {
   cloudOwnerID: string;
 };
 
-export interface LancerActorSheetData<T extends LancerActorType> extends ActorSheet.Data<ActorSheet.Options> {
+export interface BeaconActorSheetData<T extends BeaconActorType> extends ActorSheet.Data<ActorSheet.Options> {
   // Item
   mm: LiveEntryTypes<T>;
 
@@ -37,13 +37,13 @@ export interface LancerActorSheetData<T extends LancerActorType> extends ActorSh
 }
 
 // -------- Macro data -------------------------------------
-declare interface LancerStatMacroData {
+declare interface BeaconStatMacroData {
   title: string;
   bonus: string | number;
   effect?: EffectData | string;
 }
 
-declare interface LancerAttackMacroData {
+declare interface BeaconAttackMacroData {
   self_heat?: boolean;
   title: string;
   grit: number;
@@ -59,7 +59,7 @@ declare interface LancerAttackMacroData {
   destroyed?: boolean;
 }
 
-declare interface LancerTechMacroData {
+declare interface BeaconTechMacroData {
   title: string;
   t_atk: number;
   action: string;
@@ -68,7 +68,7 @@ declare interface LancerTechMacroData {
   tags: TagDataShort[];
 }
 
-declare interface LancerActionMacroData {
+declare interface BeaconActionMacroData {
   title: string;
   t_atk: number;
   acc: number;
@@ -77,36 +77,36 @@ declare interface LancerActionMacroData {
   tags: TagDataShort[];
 }
 
-declare interface LancerTalentMacroData {
-  talent: LancerTalentData;
+declare interface BeaconTalentMacroData {
+  talent: BeaconTalentData;
   rank: number;
 }
 
-declare interface LancerGenericMacroData {
+declare interface BeaconGenericMacroData {
   title: string;
   effect: EffectData | string;
 }
 
-declare interface LancerReactionMacroData {
+declare interface BeaconReactionMacroData {
   title: string;
   trigger: string;
   effect: string;
   tags?: TagDataShort[];
 }
 
-declare interface LancerTextMacroData {
+declare interface BeaconTextMacroData {
   title: string;
   description: string;
   item_id?: string;
   tags?: TagDataShort[];
 }
 
-declare interface LancerOverchargeMacroData {
+declare interface BeaconOverchargeMacroData {
   level: number;
   roll: Roll;
 }
 
-declare interface LancerMacroData {
+declare interface BeaconMacroData {
   fn: string;
   args: any[];
   iconPath?: string;

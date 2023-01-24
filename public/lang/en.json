@@ -1,5 +1,5 @@
 {
-    "lancer": {
+    "Beacon": {
         "placeholder": {
             "name": "Name"
         },
@@ -178,7 +178,7 @@
             "euc": "Euclidean: Euclidian distance rounded"
         }
     },
-    "LANCERINITIATIVE": {
+    "BeaconINITIATIVE": {
         "IconSettingsMenu": "Icon Settings",
         "Icon": "Action Icon",
         "IconDesc": "CSS classes to define the activation icon.",

@@ -1,32 +1,32 @@
-import type { GenControlContext, LancerActorSheetData, LancerStatMacroData } from "../interfaces";
-import { LANCER } from "../config";
-import { LancerActorSheet } from "./lancer-actor-sheet";
+import type { GenControlContext, BeaconActorSheetData, BeaconStatMacroData } from "../interfaces";
+import { Beacon } from "../config";
+import { BeaconActorSheet } from "./Beacon-actor-sheet";
 import { prepareItemMacro, prepareStatMacro } from "../macros";
 import { EntryType, Npc, NpcClass, NpcFeature, NpcTemplate } from "machine-mind";
 import tippy from "tippy.js";
-import { AnyMMItem, is_item_type, LancerItemType } from "../item/lancer-item";
-import type { AnyMMActor } from "./lancer-actor";
+import { AnyMMItem, is_item_type, BeaconItemType } from "../item/Beacon-item";
+import type { AnyMMActor } from "./Beacon-actor";
 import { mm_resort_item } from "../mm-util/helpers";
 import { resolve_ref_element } from "../helpers/refs";
 import { HANDLER_activate_general_controls } from "../helpers/commons";
-const lp = LANCER.log_prefix;
+const lp = Beacon.log_prefix;
 
 /**
  * Extend the basic ActorSheet
  */
-export class LancerNPCSheet extends LancerActorSheet<EntryType.NPC> {
+export class BeaconNPCSheet extends BeaconActorSheet<EntryType.NPC> {
   /**
    * Extend and override the default options used by the NPC Sheet
    */
   static get defaultOptions(): ActorSheet.Options {
     return mergeObject(super.defaultOptions, {
-      classes: ["lancer", "sheet", "actor", "npc"],
+      classes: ["Beacon", "sheet", "actor", "npc"],
       template: `systems/${game.system.id}/templates/actor/npc.hbs`,
       width: 800,
       height: 800,
       tabs: [
         {
-          navSelector: ".lancer-tabs",
+          navSelector: ".Beacon-tabs",
           contentSelector: ".sheet-body",
           initial: "mech",
         },
@@ -67,9 +67,9 @@ export class LancerNPCSheet extends LancerActorSheet<EntryType.NPC> {
         // Find the stat input to get the stat's key to pass to the macro function
         const statInput: HTMLInputElement = $(ev.currentTarget)
           .closest(".stat-container")
-          .find(".lancer-stat")[0] as HTMLInputElement;
+          .find(".Beacon-stat")[0] as HTMLInputElement;
         let tSplit = statInput.name.split(".");
-        let mData: LancerStatMacroData = {
+        let mData: BeaconStatMacroData = {
           title: tSplit[tSplit.length - 1].toUpperCase(),
           bonus: statInput.value,
         };
@@ -148,7 +148,7 @@ export class LancerNPCSheet extends LancerActorSheet<EntryType.NPC> {
 
   can_root_drop_entry(item: AnyMMItem | AnyMMActor): boolean {
     // Reject any non npc item
-    if (!LANCER.npc_items.includes(item.Type as LancerItemType)) {
+    if (!Beacon.npc_items.includes(item.Type as BeaconItemType)) {
       return false;
     }
 
@@ -237,13 +237,13 @@ export class LancerNPCSheet extends LancerActorSheet<EntryType.NPC> {
 function getStatInput(event: Event): HTMLInputElement | HTMLDataElement | null {
   if (!event.currentTarget) return null;
   // Find the stat input to get the stat's key to pass to the macro function
-  return $(event.currentTarget).closest(".stat-container").find(".lancer-stat")[0] as
+  return $(event.currentTarget).closest(".stat-container").find(".Beacon-stat")[0] as
     | HTMLInputElement
     | HTMLDataElement;
 }
 
 // Removes class/features when a delete happens
-function handleClassDelete(ctx: GenControlContext<LancerActorSheetData<EntryType.NPC>>) {
+function handleClassDelete(ctx: GenControlContext<BeaconActorSheetData<EntryType.NPC>>) {
   let npc = ctx.data.mm;
   if (ctx.action == "delete") {
     if (ctx.path_target instanceof NpcClass || ctx.path_target instanceof NpcTemplate) {

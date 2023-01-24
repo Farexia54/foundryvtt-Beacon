@@ -49,7 +49,7 @@ export class HTMLEditDialog<O> extends FormApplication {
       width: 650,
       height: "auto" as const,
       resizable: true,
-      classes: ["lancer"],
+      classes: ["Beacon"],
       submitOnChange: false,
       submitOnClose: true,
       closeOnSubmit: true,

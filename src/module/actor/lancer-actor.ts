@@ -1,4 +1,4 @@
-import { LANCER, replace_default_resource, TypeIcon } from "../config";
+import { Beacon, replace_default_resource, TypeIcon } from "../config";
 import {
   EntryType,
   funcs,
@@ -26,10 +26,10 @@ import {
   DamageType,
 } from "machine-mind";
 import { FoundryFlagData, FoundryReg } from "../mm-util/foundry-reg";
-import { LancerHooks, LancerSubscription } from "../helpers/hooks";
+import { BeaconHooks, BeaconSubscription } from "../helpers/hooks";
 import { mm_wrap_actor } from "../mm-util/helpers";
-import { system_ready } from "../../lancer";
-import type { LancerItemType } from "../item/lancer-item";
+import { system_ready } from "../../Beacon";
+import type { BeaconItemType } from "../item/Beacon-item";
 import { renderMacroTemplate, encodeMacroData, prepareOverheatMacro, prepareStructureMacro } from "../macros";
 import type { RegEntry, MechWeapon, NpcFeature } from "machine-mind";
 import { StabOptions1, StabOptions2 } from "../enums";
@@ -40,7 +40,7 @@ import { NpcClass } from "machine-mind";
 import { getAutomationOptions } from "../settings";
 import { findEffect } from "../helpers/acc_diff";
 import { AppliedDamage } from "./damage-calc";
-const lp = LANCER.log_prefix;
+const lp = Beacon.log_prefix;
 
 // Use for HP, etc
 interface BoundedValue {
@@ -70,11 +70,11 @@ interface DerivedProperties<T extends EntryType> {
   mm_promise: Promise<LiveEntryTypes<T>>;
 }
 
-interface LancerActorDataSource<T extends EntryType> {
+interface BeaconActorDataSource<T extends EntryType> {
   type: T;
   data: RegEntryTypes<T>;
 }
-interface LancerActorDataProperties<T extends EntryType> {
+interface BeaconActorDataProperties<T extends EntryType> {
   type: T;
   data: RegEntryTypes<T> & {
     derived: DerivedProperties<T>;
@@ -82,36 +82,36 @@ interface LancerActorDataProperties<T extends EntryType> {
   };
 }
 
-type LancerActorSource =
-  | LancerActorDataSource<EntryType.PILOT>
-  | LancerActorDataSource<EntryType.MECH>
-  | LancerActorDataSource<EntryType.NPC>
-  | LancerActorDataSource<EntryType.DEPLOYABLE>;
+type BeaconActorSource =
+  | BeaconActorDataSource<EntryType.PILOT>
+  | BeaconActorDataSource<EntryType.MECH>
+  | BeaconActorDataSource<EntryType.NPC>
+  | BeaconActorDataSource<EntryType.DEPLOYABLE>;
 
-type LancerActorProperties =
-  | LancerActorDataProperties<EntryType.PILOT>
-  | LancerActorDataProperties<EntryType.MECH>
-  | LancerActorDataProperties<EntryType.NPC>
-  | LancerActorDataProperties<EntryType.DEPLOYABLE>;
+type BeaconActorProperties =
+  | BeaconActorDataProperties<EntryType.PILOT>
+  | BeaconActorDataProperties<EntryType.MECH>
+  | BeaconActorDataProperties<EntryType.NPC>
+  | BeaconActorDataProperties<EntryType.DEPLOYABLE>;
 
 declare global {
   interface SourceConfig {
-    Actor: LancerActorSource;
+    Actor: BeaconActorSource;
   }
   interface DataConfig {
-    Actor: LancerActorProperties;
+    Actor: BeaconActorProperties;
   }
   interface DocumentClassConfig {
-    Actor: typeof LancerActor;
+    Actor: typeof BeaconActor;
   }
 }
 
 /**
- * Extend the Actor class for Lancer Actors.
+ * Extend the Actor class for Beacon Actors.
  */
-export class LancerActor extends Actor {
+export class BeaconActor extends Actor {
   // Tracks data propagation
-  subscriptions: LancerSubscription[] = [];
+  subscriptions: BeaconSubscription[] = [];
 
   // Kept for comparing previous to next values
   prior_max_hp = -1;
@@ -892,7 +892,7 @@ export class LancerActor extends Actor {
           await mech.writeback();
 
           // If we've got a frame (which we should) check for setting Retrograde image
-          if (mech.Frame && (await (mech.Flags.orig_doc as LancerActor).swapFrameImage(mech, null, mech.Frame))) {
+          if (mech.Frame && (await (mech.Flags.orig_doc as BeaconActor).swapFrameImage(mech, null, mech.Frame))) {
             // Write back again if we swapped images
             await mech.writeback();
           }
@@ -908,7 +908,7 @@ export class LancerActor extends Actor {
           // Check and see if we have a custom token (not from imgur) set, and if we don't, set the token image.
           if (
             // @ts-expect-error Should be fixed with v10 types
-            this.token?.img === "systems/lancer/assets/icons/pilot.svg" ||
+            this.token?.img === "systems/Beacon/assets/icons/pilot.svg" ||
             // @ts-expect-error Should be fixed with v10 types
             this.token?.img?.includes("imgur")
           ) {
@@ -980,7 +980,7 @@ export class LancerActor extends Actor {
     let job_id = this._current_prepare_job_id;
 
     // Reset subscriptions for new data
-    this.setupLancerHooks();
+    this.setupBeaconHooks();
 
     // Declare our derived data with a shorthand "dr" - we will be using it a lot
     let dr: this["data"]["data"]["derived"];
@@ -1226,7 +1226,7 @@ export class LancerActor extends Actor {
     }
 
     console.log(`${lp} Initializing new ${this.type}`);
-    let default_data: RegEntryTypes<LancerActorType> & { actions?: unknown };
+    let default_data: RegEntryTypes<BeaconActorType> & { actions?: unknown };
     let disposition: ValueOf<typeof CONST["TOKEN_DISPOSITIONS"]> = CONST.TOKEN_DISPOSITIONS.FRIENDLY;
     switch (this.type) {
       case EntryType.NPC:
@@ -1270,7 +1270,7 @@ export class LancerActor extends Actor {
    */
   protected _onUpdate(...[changed, options, user]: Parameters<Actor["_onUpdate"]>) {
     super._onUpdate(changed, options, user);
-    LancerHooks.call(this);
+    BeaconHooks.call(this);
 
     // Check for overheating / structure
     if (
@@ -1309,7 +1309,7 @@ export class LancerActor extends Actor {
   // Ditto - items alter stats quite often
   _onUpdateEmbeddedDocuments(...args: Parameters<Actor["_onUpdateEmbeddedDocuments"]>) {
     super._onUpdateEmbeddedDocuments(...args);
-    LancerHooks.call(this);
+    BeaconHooks.call(this);
   }
 
   _onDelete(...args: Parameters<Actor["_onDelete"]>) {
@@ -1321,7 +1321,7 @@ export class LancerActor extends Actor {
     this.subscriptions = [];
   }
 
-  setupLancerHooks() {
+  setupBeaconHooks() {
     // If we're a compendium document, don't actually do anything
     if (this.compendium) {
       return;
@@ -1333,7 +1333,7 @@ export class LancerActor extends Actor {
     });
     this.subscriptions = [];
 
-    let dependency: RegRef<LancerActorType> | null = null;
+    let dependency: RegRef<BeaconActorType> | null = null;
     // If we are a mech, we need to subscribe to our pilot (if it exists)
     if (this.is_mech()) {
       // @ts-expect-error Should be fixed with v10 types
@@ -1352,7 +1352,7 @@ export class LancerActor extends Actor {
 
     // Make a subscription for each
     if (dependency) {
-      let sub = LancerHooks.on(dependency, async _ => {
+      let sub = BeaconHooks.on(dependency, async _ => {
         console.debug("Triggering subscription-based update on " + this.name);
         // We typically don't need to actually .update() ourselves when a dependency updates
         // Each client will individually prepareDerivedData in response to the update, and so there is no need for DB communication
@@ -1369,7 +1369,7 @@ export class LancerActor extends Actor {
         this.render();
 
         // Also, let any listeners on us know!
-        LancerHooks.call(this);
+        BeaconHooks.call(this);
       });
       this.subscriptions.push(sub);
     }
@@ -1411,16 +1411,16 @@ export class LancerActor extends Actor {
   }
 
   // Typeguards
-  is_pilot(): this is LancerActor & { data: LancerActorDataProperties<EntryType.PILOT> } {
+  is_pilot(): this is BeaconActor & { data: BeaconActorDataProperties<EntryType.PILOT> } {
     return this.type === EntryType.PILOT;
   }
-  is_mech(): this is LancerActor & { data: LancerActorDataProperties<EntryType.MECH> } {
+  is_mech(): this is BeaconActor & { data: BeaconActorDataProperties<EntryType.MECH> } {
     return this.type === EntryType.MECH;
   }
-  is_npc(): this is LancerActor & { data: LancerActorDataProperties<EntryType.NPC> } {
+  is_npc(): this is BeaconActor & { data: BeaconActorDataProperties<EntryType.NPC> } {
     return this.type === EntryType.NPC;
   }
-  is_deployable(): this is LancerActor & { data: LancerActorDataProperties<EntryType.DEPLOYABLE> } {
+  is_deployable(): this is BeaconActor & { data: BeaconActorDataProperties<EntryType.DEPLOYABLE> } {
     return this.type === EntryType.DEPLOYABLE;
   }
 
@@ -1440,8 +1440,8 @@ export class LancerActor extends Actor {
     let oldFramePath = frameToPath[oldFrame?.Name || ""];
     let newFramePath = frameToPath[newFrame?.Name || ""];
     let defaultImg = is_reg_mech(robot)
-      ? "systems/lancer/assets/icons/mech.svg"
-      : "systems/lancer/assets/icons/npc_class.svg";
+      ? "systems/Beacon/assets/icons/mech.svg"
+      : "systems/Beacon/assets/icons/npc_class.svg";
 
     if (!newFramePath) newFramePath = defaultImg;
     let changed = false;
@@ -1469,7 +1469,7 @@ export class LancerActor extends Actor {
       robot.Flags.top_level_data.img = newFramePath;
       if (
         // @ts-expect-error Should be fixed with v10 types
-        this.token?.img?.includes("systems/lancer/assets/retrograde-minis") ||
+        this.token?.img?.includes("systems/Beacon/assets/retrograde-minis") ||
         // @ts-expect-error Should be fixed with v10 types
         this.token?.img == defaultImg
       ) {
@@ -1492,17 +1492,17 @@ export class LancerActor extends Actor {
   }
 }
 
-export type AnyMMActor = LiveEntryTypes<LancerActorType>;
-export type LancerActorType = EntryType.MECH | EntryType.DEPLOYABLE | EntryType.NPC | EntryType.PILOT;
-export const LancerActorTypes: LancerActorType[] = [
+export type AnyMMActor = LiveEntryTypes<BeaconActorType>;
+export type BeaconActorType = EntryType.MECH | EntryType.DEPLOYABLE | EntryType.NPC | EntryType.PILOT;
+export const BeaconActorTypes: BeaconActorType[] = [
   EntryType.MECH,
   EntryType.DEPLOYABLE,
   EntryType.NPC,
   EntryType.PILOT,
 ];
 
-export function is_actor_type(type: LancerActorType | LancerItemType): type is LancerActorType {
-  return LancerActorTypes.includes(type as LancerActorType);
+export function is_actor_type(type: BeaconActorType | BeaconItemType): type is BeaconActorType {
+  return BeaconActorTypes.includes(type as BeaconActorType);
 }
 
 export function is_reg_pilot(actor: RegEntry<any>): actor is Pilot {

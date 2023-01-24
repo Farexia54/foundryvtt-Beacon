@@ -1,10 +1,10 @@
 // Import TypeScript modules
-import { LANCER } from "../config";
-import type { LancerTextMacroData } from "../interfaces";
+import { Beacon } from "../config";
+import type { BeaconTextMacroData } from "../interfaces";
 import { getMacroSpeaker } from "./_util";
 import { rollTextMacro } from "./text";
 
-const lp = LANCER.log_prefix;
+const lp = Beacon.log_prefix;
 
 /**
  * Prepares a macro to present core active information for
@@ -24,7 +24,7 @@ export async function prepareCoreActiveMacro(a: string) {
     return;
   }
 
-  let mData: LancerTextMacroData = {
+  let mData: BeaconTextMacroData = {
     title: mech.Frame.CoreSystem.ActiveName,
     description: mech.Frame.CoreSystem.ActiveEffect,
     tags: mech.Frame.CoreSystem.Tags,
@@ -67,7 +67,7 @@ export async function prepareCorePassiveMacro(a: string) {
   let mech = await actor.system.derived.mm_promise;
   if (!mech.Frame) return;
 
-  let mData: LancerTextMacroData = {
+  let mData: BeaconTextMacroData = {
     title: mech.Frame.CoreSystem.PassiveName,
     description: mech.Frame.CoreSystem.PassiveEffect,
     tags: mech.Frame.CoreSystem.Tags,
@@ -93,7 +93,7 @@ export async function prepareFrameTraitMacro(a: string, index: number) {
   let trait = ent.Frame.Traits[index];
   if (!trait) return;
 
-  let mData: LancerTextMacroData = {
+  let mData: BeaconTextMacroData = {
     title: trait.Name,
     description: trait.Description,
   };

@@ -1,12 +1,12 @@
 // Import TypeScript modules
-import { LANCER } from "../config";
-import type { LancerActor } from "../actor/lancer-actor";
-import type { LancerTextMacroData } from "../interfaces";
+import { Beacon } from "../config";
+import type { BeaconActor } from "../actor/Beacon-actor";
+import type { BeaconTextMacroData } from "../interfaces";
 import { TagInstance } from "machine-mind";
 import { getMacroSpeaker } from "./_util";
 import { renderMacroTemplate } from "./_render";
 
-const lp = LANCER.log_prefix;
+const lp = Beacon.log_prefix;
 
 /**
  * Given basic information, prepares a generic text-only macro to display descriptions etc
@@ -21,7 +21,7 @@ export function prepareTextMacro(a: string, title: string, text: string, tags?: 
   if (!actor) return;
 
   // Note to self--use this in the future if I need string -> var lookup: var.split('.').reduce((o,i)=>o[i], game.data)
-  let mData: LancerTextMacroData = {
+  let mData: BeaconTextMacroData = {
     title: title,
     description: text,
     tags: tags,
@@ -33,9 +33,9 @@ export function prepareTextMacro(a: string, title: string, text: string, tags?: 
 /**
  * Given prepared data, handles rolling of a generic text-only macro to display descriptions etc.
  * @param actor {Actor} Actor rolling the macro.
- * @param data {LancerTextMacroData} Prepared macro data.
+ * @param data {BeaconTextMacroData} Prepared macro data.
  */
-export async function rollTextMacro(actor: LancerActor, data: LancerTextMacroData) {
+export async function rollTextMacro(actor: BeaconActor, data: BeaconTextMacroData) {
   if (!actor) return Promise.resolve();
 
   const template = `systems/${game.system.id}/templates/chat/generic-card.hbs`;

@@ -5,9 +5,9 @@ import commonjs from '@rollup/plugin-commonjs';
 import json from '@rollup/plugin-json';
 
 export default {
-  input: 'src/lancer.ts',
+  input: 'src/Beacon.ts',
   output: {
-    file: 'dist/lancer.js',
+    file: 'dist/Beacon.js',
     format: 'es'
   },
   plugins: [

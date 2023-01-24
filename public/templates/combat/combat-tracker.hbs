@@ -101,12 +101,12 @@
             {{/if}}
 
             <div class="token-initiative">
-                {{#lancerinitiative-repeat this.pending}}
-                <a class="{{../../icon_class}} lancer-combat-control" data-control="activateCombatant"></a>
-                {{/lancerinitiative-repeat}}
-                {{#lancerinitiative-repeat this.finished}}
-                <i class="{{../../icon_class}} done lancer-combat-control" data-control="deactivateCombatant"></i>
-                {{/lancerinitiative-repeat}}
+                {{#Beaconinitiative-repeat this.pending}}
+                <a class="{{../../icon_class}} Beacon-combat-control" data-control="activateCombatant"></a>
+                {{/Beaconinitiative-repeat}}
+                {{#Beaconinitiative-repeat this.finished}}
+                <i class="{{../../icon_class}} done Beacon-combat-control" data-control="deactivateCombatant"></i>
+                {{/Beaconinitiative-repeat}}
             </div>
         </li>
         {{/each}}

@@ -1,5 +1,5 @@
 // Import TypeScript modules
-import type { LancerToken } from "../token";
+import type { BeaconToken } from "../token";
 
 /**
  * Sets user targets to tokens that are within the highlighted spaces of the
@@ -10,7 +10,7 @@ export function targetsFromTemplate(templateId: string): void {
   const highlight = canvas?.grid?.getHighlightLayer(`MeasuredTemplate.${templateId}`);
   const grid = canvas?.grid;
   if (highlight === undefined || canvas === undefined || grid === undefined || canvas.ready !== true) return;
-  const test_token = (token: LancerToken) => {
+  const test_token = (token: BeaconToken) => {
     return Array.from(token.getOccupiedSpaces()).reduce((a, p) => a || highlight.geometry.containsPoint(p), false);
   };
 

@@ -3,7 +3,7 @@
  */
 
 import { ActionData, ActionType } from ".";
-import { LancerActor } from "../actor/lancer-actor";
+import { BeaconActor } from "../actor/Beacon-actor";
 
 export const _defaultActionData = (target: Actor) => {
   return {
@@ -28,16 +28,16 @@ export const _endTurnActionData = () => {
  * Get proxy for ease of migration when we change over to MM data backing.
  * @returns actions map.
  */
-export function getActions(actor: LancerActor): ActionData | undefined {
+export function getActions(actor: BeaconActor): ActionData | undefined {
   // @ts-expect-error Should be fixed with v10 types
   return actor.system.action_tracker ? { ...actor.system.action_tracker } : undefined;
 }
 /**
  * Set proxy for ease of migration when we change over to MM data backing.
  */
-export async function updateActions(actor: LancerActor, actions: ActionData) {
+export async function updateActions(actor: BeaconActor, actions: ActionData) {
   await actor.update({ "data.action_tracker": actions });
-  // this.token?.update({ "flags.lancer.actions": actions });
+  // this.token?.update({ "flags.Beacon.actions": actions });
 }
 
 /**
@@ -46,7 +46,7 @@ export async function updateActions(actor: LancerActor, actions: ActionData) {
  * @param spend whether to refresh or spend an action.
  * @param type specific action to spend, or undefined for end-turn behavior.
  */
-export async function modAction(actor: LancerActor, spend: boolean, type?: ActionType) {
+export async function modAction(actor: BeaconActor, spend: boolean, type?: ActionType) {
   // @ts-expect-error Should be fixed with v10 types
   let actions = { ...actor.system.action_tracker };
   if (actions) {
@@ -90,7 +90,7 @@ export async function modAction(actor: LancerActor, spend: boolean, type?: Actio
     await updateActions(actor, actions);
   }
 }
-export async function toggleAction(actor: LancerActor, type: ActionType) {
+export async function toggleAction(actor: BeaconActor, type: ActionType) {
   let actions = getActions(actor);
   if (actions) {
     if (actions[type]) {

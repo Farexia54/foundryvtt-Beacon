@@ -1,4 +1,4 @@
-<form class="{{cssClass}} lancer-sheet" autocomplete="off">
+<form class="{{cssClass}} Beacon-sheet" autocomplete="off">
   {{!-- Sheet Header --}}
   <header class="sheet-header card clipped-bot">
     <div class="header-fields">
@@ -8,7 +8,7 @@
           name="name"
           type="text"
           value="{{actor.name}}"
-          placeholder="{{localize "lancer.placeholder.name"}}"
+          placeholder="{{localize "Beacon.placeholder.name"}}"
         />
       </h1>
     </div>
@@ -16,10 +16,10 @@
   </header>
 
   {{!-- Sheet Tab Navigation --}}
-  <nav class="lancer-tabs" data-group="primary">
-    <a class="item lancer-tab medium" data-tab="status">{{localize "lancer.deployable-sheet.tabs.status"}}</a>
-    <a class="item lancer-tab medium" data-tab="config">{{localize "lancer.deployable-sheet.tabs.config"}}</a>
-    <!--<a class="item lancer-tab medium" data-tab="mech">&lt;FRAME//LOADOUT&gt;</a>-->
+  <nav class="Beacon-tabs" data-group="primary">
+    <a class="item Beacon-tab medium" data-tab="status">{{localize "Beacon.deployable-sheet.tabs.status"}}</a>
+    <a class="item Beacon-tab medium" data-tab="config">{{localize "Beacon.deployable-sheet.tabs.config"}}</a>
+    <!--<a class="item Beacon-tab medium" data-tab="mech">&lt;FRAME//LOADOUT&gt;</a>-->
   </nav>
 
   {{!-- Sheet Body --}}
@@ -38,16 +38,16 @@
         {{{stat-view-card "SPEED" "mdi mdi-arrow-right-bold-hexagon-outline" "mm.Speed" }}}
         {{{stat-view-card "SAVE" "cci cci-save" "mm.SaveTarget" }}}
 
-        <div class="card clipped full lancer-macro-grid">
-          <span class="lancer-header submajor">BASIC ATTACKS</span>
-          <div class="lancer-macro-grid">
+        <div class="card clipped full Beacon-macro-grid">
+          <span class="Beacon-header submajor">BASIC ATTACKS</span>
+          <div class="Beacon-macro-grid">
             {{{macro-button "BASIC ATTACK" "prepareEncodedAttackMacro" "mm" }}}
           </div>
         </div>
 
         <div class="card clipped full">
-          <div class="lancer-header major">
-            {{localize "lancer.deployable-sheet.deployer.label"}}
+          <div class="Beacon-header major">
+            {{localize "Beacon.deployable-sheet.deployer.label"}}
           </div>
           {{{deployer-slot "mm.Deployer" }}}
         </div>
@@ -64,7 +64,7 @@
     <div class="tab manage flexcol" data-group="primary" data-tab="config">
       {{!-- Frame Stats --}}
       <div class="card clipped" style="text-align: left;">
-        <span class="lancer-header major" style="text-align: center;">{{localize "lancer.deployable-sheet.stats.label"}}</span>
+        <span class="Beacon-header major" style="text-align: center;">{{localize "Beacon.deployable-sheet.stats.label"}}</span>
         <div class="card clipped wraprow quadruple">
           <div class="wraprow quadruple">
             {{{clicker-stat-card "MAX HP" "mdi mdi-heart-outline" "mm.BaseMaxHP" false }}}
